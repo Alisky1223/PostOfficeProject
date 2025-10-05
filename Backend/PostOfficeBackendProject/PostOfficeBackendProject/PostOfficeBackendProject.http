@@ -1,0 +1,6 @@
+@PostOfficeBackendProject_HostAddress = http://localhost:5274
+
+GET {{PostOfficeBackendProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
