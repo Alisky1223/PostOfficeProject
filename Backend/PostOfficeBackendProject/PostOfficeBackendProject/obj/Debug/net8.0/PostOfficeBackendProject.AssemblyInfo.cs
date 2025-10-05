@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PostOfficeBackendProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ba027c8f2a3f2c9ea9a6d0327f880dd33ba43a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2fb6c17560d5033be4c7e580b1c824bbc01195ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("PostOfficeBackendProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PostOfficeBackendProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

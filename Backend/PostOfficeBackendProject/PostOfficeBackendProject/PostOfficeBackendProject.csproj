@@ -6,4 +6,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="src\Application\Dictionary\" />
+    <Folder Include="src\Application\Dto\" />
+    <Folder Include="src\Application\Helper\" />
+    <Folder Include="src\Application\Job\" />
+    <Folder Include="src\Application\Mapper\" />
+    <Folder Include="src\Application\Service\" />
+    <Folder Include="src\Common\" />
+    <Folder Include="src\Configurations\" />
+    <Folder Include="src\Domain\" />
+    <Folder Include="src\Infrastructure\" />
+    <Folder Include="src\Tests\" />
+    <Folder Include="src\Presentation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+  </ItemGroup>
+
 </Project>
