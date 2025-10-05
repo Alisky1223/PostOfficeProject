@@ -1,49 +1,49 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\",
+  "WorkspaceRootPath": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\presentation\\controller\\postofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\presentation\\controller\\postofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\presentation\\controller\\postofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\repository\\postofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\repository\\postofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\infrastructure\\repository\\postofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\domain\\interface\\ipostofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\domain\\interface\\ipostofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\domain\\interface\\ipostofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\domain\\model\\postoffice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\domain\\model\\postoffice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\domain\\model\\postoffice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\extention\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\extention\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\infrastructure\\extention\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\dto\\postofficedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\dto\\postofficedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\application\\dto\\postofficedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\dto\\postofficeupdateandcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\dto\\postofficeupdateandcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\application\\dto\\postofficeupdateandcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\mapper\\postofficemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\my test\\test2\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\mapper\\postofficemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\application\\mapper\\postofficemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -54,17 +54,25 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "launchSettings.json",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Properties\\launchSettings.json",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\Properties\\launchSettings.json",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Properties\\launchSettings.json",
               "RelativeToolTip": "PostOfficeBackendProject\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-10-05T11:23:58.467Z",
               "EditorCaption": ""
@@ -72,10 +80,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Bookmark",
@@ -111,141 +115,127 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "PostOfficeController.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAYwCcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:59:27.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:59:27.967Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "ServiceCollectionExtensions.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Extention\\ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Extention\\ServiceCollectionExtensions.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Infrastructure\\Extention\\ServiceCollectionExtensions.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Extention\\ServiceCollectionExtensions.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Extention\\ServiceCollectionExtensions.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Infrastructure\\Extention\\ServiceCollectionExtensions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:50:15.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:50:15.755Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "IPostOfficeRepository.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:43:49.726Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:43:49.726Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "PostOfficeRepository.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAgwCsAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:42:51.348Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:42:51.348Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
               "Title": "PostOfficeMapper.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:37:26.506Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:37:26.506Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "PostOfficeUpdateAndCreateDto.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeUpdateAndCreateDto.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeUpdateAndCreateDto.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeUpdateAndCreateDto.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeUpdateAndCreateDto.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeUpdateAndCreateDto.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeUpdateAndCreateDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:36:56.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:36:56.24Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "PostOfficeDto.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeDto.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeDto.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeDto.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeDto.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeDto.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Application\\Dto\\PostOfficeDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:36:02.536Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:36:02.536Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
               "Title": "ApplicationDBContext.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:15:43.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:15:43.24Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "PostOffice.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Model\\PostOffice.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Model\\PostOffice.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Domain\\Model\\PostOffice.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Model\\PostOffice.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Model\\PostOffice.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Domain\\Model\\PostOffice.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:13:31.602Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:13:31.602Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Program.cs",
+              "DocumentMoniker": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Program.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\Program.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Program.cs",
+              "ToolTip": "D:\\my test\\test2\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Program.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T09:53:34.643Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T09:53:34.643Z"
             }
           ]
         }
