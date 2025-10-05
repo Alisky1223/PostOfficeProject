@@ -1,2 +1,2 @@
-# PostOfficeProject
-this is my backend project that will show my 2+ year skill in .netcore 
+# Post Office Project
+this is my Web API project that will show my 2+ year skill in .netcore 
