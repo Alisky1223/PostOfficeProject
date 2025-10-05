@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostOfficeController",
+    "Method": "Create",
+    "RelativePath": "api/postOffice/createPostOffice",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "PostOfficeBackendProject.src.Application.Dto.PostOfficeUpdateAndCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostOfficeController",
+    "Method": "GetAll",
+    "RelativePath": "api/postOffice/getAllPostOffice",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

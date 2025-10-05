@@ -8,19 +8,13 @@
 
   <ItemGroup>
     <Folder Include="src\Application\Dictionary\" />
-    <Folder Include="src\Application\Dto\" />
     <Folder Include="src\Application\Helper\" />
     <Folder Include="src\Application\Job\" />
-    <Folder Include="src\Application\Mapper\" />
     <Folder Include="src\Application\Service\" />
     <Folder Include="src\Common\Query\" />
     <Folder Include="src\Configurations\" />
-    <Folder Include="src\Domain\Interface\" />
-    <Folder Include="src\Infrastructure\Extention\" />
     <Folder Include="src\Infrastructure\Interceptor\" />
     <Folder Include="src\Infrastructure\Midleware\" />
-    <Folder Include="src\Infrastructure\Repository\" />
-    <Folder Include="src\Presentation\Controller\" />
     <Folder Include="src\Tests\ServiceTest\TestCases\" />
   </ItemGroup>
 
