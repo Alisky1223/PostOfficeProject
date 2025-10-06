@@ -9,10 +9,12 @@ namespace PostOfficeBackendProject.src.Application.Mapper
         {
             return new PostOfficeDto
             {
+                Id = postOffice.Id,
                 OfficeName = postOffice.OfficeName,
                 OfficeAccessCode = postOffice.OfficeAccessCode,
                 Address = postOffice.Address,
                 StorageCapacity = postOffice.StorageCapacity,
+                
             };
         }
 
@@ -24,6 +26,7 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 OfficeAccessCode = createDto.OfficeAccessCode,
                 Address = createDto.Address,
                 StorageCapacity = createDto.StorageCapacity,
+                Products = createDto.Products.Select(x => x.ToProductFromCreateDto()).ToList(),
             };
         }
     }

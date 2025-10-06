@@ -10,7 +10,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Extention
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IPostOfficeRepository, PostOfficeRepository>();
-
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
         }
