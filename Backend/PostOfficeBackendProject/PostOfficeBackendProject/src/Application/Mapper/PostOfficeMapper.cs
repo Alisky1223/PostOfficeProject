@@ -10,7 +10,9 @@ namespace PostOfficeBackendProject.src.Application.Mapper
             return new PostOfficeDto
             {
                 OfficeName = postOffice.OfficeName,
-                OfficeAccessCode = postOffice.OfficeAccessCode
+                OfficeAccessCode = postOffice.OfficeAccessCode,
+                Address = postOffice.Address,
+                StorageCapacity = postOffice.StorageCapacity,
             };
         }
 
@@ -19,7 +21,9 @@ namespace PostOfficeBackendProject.src.Application.Mapper
             return new PostOffice
             {
                 OfficeName = createDto.OfficeName,
-                OfficeAccessCode = createDto.OfficeAccessCode
+                OfficeAccessCode = createDto.OfficeAccessCode,
+                Address = createDto.Address,
+                StorageCapacity = createDto.StorageCapacity,
             };
         }
     }
