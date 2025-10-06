@@ -282,3 +282,5 @@ D:\Projects\MyProjects\TestProjects\PostOffice\PostOfficeProject\Backend\PostOff
 D:\Projects\MyProjects\TestProjects\PostOffice\PostOfficeProject\Backend\PostOfficeBackendProject\PostOfficeBackendProject\obj\Debug\net8.0\PostOfficeBackendProject.pdb
 D:\Projects\MyProjects\TestProjects\PostOffice\PostOfficeProject\Backend\PostOfficeBackendProject\PostOfficeBackendProject\obj\Debug\net8.0\PostOfficeBackendProject.genruntimeconfig.cache
 D:\Projects\MyProjects\TestProjects\PostOffice\PostOfficeProject\Backend\PostOfficeBackendProject\PostOfficeBackendProject\obj\Debug\net8.0\ref\PostOfficeBackendProject.dll
+D:\Projects\MyProjects\TestProjects\PostOffice\PostOfficeProject\Backend\PostOfficeBackendProject\PostOfficeBackendProject\bin\Debug\net8.0\CommonDll.dll
+D:\Projects\MyProjects\TestProjects\PostOffice\PostOfficeProject\Backend\PostOfficeBackendProject\PostOfficeBackendProject\bin\Debug\net8.0\CommonDll.pdb
