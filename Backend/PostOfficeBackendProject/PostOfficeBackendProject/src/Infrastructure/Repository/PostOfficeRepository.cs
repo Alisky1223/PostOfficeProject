@@ -40,6 +40,8 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
             targetPostOffice.OfficeName = postOffice.OfficeName;
             targetPostOffice.OfficeAccessCode = postOffice.OfficeAccessCode;
+            targetPostOffice.Address = postOffice.Address;
+            targetPostOffice.StorageCapacity = postOffice.StorageCapacity;
 
             await _context.SaveChangesAsync();
 
