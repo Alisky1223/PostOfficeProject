@@ -1,4 +1,6 @@
-﻿namespace PostOfficeBackendProject.src.Application.Dto
+﻿using CommonDll.Dto;
+
+namespace PostOfficeBackendProject.src.Application.Dto
 {
     public class PostOfficeUpdateAndCreateDto
     {
