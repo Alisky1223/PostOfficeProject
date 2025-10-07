@@ -1,4 +1,5 @@
-﻿using PostOfficeBackendProject.src.Application.Dto;
+﻿using CommonDll.Dto;
+using PostOfficeBackendProject.src.Application.Dto;
 using PostOfficeBackendProject.src.Domain.Model;
 
 namespace PostOfficeBackendProject.src.Application.Mapper
@@ -27,6 +28,18 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 Address = createDto.Address,
                 StorageCapacity = createDto.StorageCapacity,
                 Products = createDto.Products.Select(x => x.ToProductFromCreateDto()).ToList(),
+            };
+        }
+
+        public static PostOfficeBasicInformationDto ToBasicInformationDto(this PostOffice postOffice) 
+        {
+            return new PostOfficeBasicInformationDto 
+            {
+                Id = postOffice.Id,
+                OfficeName = postOffice.OfficeName,
+                OfficeAccessCode = postOffice.OfficeAccessCode,
+                Address = postOffice.Address,
+                StorageCapacity = postOffice.StorageCapacity,
             };
         }
     }
