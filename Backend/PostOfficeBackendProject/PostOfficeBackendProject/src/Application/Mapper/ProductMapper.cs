@@ -12,7 +12,9 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 Description = product.Description,
                 Id = product.Id,
                 Price = product.Price,
-                ProductName = product.ProductName
+                ProductName = product.ProductName,
+                //ProductType = product.ProductType == null ? null : product.ProductType.ToDto(),
+                ProductType = product.ProductType?.ToDto() ?? null,
             };
         }
 

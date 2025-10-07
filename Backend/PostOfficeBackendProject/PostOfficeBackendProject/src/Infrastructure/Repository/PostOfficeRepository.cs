@@ -22,7 +22,9 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
         public async Task<List<PostOffice>> GetAllPostsAsync()
         {
-            return await _context.PostOffice.ToListAsync();
+            return await _context.PostOffice
+                .Include(c => c.Products).ThenInclude(c => c.ProductType)
+                .ToListAsync();
         }
 
         public async Task<PostOffice?> GetPostByIdAsync(int id)

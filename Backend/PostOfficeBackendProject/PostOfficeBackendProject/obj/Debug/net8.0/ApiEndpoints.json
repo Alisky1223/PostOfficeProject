@@ -54,7 +54,7 @@
   {
     "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.ProductController",
     "Method": "Update",
-    "RelativePath": "api/product/update/{int}",
+    "RelativePath": "api/product/update/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -62,16 +62,58 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "updateDto",
         "Type": "CommonDll.Dto.ProductUpdateAndCreateDto",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.ProductTypeController",
+    "Method": "Create",
+    "RelativePath": "api/productType/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "CommonDll.Dto.ProductTypeUpdateAndCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.ProductTypeController",
+    "Method": "GetAll",
+    "RelativePath": "api/productType/getAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.ProductTypeController",
+    "Method": "Update",
+    "RelativePath": "api/productType/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       },
       {
-        "Name": "int",
-        "Type": "",
+        "Name": "updateDto",
+        "Type": "CommonDll.Dto.ProductTypeUpdateAndCreateDto",
         "IsRequired": true
       }
     ],

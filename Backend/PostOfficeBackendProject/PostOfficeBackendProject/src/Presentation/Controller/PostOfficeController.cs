@@ -10,8 +10,8 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
     public class PostOfficeController : ControllerBase
     {
         private const string getAllRequest      = "getAllPostOffice";
-        private const string getByIdRequest     = "getByIdPostOffice/{int:id}";
-        private const string updateRequest      = "updatePostOffice";
+        private const string getByIdRequest     = "getByIdPostOffice/{id:int}";
+        private const string updateRequest      = "updatePostOffice/{id:int}";
         private const string createRequest      = "createPostOffice";
         
         private readonly IPostOfficeRepository _repository;

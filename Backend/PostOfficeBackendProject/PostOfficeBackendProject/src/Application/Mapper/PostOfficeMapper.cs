@@ -14,7 +14,7 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 OfficeAccessCode = postOffice.OfficeAccessCode,
                 Address = postOffice.Address,
                 StorageCapacity = postOffice.StorageCapacity,
-                
+                Products = postOffice.Products.Select(x => x.ToDto()).ToList(),
             };
         }
 

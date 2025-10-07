@@ -11,7 +11,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
     {
         private const string getallRequest = "getall";
         private const string createRequest = "create";
-        private const string updateRequest = "update/{int:id}";
+        private const string updateRequest = "update/{id:int}";
 
         private readonly IProductRepository _repository;
         public ProductController(IProductRepository repository)
