@@ -3,44 +3,20 @@
   "WorkspaceRootPath": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\mapper\\productmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\application\\mapper\\productmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\presentation\\controller\\postofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\presentation\\controller\\postofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\mapper\\postofficemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\application\\mapper\\postofficemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\presentation\\controller\\postofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\presentation\\controller\\postofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\extention\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\infrastructure\\extention\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\presentation\\controller\\producttypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\presentation\\controller\\producttypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\repository\\producttyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\infrastructure\\repository\\producttyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\domain\\interface\\iproducttyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\domain\\interface\\iproducttyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\application\\mapper\\producttypemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\application\\mapper\\producttypemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\repository\\postofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\infrastructure\\repository\\postofficerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\presentation\\controller\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\presentation\\controller\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\src\\infrastructure\\extention\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|solutionrelative:postofficebackendproject\\src\\infrastructure\\extention\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}|PostOfficeBackendProject\\PostOfficeBackendProject.csproj|d:\\projects\\myprojects\\testprojects\\postoffice\\postofficeproject\\backend\\postofficebackendproject\\postofficebackendproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 18,
+          "SelectedChildIndex": 14,
           "Children": [
             {
               "$type": "Bookmark",
@@ -118,46 +94,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IProductTypeRepository.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Interface\\IProductTypeRepository.cs",
-              "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Domain\\Interface\\IProductTypeRepository.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Interface\\IProductTypeRepository.cs",
-              "RelativeToolTip": "PostOfficeBackendProject\\src\\Domain\\Interface\\IProductTypeRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T06:00:45.14Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ProductTypeMapper.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\ProductTypeMapper.cs",
-              "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Application\\Mapper\\ProductTypeMapper.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\ProductTypeMapper.cs",
-              "RelativeToolTip": "PostOfficeBackendProject\\src\\Application\\Mapper\\ProductTypeMapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T05:58:53.087Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "PostOfficeRepository.cs",
               "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
               "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Infrastructure\\Repository\\PostOfficeRepository.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAgwBkAAABJAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB8AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-05T10:42:51.348Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 5,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\Properties\\launchSettings.json",
@@ -169,20 +119,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "PostOfficeController.cs",
               "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
               "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Presentation\\Controller\\PostOfficeController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABwAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAwwD0AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-05T10:59:27.967Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 7,
               "Title": "IPostOfficeRepository.cs",
               "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Domain\\Interface\\IPostOfficeRepository.cs",
@@ -191,31 +141,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-05T10:43:49.726Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProductMapper.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\ProductMapper.cs",
-              "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Application\\Mapper\\ProductMapper.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\ProductMapper.cs",
-              "RelativeToolTip": "PostOfficeBackendProject\\src\\Application\\Mapper\\ProductMapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABCAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T09:58:10.851Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductController.cs",
-              "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductController.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductController.cs",
-              "RelativeToolTip": "PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T10:17:34.112Z"
             },
             {
               "$type": "Document",
@@ -238,40 +163,14 @@
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
               "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
               "RelativeToolTip": "PostOfficeBackendProject\\src\\Application\\Mapper\\PostOfficeMapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-05T10:37:26.506Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProductTypeController.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductTypeController.cs",
-              "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductTypeController.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductTypeController.cs",
-              "RelativeToolTip": "PostOfficeBackendProject\\src\\Presentation\\Controller\\ProductTypeController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAA0wDAAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T06:55:38.035Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ProductTypeRepository.cs",
-              "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\ProductTypeRepository.cs",
-              "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Infrastructure\\Repository\\ProductTypeRepository.cs",
-              "ToolTip": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Repository\\ProductTypeRepository.cs",
-              "RelativeToolTip": "PostOfficeBackendProject\\src\\Infrastructure\\Repository\\ProductTypeRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T06:01:16.211Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 6,
               "Title": "ApplicationDBContext.cs",
               "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\src\\Infrastructure\\Data\\ApplicationDBContext.cs",
@@ -283,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\Program.cs",
               "RelativeDocumentMoniker": "PostOfficeBackendProject\\Program.cs",

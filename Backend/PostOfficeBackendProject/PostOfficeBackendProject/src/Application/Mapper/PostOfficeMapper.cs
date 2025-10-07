@@ -27,7 +27,6 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 OfficeAccessCode = createDto.OfficeAccessCode,
                 Address = createDto.Address,
                 StorageCapacity = createDto.StorageCapacity,
-                Products = createDto.Products.Select(x => x.ToProductFromCreateDto()).ToList(),
             };
         }
 
