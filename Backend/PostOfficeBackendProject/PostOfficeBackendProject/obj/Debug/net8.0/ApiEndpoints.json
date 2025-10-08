@@ -1,5 +1,68 @@
 [
   {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostmanController",
+    "Method": "Create",
+    "RelativePath": "api/postman/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "CommonDll.Dto.PostmanUpdateAndCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostmanController",
+    "Method": "GetAll",
+    "RelativePath": "api/postman/getall",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostmanController",
+    "Method": "GetById",
+    "RelativePath": "api/postman/getbyId/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostmanController",
+    "Method": "Update",
+    "RelativePath": "api/postman/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "CommonDll.Dto.PostmanUpdateAndCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostOfficeController",
     "Method": "Create",
     "RelativePath": "api/postOffice/createPostOffice",

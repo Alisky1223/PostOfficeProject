@@ -12,6 +12,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Extention
             services.AddScoped<IPostOfficeRepository, PostOfficeRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+            services.AddScoped<IPostmanRepository, PostmanRepository>();
 
             return services;
         }
