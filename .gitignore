@@ -148,3 +148,4 @@ Thumbs.db
 /Backend/PostOfficeBackendProject/.vs/*
 /Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/Debug/*
 
+/Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/Debug/net8.0/PostOfficeBackendProject.csproj.AssemblyReference.cache
