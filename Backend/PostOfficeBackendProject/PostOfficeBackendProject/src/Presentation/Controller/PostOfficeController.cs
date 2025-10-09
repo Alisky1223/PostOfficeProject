@@ -26,8 +26,19 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
             var postOffices = await _repository.GetAllPostsAsync();
-            var postOfficesDto = postOffices.Select(x => x.ToDto());
+            var postOfficesDto = postOffices.Select(x => x.ToBasicInformationDto());
             return Ok(postOfficesDto);
+        }
+
+        [HttpGet(getByIdRequest)]
+        public async Task<IActionResult> GetById([FromRoute] int id) 
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var postOffice = await _repository.GetPostByIdAsync(id);
+            if(postOffice == null) return NotFound();
+
+            return Ok(postOffice.ToDto());
         }
 
         [HttpPost(createRequest)]
@@ -38,6 +49,17 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             var createdPostOffice = await _repository.CreatePostAsync(postOffice);
             var createdPostOfficeDto = createdPostOffice.ToDto();
             return Ok(createdPostOfficeDto);
+        }
+
+        [HttpPut(updateRequest)]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] PostOfficeUpdateAndCreateDto updateDto) 
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var postOffice = await _repository.UpdatePostAsync(id, updateDto.ToModelFromPostOfficeUpdateAndCreateDto());
+            if (postOffice == null) return NotFound();
+
+            return Ok(postOffice.ToDto());
         }
     }
 }
