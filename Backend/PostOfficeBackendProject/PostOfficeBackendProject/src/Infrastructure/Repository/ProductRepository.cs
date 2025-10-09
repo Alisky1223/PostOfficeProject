@@ -22,7 +22,9 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
         public async Task<List<Product>> GetAllAsync()
         {
-            return await _dbContext.Product.ToListAsync();
+            return await _dbContext.Product
+                .Include(c => c.ProductType)
+                .ToListAsync();
         }
 
         public async Task<Product?> UpdateAsync(int id, Product product)

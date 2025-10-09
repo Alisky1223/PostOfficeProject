@@ -89,6 +89,43 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostOfficeController",
+    "Method": "GetById",
+    "RelativePath": "api/postOffice/getByIdPostOffice/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.PostOfficeController",
+    "Method": "Update",
+    "RelativePath": "api/postOffice/updatePostOffice/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "PostOfficeBackendProject.src.Application.Dto.PostOfficeUpdateAndCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PostOfficeBackendProject.src.Presentation.Controller.ProductController",
     "Method": "Create",
     "RelativePath": "api/product/create",
