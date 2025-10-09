@@ -1,0 +1,10 @@
+﻿namespace PostOfficeFrontendProject__all_interactive.Interface
+{
+    public interface IDataPassHelper
+    {
+        //postOffice
+        public int GetPostOfficeId();
+
+        public void SetPostOfficeId(int postOfficeId);
+    }
+}
