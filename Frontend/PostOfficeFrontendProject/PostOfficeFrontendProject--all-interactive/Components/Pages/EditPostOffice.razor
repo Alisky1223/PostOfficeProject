@@ -10,11 +10,9 @@
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
-@inject IDialogService DialogService
 @inject IDataPassHelper dataHelper
+@inject IDialogService DialogService
 @inject IPostOfficeMiddelware postOfficeMiddelware
-
-
 
 <MudRTLProvider RightToLeft="@_rightToLeft">
 
@@ -22,28 +20,31 @@
         <MudText Typo="Typo.h5">ویرایش تصحیح کننده</MudText>
     </MudItem>
 
-    <MudPaper Class="d-flex flex-wrap align-start justify-center gap-4" Style="margin-bottom:20px;padding:20px" Elevation="25">
+    <MudForm @ref="form">
 
-        <MudItem Style="width:20%">
-            <MudTextField @bind-Value="EditedPostOffice.OfficeAccessCode" Label="کد مرکز" Variant="Variant.Outlined" Required></MudTextField>
-        </MudItem>
+        <MudPaper Class="d-flex flex-wrap align-start justify-center gap-4" Style="margin-bottom:20px;padding:20px" Elevation="25">
 
-        <MudItem Style="width:20%">
-            <MudTextField @bind-Value="EditedPostOffice.OfficeName" Label="نام مرکز" Variant="Variant.Outlined" Required></MudTextField>
-        </MudItem>
+            <MudItem Style="width:20%">
+                <MudTextField @bind-Value="EditedPostOffice.OfficeAccessCode" Label="کد مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+            </MudItem>
 
-        <MudItem Style="width:20%">
-            <MudTextField @bind-Value="EditedPostOffice.Address" Label="آدرس مرکز" Variant="Variant.Outlined" Required></MudTextField>
-        </MudItem>
+            <MudItem Style="width:20%">
+                <MudTextField @bind-Value="EditedPostOffice.OfficeName" Label="نام مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+            </MudItem>
 
-        <MudItem Style="width:20%">
-            <MudTextField @bind-Value="EditedPostOffice.StorageCapacity" Label="ظرفیت مرکز" Variant="Variant.Outlined" Required></MudTextField>
-        </MudItem>
+            <MudItem Style="width:20%">
+                <MudTextField @bind-Value="EditedPostOffice.Address" Label="آدرس مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+            </MudItem>
 
-    </MudPaper>
+            <MudItem Style="width:20%">
+                <MudTextField @bind-Value="EditedPostOffice.StorageCapacity" Label="ظرفیت مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+            </MudItem>
 
+        </MudPaper>
 
-@*     <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
+    </MudForm>
+
+    <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
 
         <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditCorreector">ذخیره تغییرات</MudButton>
 
@@ -51,15 +52,15 @@
 
         <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
 
-    </MudPaper> *@
+    </MudPaper>
 
 </MudRTLProvider>
 
 <style>
 
     .main-button {
-    position: fixed;
-    left: 15px;
+        position: fixed;
+        left: 15px;
     }
 
 </style>
@@ -67,6 +68,8 @@
 @code {
 
     #region Props
+
+    private MudForm form;
 
     private bool _rightToLeft = true;
 
@@ -79,7 +82,7 @@
 
     #endregion
 
-    // #region Submit
+    #region LoadOffice
 
     private async Task GetData()
     {
@@ -89,49 +92,57 @@
 
     }
 
-    // private async Task EditCorreector()
+    #endregion
 
-    // {
+    #region SubmitOrCancele
 
-    //     var update = new CorrectorUpdateAndCreateDto
-    //         {
-    //             CorrectorSerialNumber = editCorretor.CorrectorSerialNumber,
+    private async Task EditCorreector()
+    {
+        await form.Validate();
 
-    //             CorrectorManufactureDate = editCorretor.CorrectorManufactureDate,
+        if (form.IsValid)
+        {
+            var update = new PostOfficeUpdateAndCreateDto
+                {
+                    OfficeAccessCode = EditedPostOffice.OfficeAccessCode,
+                    OfficeName = EditedPostOffice.OfficeName,
+                    Address = EditedPostOffice.Address,
+                    StorageCapacity = EditedPostOffice.StorageCapacity,
+                };
 
-    //             CorrectorPressureRange = editCorretor.CorrectorPressureRange,
 
-    //             CorrectorTemperatureRange = editCorretor.CorrectorTemperatureRange,
+            await postOfficeMiddelware.UpdatePostOfficeAsync(dataHelper.GetPostOfficeId(), update);
 
-    //         };
+            Snackbar.Add("تغییرات با موفقیت ذخیره شد.", Severity.Success);
 
+            NavigationManager.NavigateTo("/PostOffice");
+        }
 
-    //     await correctorService.UpdateCorrectorAsync(correctorPassIdService.GetCorrectorId(), update);
+        else
+        {
+            Snackbar.Add("لطفاً تمام فیلدهای ضروری را تکمیل کنید.", Severity.Error);
+        }
+    }
 
-    //     Snackbar.Add("تغییرات با موفقیت ذخیره شد.", Severity.Success);
+    private void CanceleOpration()
+    {
 
-    //     NavigationManager.NavigateTo("/Corrector");
+        NavigationManager.NavigateTo("/PostOffice");
 
-    // }
+    }
 
-    // private void CanceleOpration()
-    // {
-
-    //     NavigationManager.NavigateTo("/Corrector");
-
-    // }
-
-    // #endregion
+    #endregion
 
     #region GoToMainPage
 
     private void GoToMainPage()
     {
 
-        NavigationManager.NavigateTo("/MainPage");
+        NavigationManager.NavigateTo("/");
 
     }
 
     #endregion
+
 }
 
