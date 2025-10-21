@@ -90,7 +90,3 @@ ehthumbs.db
 coverage.*
 *.trx
 *.xml
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/CodeChunks.db
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/SemanticSymbols.db
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/SemanticSymbols.db-shm
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/SemanticSymbols.db-wal
