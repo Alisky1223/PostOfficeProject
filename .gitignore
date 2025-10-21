@@ -167,4 +167,8 @@ Thumbs.db
 /Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/Debug/net8.0/PostOfficeBackendProject.pdb
 /Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/Debug/net8.0/PostOfficeBackendProject.sourcelink.json
 /Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/Debug/net8.0/staticwebassets.build.json
-/Backend/PostOfficeBackendProject/PostOfficeBackendProject/appsettings.json
+
+/Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/PostOfficeBackendProject.csproj.nuget.dgspec.json
+/Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/PostOfficeBackendProject.csproj.nuget.g.props
+/Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/project.assets.json
+/Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/project.nuget.cache
