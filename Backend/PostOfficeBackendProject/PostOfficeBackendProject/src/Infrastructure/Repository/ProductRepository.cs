@@ -1,5 +1,4 @@
-﻿
-using PostOfficeBackendProject.src.Domain.Interface;
+﻿using PostOfficeBackendProject.src.Domain.Interface;
 using PostOfficeBackendProject.src.Domain.Model;
 using PostOfficeBackendProject.src.Infrastructure.Data;
 
