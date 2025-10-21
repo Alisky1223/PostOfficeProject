@@ -18,6 +18,14 @@ namespace PostOfficeFrontendProject__all_interactive.Extention
             services.AddHttpClient<IPostOfficeMiddelware,PostOfficeMiddelware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
+            }); 
+            services.AddHttpClient<IProductsMiddelware, ProductsMiddelware>(client =>
+            {
+                client.BaseAddress = new Uri(baseAddress);
+            });         
+            services.AddHttpClient<IProductDropdownMiddelware, ProductDropdownMiddelware>(client =>
+            {
+                client.BaseAddress = new Uri(baseAddress);
             });
 
             services.AddMudServices();

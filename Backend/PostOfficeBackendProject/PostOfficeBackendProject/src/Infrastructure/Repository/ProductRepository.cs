@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PostOfficeBackendProject.src.Domain.Interface;
+﻿using PostOfficeBackendProject.src.Domain.Interface;
 using PostOfficeBackendProject.src.Domain.Model;
 using PostOfficeBackendProject.src.Infrastructure.Data;
 
@@ -25,6 +24,14 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             return await _dbContext.Product
                 .Include(c => c.ProductType)
                 .ToListAsync();
+        }
+
+        public async Task<Product?> GetById(int id)
+        {
+            var targetProduct = await _dbContext.Product.FirstOrDefaultAsync(x => x.Id == id);
+            if (targetProduct == null) return null;
+
+            return targetProduct;
         }
 
         public async Task<Product?> UpdateAsync(int id, Product product)

@@ -7,5 +7,6 @@ namespace PostOfficeBackendProject.src.Domain.Interface
         Task<List<Product>> GetAllAsync();
         Task<Product> CreateAsync(Product product);
         Task<Product?> UpdateAsync(int id, Product product);
+        Task<Product?> GetById(int id);
     }
 }

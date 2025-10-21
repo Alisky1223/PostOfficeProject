@@ -1,59 +1,311 @@
 ﻿@page "/"
+@using MudBlazor
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 
-<PageTitle>Home</PageTitle>
+<MudMainContent>
+  
+    <MudContainer MaxWidth="MaxWidth.Large" Class="my-8">
+     
+        <MudPaper Class="hero-banner pa-8 mb-8" Elevation="5">
+          
+            <MudGrid>
+             
+                <MudItem xs="12" sm="6">
+                
+                    <MudText Typo="Typo.h3" Class="mb-4">ارسال سریع و امن</MudText>
+               
+                    <MudText Typo="Typo.body1" Class="mb-6">با شرکت پست مدرن، بسته‌هایتان را با سرعت نور ارسال کنید. ردیابی لحظه‌ای و تحویل تضمینی!</MudText>
+                  
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.LocalShipping" Size="Size.Large" OnClick="GoToPostOffices">
+                      
+                        مراکزپست
+               
+                    </MudButton>
+              
+                </MudItem>
+             
+                <MudItem xs="12" sm="6">
+             
+                    <MudImage Src="https://picsum.photos/seed/delivery/500/300" Class="hero-image" />
+             
+                </MudItem>
+          
+            </MudGrid>
+       
+        </MudPaper>
+      
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-6 services-title">خدمات ما</MudText>
+     
+        <MudGrid Spacing="4" Justify="Justify.Center">
+          
+            <MudItem xs="12" sm="6" md="4">
+               
+                <MudCard Class="service-card service-domestic pa-4" Elevation="3">
+                 
+                    <MudCardMedia Image="https://picsum.photos/seed/truck/300/200" Height="200" Class="service-media" />
+                 
+                    <MudCardContent>
+                     
+                        <MudText Typo="Typo.h6" Class="mb-2">ارسال داخلی</MudText>
+                     
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">تحویل سریع در سراسر کشور</MudText>
+                  
+                    </MudCardContent>
+                 
+                    <MudCardActions>
+                       
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">جزئیات</MudButton>
+                    
+                    </MudCardActions>
+             
+                </MudCard>
+          
+            </MudItem>
+           
+            <MudItem xs="12" sm="6" md="4">
+              
+                <MudCard Class="service-card service-international pa-4" Elevation="3">
+                 
+                    <MudCardMedia Image="https://picsum.photos/seed/world/300/200" Height="200" Class="service-media" />
+                 
+                    <MudCardContent>
+                     
+                        <MudText Typo="Typo.h6" Class="mb-2">ارسال بین‌المللی</MudText>
+                     
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">به تمام نقاط جهان</MudText>
+                  
+                    </MudCardContent>
+                   
+                    <MudCardActions>
+                  
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">جزئیات</MudButton>
+                   
+                    </MudCardActions>
+              
+                </MudCard>
+            </MudItem>
+           
+            <MudItem xs="12" sm="6" md="4">
+               
+                <MudCard Class="service-card service-tracking pa-4" Elevation="3">
+                  
+                    <MudCardMedia Image="https://picsum.photos/seed/map/300/200" Height="200" Class="service-media" />
+                  
+                    <MudCardContent>
+                      
+                        <MudText Typo="Typo.h6" Class="mb-2">ردیابی آنلاین</MudText>
+                      
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">پیگیری لحظه‌ای بسته</MudText>
+                   
+                    </MudCardContent>
+                   
+                    <MudCardActions>
+                      
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">جزئیات</MudButton>
+                    
+                    </MudCardActions>
+               
+                </MudCard>
+            
+            </MudItem>
+      
+        </MudGrid>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor and the .NET 9 Template!</MudText>
+        <MudPaper Class="quick-track pa-6 mt-8" Elevation="2">
 
-<MudAlert Severity="Severity.Normal" ContentAlignment="HorizontalAlignment.Start">
-    You can find documentation and examples on our website here:
-    <MudLink Href="https://mudblazor.com" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        <b>www.mudblazor.com</b>
-    </MudLink>
-</MudAlert>
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">ردیابی سریع</MudText>
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">Interactivity in this Template</MudText>
-<br />
-<MudText Typo="Typo.body2">
-    When you opt for the "Global" Interactivity Location, <br />
-    the render modes are defined in App.razor and consequently apply to all child components.<br />
-    In this case, providers are globally set in the MainLayout.<br />
-    <br />
-    On the other hand, if you choose the "Per page/component" Interactivity Location,<br />
-    it is necessary to include the <br />
-    <br />
-    &lt;MudPopoverProvider /&gt; <br />
-    &lt;MudDialogProvider /&gt; <br />
-    &lt;MudSnackbarProvider /&gt; <br />
-    <br />
-    components on every interactive page.<br />
-    <br />
-    If a render mode is not specified for a page, it defaults to Server-Side Rendering (SSR),<br />
-    similar to this page. While MudBlazor allows pages to be rendered in SSR,<br />
-    please note that interactive features, such as buttons and dropdown menus, will not be functional.
-</MudText>
+            <MudGrid>
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">What's New in Blazor with the Release of .NET 9</MudText>
-<br />
+                <MudItem xs="12" md="8">
 
-<MudText Typo="Typo.h6" GutterBottom="true">Prerendering</MudText>
-<MudText Typo="Typo.body2" GutterBottom="true">
-    If you're exploring the features of .NET 9 Blazor,<br /> you might be pleasantly surprised to learn that each page is prerendered on the server,<br /> regardless of the selected render mode.<br /><br />
-    This means that you'll need to inject all necessary services on the server,<br /> even when opting for the wasm (WebAssembly) render mode.<br /><br />
-    This prerendering functionality is crucial to ensuring that WebAssembly mode feels fast and responsive,<br /> especially when it comes to initial page load times.<br /><br />
-    For more information on how to detect prerendering and leverage the RenderContext, you can refer to the following link:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issuecomment-1783568121" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+                    <MudTextField @bind-Value="trackCode" Label="کد رهگیری" Variant="Variant.Outlined" Adornment="@Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentAriaLabel="جستجو" />
 
-<br />
-<MudText Typo="Typo.h6" GutterBottom="true">InteractiveAuto</MudText>
-<MudText Typo="Typo.body2">
-    A discussion on how to achieve this can be found here:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issue-1950424116" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+                </MudItem>
+
+                <MudItem xs="12" md="4">
+
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth Size="Size.Large">
+
+                        جستجو
+
+                    </MudButton>
+
+                </MudItem>
+
+            </MudGrid>
+
+        </MudPaper>
+
+        <MudGrid Class="mt-8 stats-grid" Spacing="4">
+
+            <MudItem xs="12" sm="4">
+
+                <MudPaper Class="stat-card stat-packages pa-4 text-center" Elevation="1">
+
+                    <MudText Typo="Typo.h3">1M+</MudText>
+
+                    <MudText Typo="Typo.body1">بسته ارسال شده</MudText>
+
+                </MudPaper>
+
+            </MudItem>
+
+            <MudItem xs="12" sm="4">
+
+                <MudPaper Class="stat-card stat-satisfaction pa-4 text-center" Elevation="1">
+
+                    <MudText Typo="Typo.h3">99%</MudText>
+
+                    <MudText Typo="Typo.body1">رضایت مشتریان</MudText>
+
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="4">
+
+                <MudPaper Class="stat-card stat-support pa-4 text-center" Elevation="1">
+
+                    <MudText Typo="Typo.h3">24/7</MudText>
+
+                    <MudText Typo="Typo.body1">پشتیبانی</MudText>
+
+                </MudPaper>
+
+            </MudItem>
+        </MudGrid>
+
+    </MudContainer>
+
+</MudMainContent>
+
+<style>
+
+    /* پس‌زمینه کل صفحه - آبی-سبز برای اعتماد و سرعت */
+    html, body {
+        background: linear-gradient(135deg, #007BFF 0%, #28A745 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 16px;
+    }
+
+    .hero-image {
+        border-radius: 12px;
+    }
+
+    /* Services Grid */
+    .services-title {
+        color: #2c3e50;
+        font-weight: bold;
+    }
+
+    .service-card {
+        transition: transform 0.3s ease-in-out;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+
+    .service-domestic {
+        background: linear-gradient(135deg, #4ECDC4, #44A08D);
+        color: white;
+    }
+
+        .service-domestic .mud-card-content {
+            color: white;
+        }
+
+        .service-domestic .mud-button-text {
+            color: white !important;
+        }
+
+    .service-international {
+        background: linear-gradient(135deg, #45B7D1, #96CEB4);
+        color: white;
+    }
+
+        .service-international .mud-card-content {
+            color: white;
+        }
+
+        .service-international .mud-button-text {
+            color: white !important;
+        }
+
+    .service-tracking {
+        background: linear-gradient(135deg, #96CEB4, #FECA57);
+        color: white;
+    }
+
+        .service-tracking .mud-card-content {
+            color: white;
+        }
+
+        .service-tracking .mud-button-text {
+            color: white !important;
+        }
+
+    .service-media {
+        border-radius: 8px;
+    }
+
+    /* Quick Track Section */
+    .quick-track {
+        border-radius: 12px;
+        background-color: #f8f9fa;
+        backdrop-filter: blur(10px);
+    }
+
+    /* Stats Cards */
+    .stats-grid .stat-card {
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        color: white;
+    }
+
+    .stat-packages {
+        background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+    }
+
+    .stat-satisfaction {
+        background: linear-gradient(45deg, #A8E6CF, #88D8A3);
+    }
+
+    .stat-support {
+        background: linear-gradient(45deg, #FF8E53, #FE6D73);
+    }
+
+    /* Responsive برای موبایل */
+    @@media (max-width: 600px) {
+        .service-card:hover {
+            transform: none;
+        }
+
+        .hero-banner {
+            padding: 1rem !important;
+        }
+    }
+
+</style>
+
+@code {
+
+    private string trackCode = "";
+
+    private void GoToPostOffices()
+    {
+        NavigationManager.NavigateTo("/PostOffice");
+    }
+
+}
