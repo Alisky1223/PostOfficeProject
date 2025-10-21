@@ -6,5 +6,11 @@
         public int GetPostOfficeId();
 
         public void SetPostOfficeId(int postOfficeId);
+
+        //product
+
+        public int GetProudctId();
+
+        public void SetProudctId(int proudctId);
     }
 }
