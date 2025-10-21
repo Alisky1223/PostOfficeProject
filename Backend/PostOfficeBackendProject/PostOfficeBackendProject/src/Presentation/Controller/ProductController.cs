@@ -12,6 +12,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         private const string getallRequest = "getall";
         private const string createRequest = "create";
         private const string updateRequest = "update/{id:int}";
+        private const string getbyIdRequest = "getbyId/{id:int}";
 
         private readonly IProductRepository _repository;
         public ProductController(IProductRepository repository)
@@ -27,6 +28,15 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             var productsDto = products.Select(x => x.ToDto()).ToList();
 
             return Ok(productsDto);
+        }
+
+        [HttpGet(getbyIdRequest)]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var product = await _repository.GetById(id);
+            if (product == null) return NotFound(id);
+            return Ok(product.ToDto());
         }
 
         [HttpPost(createRequest)]
