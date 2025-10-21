@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "cIlZCw8MRKuwfJ42dsISX9VNnkLLj2gQMaWjGZFXJQA=",
+  "Hash": "rkRjj+uON+9Ft4PAMQLVrNwFfNtVNuIXZ15OdcVhdSY=",
   "Source": "PostOfficeBackendProject",
   "BasePath": "_content/PostOfficeBackendProject",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

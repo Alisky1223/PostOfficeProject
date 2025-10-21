@@ -12,4 +12,11 @@
   <ItemGroup>
     <PackageReference Include="MudBlazor" Version="8.*" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="CommonDll">
+      <HintPath>..\..\..\Common\CommonDll\bin\Debug\net8.0\CommonDll.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
