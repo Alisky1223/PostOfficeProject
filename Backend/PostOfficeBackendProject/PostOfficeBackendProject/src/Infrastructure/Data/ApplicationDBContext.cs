@@ -19,11 +19,6 @@ namespace PostOfficeBackendProject.src.Infrastructure.Data
             return new ApplicationDBContext(options);
         }
 
-        internal async Task SaveChangesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         public DbSet<PostOffice> PostOffice { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductType> ProductType { get; set; }
