@@ -1,4 +1,5 @@
-﻿using PostOfficeBackendProject.src.Domain.Interface;
+﻿using Microsoft.EntityFrameworkCore;
+using PostOfficeBackendProject.src.Domain.Interface;
 using PostOfficeBackendProject.src.Domain.Model;
 using PostOfficeBackendProject.src.Infrastructure.Data;
 
@@ -14,9 +15,18 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
         public async Task<Product> CreateAsync(Product product)
         {
-            var newProduct = await _dbContext.Product.AddAsync(product);
-            await _dbContext.SaveChangesAsync();
-            return newProduct.Entity;
+            try
+            {
+                var newProduct = await _dbContext.Product.AddAsync(product);
+                await _dbContext.SaveChangesAsync();
+                return newProduct.Entity;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
         public async Task<List<Product>> GetAllAsync()
