@@ -7,5 +7,6 @@
         public string Description { get; set; } = string.Empty;
         public int? ProductTypeId { get; set; }
         public int? PostOfficeId { get; set; }
+        public int? TransportStatusId { get; set; }
     }
 }

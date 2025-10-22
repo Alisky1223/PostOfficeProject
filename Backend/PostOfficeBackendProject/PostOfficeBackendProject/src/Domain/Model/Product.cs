@@ -12,5 +12,8 @@
         
         public int? ProductTypeId { get; set; }
         public ProductType? ProductType { get; set; }
+
+        public int? TransportStatusId { get; set; }
+        public TransportStatus? TransportStatus { get; set; }
     }
 }
