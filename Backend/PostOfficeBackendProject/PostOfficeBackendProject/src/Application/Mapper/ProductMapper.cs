@@ -7,7 +7,7 @@ namespace PostOfficeBackendProject.src.Application.Mapper
     {
         public static ProductDto ToDto(this Product product) 
         {
-            return new ProductDto 
+            return new ProductDto
             {
                 Description = product.Description,
                 Id = product.Id,
@@ -15,6 +15,7 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 ProductName = product.ProductName,
                 //ProductType = product.ProductType == null ? null : product.ProductType.ToDto(),
                 ProductType = product.ProductType?.ToDto() ?? null,
+                TransportStatus = product.TransportStatus?.ToDto() ?? null
             };
         }
 
@@ -28,6 +29,7 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 ProductName = createDto.ProductName,
                 PostOfficeId = createDto.PostOfficeId,
                 ProductTypeId = createDto.ProductTypeId,
+                TransportStatusId = createDto.TransportStatusId,
             };
         }
     }

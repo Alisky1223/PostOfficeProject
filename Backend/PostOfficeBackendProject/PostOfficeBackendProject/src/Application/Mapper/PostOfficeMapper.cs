@@ -16,6 +16,8 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 Address = postOffice.Address,
                 StorageCapacity = postOffice.StorageCapacity,
                 Products = postOffice.Products.Select(x => x.ToDto()).ToList(),
+                PostMans = postOffice.Postman.Select(x => x.ToDto()).ToList(),
+                Transport = postOffice.Transport.Select(x => x.ToBasicInformationDto()).ToList(),
             };
         }
 
