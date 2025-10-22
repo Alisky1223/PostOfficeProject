@@ -7,5 +7,6 @@
         public decimal Price { get; set; }
         public string Description { get; set; } = string.Empty;
         public ProductTypeDto? ProductType { get; set; }
+        public TransportStatusDto? TransportStatus { get; set; }
     }
 }

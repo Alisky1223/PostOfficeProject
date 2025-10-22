@@ -23,5 +23,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductType> ProductType { get; set; }
         public DbSet<Postman> Postman { get; set; }
+        public DbSet<Transport> Transport { get; set; }
+        public DbSet<TransportStatus> TransportStatus { get; set; }
     }
 }

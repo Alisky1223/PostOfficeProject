@@ -4,152 +4,89 @@ obj/
 *.user
 *.suo
 *.sln.docstates
+
+# Build directories
 [Dd]ebug/
-[Dd]ebugPublic/
 [Rr]elease/
-[Rr]eleases/
 x64/
 x86/
-[Aa]rchive/
 bld/
-[Bb]in/
 out/
 [Ll]ogs/
-
-# .NET Sdk 2.0's implicit globalusages file points to a dependency in your user profile, which you do not want to check in
-global.json
-global.json.lock
-
-# NuGet Package Files
-*.nupkg
-# NuGet Symbol Packages
-*.snupkg
-# The packages folder can be ignored because of Package Restore
-**/[Pp]ackages/*
-# except build/, which is used as an MSBuild target.
-!**/[Pp]ackages/build/
-# Uncomment if necessary however generally it will be regenerated when needed
-#!**/[Pp]ackages/repositories.lock.json
-# NuGet v3's project.json (read-only) is not checked in
-project.lock.json
-project.fragment.lock.json
 artifacts/
 
+# NuGet Packages
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
 # NuGet v3 temporary files
 *.nuget.props
 *.nuget.targets
+project.lock.json
+project.fragment.lock.json
 
-# Visual Studio / Rider
+# Global configuration
+global.json
+global.json.lock
+
+# Visual Studio
 .vs/
+*.vsidx
+*.vssettings
+*.vsconfig
+
+# Visual Studio Code
 .vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-ExportedTypeNames.dummy
-$tf/
-*.cache
-*.VSIX
-*.swp
-*.tss
-*.scc
-*.user
-*.userosscache
-*.sln.docstates
-# Visual Studio 2015 cache/options directory
-.vs/
-# Uncomment if you have linter that creates lock files
-# .eslintcache
-
-# Visual Studio Code files for those using it
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# Visual Studio 2015/2017/2019 cache and user files
-.vscode/
-.vs/
-*.user
-*.suo
-*.sln.docstates
-*.cache
-*.VSIX
-*.swp
-*.tss
-*.scc
-*.userosscache
-*.sln.docstates
 
 # JetBrains Rider
 .idea/
+*.iml
 *.dotSettings.user
 *.dotSettings.user.local
 
-# LightBulb settings file
+# LightBulb settings
 .lightbulb/
 
-# Optional: Ignore client-side Blazor build artifacts (if using WebAssembly)
-# wwwroot/_framework/ (regenerated on build)
-# But keep if you want to commit static assets
-
 # Blazor-specific (WebAssembly or Server)
-**/wwwroot/**/_framework/**/*
+**/wwwroot/**/_framework/*
 !**/wwwroot/**/_framework/blazor.*.js
 !**/wwwroot/**/_framework/blazor.*.wasm
 !**/wwwroot/**/_framework/Razor.*.dll
 
-# User-specific files
+# User-specific and temporary files
 *.rsuser
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# Build Results
-**/Resharper*/**/*.DotSettings.user
-*[Pp]ackages/*
-*[Bb]in/
-*[Oo]bj/
-[Ll]og/
-[Ll]ogs/
-
-# User-specific files
-*.[Cc]ache
+*.cache
 *.log
 *.lock
-local.lock
+*.lockfile
 *.rdl.data
 *.rpt2.cache
 *.pdb
 *.mdb
 *.opendb
 *.sql
-
-# Runtime data
 pids
 *.pid
 *.seed
-*.lock
-*.lockfile
 logs/
 results/
 **/App_Data/
 
-# OS generated files
+# OS-generated files
 .DS_Store
-.DS_Store?
+Thumbs.db
+ehthumbs.db
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
-Thumbs.db
-/Backend/PostOfficeBackendProject/.vs/*
-/Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/Debug/*
 
-/Backend/PostOfficeBackendProject/PostOfficeBackendProject/obj/Debug/net8.0/PostOfficeBackendProject.csproj.AssemblyReference.cache
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/CodeChunks.db
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/SemanticSymbols.db
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/SemanticSymbols.db-shm
-/Backend/PostOfficeBackendProject/.vs/PostOfficeBackendProject/CopilotIndices/0.2.1653.9816/SemanticSymbols.db-wal
+# Test results
+[Tt]est[Rr]esult*/
+coverage.*
+*.trx
+*.xml

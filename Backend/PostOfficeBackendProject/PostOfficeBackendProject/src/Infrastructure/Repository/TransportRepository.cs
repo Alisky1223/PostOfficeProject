@@ -1,0 +1,62 @@
+﻿using Microsoft.EntityFrameworkCore;
+using PostOfficeBackendProject.src.Domain.Interface;
+using PostOfficeBackendProject.src.Domain.Model;
+using PostOfficeBackendProject.src.Infrastructure.Data;
+
+namespace PostOfficeBackendProject.src.Infrastructure.Repository
+{
+    public class TransportRepository : ITransportRepository
+    {
+        private readonly ApplicationDBContext _context;
+        public TransportRepository(ApplicationDBContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Transport> CreateAsync(Transport transport)
+        {
+            var newTransport = await _context.Transport.AddAsync(transport);
+            await _context.SaveChangesAsync();
+            return newTransport.Entity;
+        }
+
+        public async Task<List<Transport>> GetAllAsync()
+        {
+            return await _context.Transport.ToListAsync();
+        }
+
+        public async Task<Transport?> GetByIdAsync(int id)
+        {
+            var transport = await _context.Transport
+                .Include(c => c.Postman)
+                .Include(c => c.PostOffice)
+                .Include(c => c.Product)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (transport == null) return null;
+
+            return transport;
+        }
+
+        public async Task<Transport?> UpdateAsync(int id, Transport transport)
+        {
+            var targetTransport = await _context.Transport
+                .Include(c => c.Postman)
+                .Include(c => c.PostOffice)
+                .Include(c => c.Product)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (targetTransport == null) return null;
+
+            targetTransport.Id = id;    
+            targetTransport.ProductId = transport.ProductId;
+            targetTransport.PostOfficeId = transport.PostOfficeId;
+            targetTransport.PostmanId = transport.PostmanId;
+            targetTransport.DeliverdDate = transport.DeliverdDate;
+            targetTransport.DeliverdTo = transport.DeliverdTo;
+
+            await _context.SaveChangesAsync();
+            return targetTransport;
+        }
+    }
+}

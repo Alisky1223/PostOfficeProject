@@ -11,5 +11,6 @@
         //Navigation
         public List<Product> Products { get; set; } = [];
         public List<Postman> Postman { get; set; } = [];
+        public List<Transport> Transport { get; set; } = [];
     }
 }
