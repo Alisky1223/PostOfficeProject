@@ -11,5 +11,6 @@ namespace PostOfficeBackendProject.src.Application.Dto
         public int StorageCapacity { get; set; }
         public List<ProductDto> Products { get; set; } = [];
         public List<PostManDto> PostMans { get; set; } = [];
+        public List<TransportBasicInformationDto> Transport { get; set; } = [];
     }
 }

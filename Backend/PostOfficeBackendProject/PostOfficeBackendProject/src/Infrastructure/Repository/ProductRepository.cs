@@ -33,6 +33,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
         {
             return await _dbContext.Product
                 .Include(c => c.ProductType)
+                .Include(c => c.TransportStatus)
                 .ToListAsync();
         }
 
@@ -55,6 +56,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             targetProduct.ProductName = product.ProductName;
             targetProduct.PostOfficeId = product.PostOfficeId;
             targetProduct.ProductTypeId = product.ProductTypeId;
+            targetProduct.TransportStatusId = product.TransportStatusId;
 
             await _dbContext.SaveChangesAsync();
             return targetProduct;
