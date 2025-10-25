@@ -26,7 +26,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var products = await _repository.GetAllAsync();
-            var productsDto = products.Select(x => x.ToDto()).ToList();
+            var productsDto = products.Select(x => x.ToBasicInformationDto()).ToList();
 
             return Ok(productsDto);
         }

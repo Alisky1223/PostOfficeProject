@@ -8,5 +8,6 @@
         public int? ProductTypeId { get; set; }
         public int? PostOfficeId { get; set; }
         public int? TransportStatusId { get; set; }
+        public int? PostmanId { get; set; }
     }
 }

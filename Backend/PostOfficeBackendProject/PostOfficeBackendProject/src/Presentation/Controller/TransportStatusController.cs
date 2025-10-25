@@ -53,7 +53,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             return Ok(createdTransportStatus.ToDto());
         }
 
-        [HttpGet(updateRequest)]
+        [HttpPut(updateRequest)]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TransportStatusUpdateAndCreateDto updateDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

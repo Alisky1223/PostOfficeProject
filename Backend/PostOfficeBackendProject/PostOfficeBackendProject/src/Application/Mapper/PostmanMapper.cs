@@ -12,6 +12,17 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 Id = postman.Id,
                 Name = postman.Name,
                 PersonalCode = postman.PersonalCode,  
+                Products = postman.Products.Select(x => x.ToDto()).ToList(),
+            };
+        }
+
+        public static PostmanBasicInformationDto ToBasicInformationDto(this Postman postman)
+        {
+            return new PostmanBasicInformationDto
+            {
+                Id = postman.Id,
+                Name = postman.Name,
+                PersonalCode = postman.PersonalCode,
             };
         }
 

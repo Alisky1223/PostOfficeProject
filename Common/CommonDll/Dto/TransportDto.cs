@@ -7,8 +7,8 @@ namespace CommonDll.Dto
         public int Id { get; set; }
         public string DeliverdTo { get; set; } = string.Empty;
         public DateTime DeliverdDate { get; set; }
-        public PostOfficeDto? PostOffice { get; set; }
-        public ProductDto? Product { get; set; }
-        public PostManDto? Postman { get; set; }
+        public PostOfficeBasicInformationDto? PostOffice { get; set; }
+        public ProductBasicInformationDto? Product { get; set; }
+        public PostmanBasicInformationDto? Postman { get; set; }
     }
 }

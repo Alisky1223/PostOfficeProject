@@ -15,5 +15,8 @@
 
         public int? TransportStatusId { get; set; }
         public TransportStatus? TransportStatus { get; set; }
+
+        public int? PostmanId { get; set; }
+        public Postman? Postman { get; set; }
     }
 }
