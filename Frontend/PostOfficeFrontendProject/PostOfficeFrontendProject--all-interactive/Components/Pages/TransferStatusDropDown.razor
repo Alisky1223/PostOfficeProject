@@ -1,4 +1,4 @@
-﻿@page "/ProductTypeDropDown"
+﻿@page "/TransferStatusDropDown"
 @using CommonDll.Dto
 @using MudBlazor
 @using System.Net.Http.Json
@@ -16,40 +16,40 @@
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-        <MudText Typo="Typo.h5"> نوع مرسولات</MudText>
+        <MudText Typo="Typo.h5"> نقل و انتقال مرسوله ها  </MudText>
 
     </MudItem>
 
-    <MudDataGrid FixedHeader Height="60vh" T="ProductTypeDto" ColumnResizeMode="ResizeMode.Container" Loading="isLoading" Items="@productTypes" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedType" Filterable="true" SelectOnRowClick Hideable="_hideable" ShowMenuIcon="true" QuickFilter="_quickFilterForProductTypes">
+    <MudDataGrid FixedHeader Height="60vh" T="TransportStatusDto" ColumnResizeMode="ResizeMode.Container" Loading="isLoading" Items="@Status" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedStatus" Filterable="true" SelectOnRowClick Hideable="_hideable" ShowMenuIcon="true" QuickFilter="_quickFilterForStatus">
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h6">نوع مرسوله</MudText>
+            <MudText Typo="Typo.h6">وضعیت نقل و انتقال مرسوله</MudText>
 
             <MudSpacer />
 
-            <MudTextField @bind-Value="searchType" Immediate="true" Placeholder="جستجو" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchStatus" Immediate="true" Placeholder="جستجو" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 
         </ToolBarContent>
 
         <Columns>
-         
-            <SelectColumn T="ProductTypeDto" />
 
-            <PropertyColumn Property="x => x.Type" Title="نوع" HeaderStyle="background:#ADD8E6;color:#333;">
+            <SelectColumn T="TransportStatusDto" />
+
+            <PropertyColumn Property="x => x.Status" Title="وضعیت" HeaderStyle="background:#ADD8E6;color:#333;">
 
                 <CellTemplate>
 
-                    @if (editingProductType == context.Item)
+                    @if (editingStatus == context.Item)
                     {
 
-                        <MudTextField @bind-Value="context.Item.Type" Immediate="true" Placeholder="مقدار جدید" />
+                        <MudTextField @bind-Value="context.Item.Status" Immediate="true" Placeholder="مقدار جدید" />
 
                     }
                     else
                     {
 
-                        @context.Item.Type
+                        @context.Item.Status
 
                     }
 
@@ -63,7 +63,7 @@
 
                     <MudStack Row>
 
-                        @if (editingProductType == context.Item)
+                        @if (editingStatus == context.Item)
                         {
 
                             <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="SaveEdit">
@@ -76,7 +76,7 @@
                         else
                         {
 
-                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditType(context.Item))">
+                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditStatus(context.Item))">
 
                                 ویرایش
 
@@ -98,7 +98,7 @@
 
         <PagerContent>
 
-            <MudDataGridPager T="ProductTypeDto" />
+            <MudDataGridPager T="TransportStatusDto" />
 
         </PagerContent>
 
@@ -106,9 +106,9 @@
 
     <div style="display:inline;">
 
-        <MudTextField Label="مقدار جدید" @bind-Value="_newProductType.Type" Placeholder=" کلاس کنتور" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Add" Class="mt-2" />
+        <MudTextField Label="مقدار جدید" @bind-Value="_newStatus.Status" Placeholder="وضعیت" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Add" Class="mt-2" />
 
-        <MudButton Style="margin-top:10px;" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNewMeter">ثبت کلاس کنتور</MudButton>
+        <MudButton Style="margin-top:10px;" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNewStatus">ثبت</MudButton>
 
     </div>
 
@@ -128,23 +128,23 @@
 
     private bool _hideable = true;
 
-    private string searchType = "";
+    private string searchStatus = "";
 
     private bool isLoading = false;
 
     private bool _rightToLeft = true;
 
-    public MudDataGrid<ProductTypeDto> grid;
+    public MudDataGrid<TransportStatusDto> grid;
 
-    private ProductTypeDto selectedType = null;
+    private TransportStatusDto selectedStatus = null;
 
-    private ProductTypeDto editingProductType = null;
+    private TransportStatusDto editingStatus = null;
 
-    private ProductTypeDto creatingProductType = null;
+    private TransportStatusDto creatingStatus = null;
 
-    private ProductTypeUpdateAndCreateDto _newProductType = new();
+    private TransportStatusUpdateAndCreateDto _newStatus = new();
 
-    private List<ProductTypeDto> productTypes = new List<ProductTypeDto>();
+    private List<TransportStatusDto> Status = new List<TransportStatusDto>();
 
     protected async override Task OnInitializedAsync()
     {
@@ -152,7 +152,7 @@
         try
         {
             isLoading = true;
-            productTypes = await productDropdownMiddelware.GetAllProductTypeAsync();
+            Status = await productDropdownMiddelware.GetAllStatusAsync();
 
         }
         catch (Exception ex)
@@ -172,18 +172,18 @@
 
     #region Filter
 
-    private Func<ProductTypeDto, bool> _quickFilterForProductTypes => x =>
+    private Func<TransportStatusDto, bool> _quickFilterForStatus => x =>
     {
-        if (string.IsNullOrWhiteSpace(searchType))
+        if (string.IsNullOrWhiteSpace(searchStatus))
             return true;
 
         var fields = new List<string?>
-                                                   {
-        x.Type,
-                                                    };
+                                                       {
+        x.Status,
+                                                        };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
-                               f.Contains(searchType, StringComparison.OrdinalIgnoreCase));
+                               f.Contains(searchStatus, StringComparison.OrdinalIgnoreCase));
     };
 
 
@@ -213,12 +213,12 @@
 
     #region deleteItem
 
-    private async Task DeleteItem(ProductTypeDto productType)
+    private async Task DeleteItem(TransportStatusDto status)
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(
             "تأیید حذف",
-            $"آیا مطمئن هستید که می‌خواهید مرسوله '{productType.Type}' را حذف کنید؟",
+            $"آیا مطمئن هستید که می‌خواهید  '{status.Status}' را حذف کنید؟",
             yesText: "بله",
             noText: "خیر"
         );
@@ -226,60 +226,61 @@
         if (confirmed == true)
         {
 
-            productTypes = productTypes.Where(s => s.Id != productType.Id).ToList();
+            Status = Status.Where(s => s.Id != status.Id).ToList();
         }
 
     }
 
     #endregion
 
-    #region EditType
+    #region EditMeterType
 
-    private void EditType(ProductTypeDto productType)
+    private void EditStatus(TransportStatusDto productStatus)
     {
 
-        editingProductType = productType;
+        editingStatus = productStatus;
     }
 
     private async void SaveEdit()
     {
 
-        var update = new ProductTypeUpdateAndCreateDto
+        var update = new TransportStatusUpdateAndCreateDto
             {
 
-                Type = editingProductType.Type,
+                Status = editingStatus.Status,
 
             };
 
-        int editingItemId = editingProductType.Id;
+        int editingItemId = editingStatus.Id;
 
-        editingProductType = null;
+        editingStatus = null;
 
-        await productDropdownMiddelware.UpdateProductTypeAsync(editingItemId, update);
+        await productDropdownMiddelware.UpdateStatusAsync(editingItemId, update);
 
         Snackbar.Add("تغییرات ذخیره شد", Severity.Success);
 
     }
+    
 
     #endregion
 
     #region CreateItem
 
-    private async void AddNewMeter()
+    private async void AddNewStatus()
     {
 
-        if (!string.IsNullOrEmpty(_newProductType.Type))
+        if (!string.IsNullOrEmpty(_newStatus.Status))
         {
 
-            productTypes.Add(new ProductTypeDto
+            Status.Add(new TransportStatusDto
                 {
 
-                    Type = _newProductType.Type
+                    Status = _newStatus.Status
                 });
 
-            await productDropdownMiddelware.CreateProductTypeAsync(_newProductType);
+            await productDropdownMiddelware.CreateStatusAsync(_newStatus);
 
-            Snackbar.Add("نوع مرسوله جدید اضافه شد", Severity.Success);
+            Snackbar.Add("وضعیت جدید اضافه شد", Severity.Success);
 
         }
         else
@@ -309,3 +310,4 @@
     #endregion
 
 }
+

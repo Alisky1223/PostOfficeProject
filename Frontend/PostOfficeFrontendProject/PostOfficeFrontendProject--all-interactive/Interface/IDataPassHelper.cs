@@ -12,5 +12,11 @@
         public int GetProudctId();
 
         public void SetProudctId(int proudctId);
+
+        //postMan
+
+        public int GetPostManId();
+
+        public void SetPostManId(int postManId);
     }
 }

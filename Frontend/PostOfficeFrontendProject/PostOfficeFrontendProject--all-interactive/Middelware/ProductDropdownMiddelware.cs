@@ -10,18 +10,21 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             _httpClient = httpClient;
         }
 
+        //Type
+
         public async Task<List<ProductTypeDto>> GetAllProductTypeAsync()
         {
-            // Make the HTTP GET request with query parameters
+           
             return await _httpClient.GetFromJsonAsync<List<ProductTypeDto>>("api/productType/getAll");
         }
 
         public async Task<ProductTypeDto> CreateProductTypeAsync(ProductTypeUpdateAndCreateDto createDto)
         {
             var response = await _httpClient.PostAsJsonAsync("api/productType/createMeterClass", createDto);
-            response.EnsureSuccessStatusCode(); // Throws if the response indicates an error
+            response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<ProductTypeDto>();
         }
+        
         public async Task<ProductTypeDto?> UpdateProductTypeAsync(int id, ProductTypeUpdateAndCreateDto updateDto)
         {
             var response = await _httpClient.PutAsJsonAsync($"api/productType/updateMeterClass/{id}", updateDto);
@@ -31,16 +34,47 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                return null; // Handle "not found" response
+                return null;
             }
             else
             {
-                response.EnsureSuccessStatusCode(); // Throw for other HTTP errors
-                return null; // Unreachable but keeps compiler happy
+                response.EnsureSuccessStatusCode();
+                return null;
             }
         }
-        // Delete an existing MeterType
 
+        //Status
+
+        public async Task<List<TransportStatusDto>> GetAllStatusAsync()
+        {
+
+            return await _httpClient.GetFromJsonAsync<List<TransportStatusDto>>("api/TransportStatus/getAll");
+        }
+
+        public async Task<TransportStatusDto> CreateStatusAsync(TransportStatusUpdateAndCreateDto create)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/TransportStatus/create", create);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<TransportStatusDto>();
+        }
+
+        public async Task<TransportStatusDto?> UpdateStatusAsync(int id, TransportStatusUpdateAndCreateDto update)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"api/TransportStatus/{id}", update);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<TransportStatusDto>();
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            else
+            {
+                response.EnsureSuccessStatusCode();
+                return null;
+            }
+        }
 
     }
 }

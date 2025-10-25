@@ -15,6 +15,18 @@ namespace PostOfficeFrontendProject__all_interactive.Mapper
             {
                 return "";
             }
+        }     
+        public static string ProductStatusToString(this TransportStatusDto transportStatus)
+        {
+            if (transportStatus != null)
+            {
+                return transportStatus.Status;
+
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }
