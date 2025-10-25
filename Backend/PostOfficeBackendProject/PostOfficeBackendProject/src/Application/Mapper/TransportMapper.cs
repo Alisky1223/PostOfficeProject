@@ -12,9 +12,9 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 Id = transport.Id,
                 DeliverdDate = transport.DeliverdDate,
                 DeliverdTo = transport.DeliverdTo,
-                Postman = transport.Postman?.ToDto() ?? null,
-                PostOffice = transport.PostOffice?.ToDto() ?? null,
-                Product = transport.Product?.ToDto() ?? null
+                Postman = transport.Postman?.ToBasicInformationDto() ?? null,
+                PostOffice = transport.PostOffice?.ToBasicInformationDto() ?? null,
+                Product = transport.Product?.ToBasicInformationDto() ?? null
             };
         }
 

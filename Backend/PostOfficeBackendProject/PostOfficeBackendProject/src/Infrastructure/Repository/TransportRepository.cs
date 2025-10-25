@@ -22,7 +22,11 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
         public async Task<List<Transport>> GetAllAsync()
         {
-            return await _context.Transport.ToListAsync();
+            return await _context.Transport
+                .Include(c => c.Postman)
+                .Include(c => c.PostOffice)
+                .Include(c => c.Product)
+                .ToListAsync();
         }
 
         public async Task<Transport?> GetByIdAsync(int id)

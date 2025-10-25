@@ -22,7 +22,10 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
         public async Task<Postman?> GetPostmanById(int id)
         {
-            var postman = await _context.Postman.FirstOrDefaultAsync(x => x.Id == id);
+            var postman = await _context.Postman
+                .Include(c => c.Products).ThenInclude(c => c.ProductType)
+                .Include(c => c.Products).ThenInclude(c => c.TransportStatus)
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (postman == null) return null;
 
             return postman;

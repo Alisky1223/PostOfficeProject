@@ -30,6 +30,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             return await _context.PostOffice
                 .Include(c => c.Products).ThenInclude(c => c.ProductType)
                 .Include(c => c.Products).ThenInclude(c => c.TransportStatus)
+                .Include(c => c.Products).ThenInclude(c => c.Postman)
                 .Include(c => c.Postman)
                 .Include(c => c.Transport)
                 .FirstOrDefaultAsync(x => x.Id == id);

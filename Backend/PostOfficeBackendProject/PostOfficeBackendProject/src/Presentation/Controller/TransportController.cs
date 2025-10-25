@@ -27,7 +27,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
 
             var transports = await _repository.GetAllAsync();
             var transportsDto = transports.Select(x => x.ToDto());
-            return Ok(transports);
+            return Ok(transportsDto);
         }
 
         [HttpGet(getByIdRequest)]

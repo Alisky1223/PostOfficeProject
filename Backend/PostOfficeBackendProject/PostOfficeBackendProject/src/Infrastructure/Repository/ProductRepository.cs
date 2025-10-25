@@ -31,15 +31,17 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
         public async Task<List<Product>> GetAllAsync()
         {
-            return await _dbContext.Product
-                .Include(c => c.ProductType)
-                .Include(c => c.TransportStatus)
-                .ToListAsync();
+            return await _dbContext.Product.ToListAsync();
         }
 
         public async Task<Product?> GetById(int id)
         {
-            var targetProduct = await _dbContext.Product.FirstOrDefaultAsync(x => x.Id == id);
+            var targetProduct = await _dbContext.Product
+                .Include(c => c.ProductType)
+                .Include(c => c.TransportStatus)
+                .Include(c => c.Postman)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             if (targetProduct == null) return null;
 
             return targetProduct;
@@ -57,6 +59,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             targetProduct.PostOfficeId = product.PostOfficeId;
             targetProduct.ProductTypeId = product.ProductTypeId;
             targetProduct.TransportStatusId = product.TransportStatusId;
+            targetProduct.PostmanId = product.PostmanId;
 
             await _dbContext.SaveChangesAsync();
             return targetProduct;

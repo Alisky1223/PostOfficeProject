@@ -26,7 +26,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
             var postmen = await _repository.GetPostmen();
-            var postmenDto = postmen.Select(x => x.ToDto()).ToList();
+            var postmenDto = postmen.Select(x => x.ToBasicInformationDto()).ToList();
 
             return Ok(postmenDto);
         }

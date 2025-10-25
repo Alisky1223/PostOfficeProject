@@ -9,5 +9,7 @@
         //Navigation
         public int? PostOfficeId { get; set; }
         public PostOffice? PostOffice { get; set; }
+
+        public List<Product> Products { get; set; } = [];
     }
 }
