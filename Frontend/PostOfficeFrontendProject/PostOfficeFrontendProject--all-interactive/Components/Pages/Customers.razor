@@ -1,4 +1,4 @@
-﻿@page "/PostOfficeProducts"
+﻿@page "/Customers"
 @using CommonDll.Dto
 @using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
@@ -23,7 +23,7 @@
 
     </MudItem>
 
-    <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick"  T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
+    <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
 
         <ToolBarContent>
 
@@ -39,9 +39,9 @@
 
             <PropertyColumn Property="x => x.ProductName" Title="نام مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
-            <PropertyColumn Property="x => x.Price" Title="ارزش مرسوله" HeaderStyle="background:#ADD8E6;color:#333;"/>
+            <PropertyColumn Property="x => x.Price" Title="ارزش مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.Description" Title="توضیحات مرسوله" HeaderStyle="background:#ADD8E6;color:#333;"  />
+            <PropertyColumn Property="x => x.Description" Title="توضیحات مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
 
             <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="نوع مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
 
@@ -161,13 +161,13 @@
             return true;
 
         var fields = new List<string?>
-                            {
+                                {
         x.ProductName?.ToString(),
         x.Price.ToString(),
         x.Description.ToString(),
         x.ProductType?.ToString(),
 
-                            };
+                                };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
                                f.Contains(searchString, StringComparison.OrdinalIgnoreCase));

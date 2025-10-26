@@ -1,64 +1,133 @@
 ﻿@page "/ProductInformations"
 @using CommonDll.Dto
 @using MudBlazor
-@using System.Net.Http.Json
-@using System.Globalization
-@using System.Reflection
-@using System.Threading
-@using System.Diagnostics.Metrics
-@using PostOfficeBackendProject.src.Application.Dto
 @using PostOfficeFrontendProject__all_interactive.Interface
-@inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataPassHelper
-@inject IDialogService DialogService
 @inject IProductsMiddelware productsMiddelware
-@inject IProductDropdownMiddelware productDropdownMiddelware
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
+<MudRTLProvider RightToLeft="true">
 
-    <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-6 mb-10">
 
-        <MudText Typo="Typo.h5"> اطلاعات مرسوله</MudText>
+        <MudPaper Elevation="4" Class="rounded-xl pa-6" Style="background: linear-gradient(135deg,#E3F2FD,#F3E5F5);">
 
-    </MudItem>
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="font-weight-bold mb-2">
 
-    <MudPaper style="margin-bottom:20px;padding:20px" Class="d-flex flex-wrap align-start justify-center  gap-4" Elevation="25">
+                📦 اطلاعات مرسوله
 
-        <MudItem Style="width:20%">
+            </MudText>
 
-            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">نام مرسوله</MudInputLabel>
+            <MudDivider Class="mb-4" />
 
-            <MudPaper Width="100%" Class="pa-3">@product?.ProductName</MudPaper>
+            @if (isLoading)
+            {
+                <div class="d-flex justify-center my-6">
 
-        </MudItem>
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
 
-        <MudItem Style="width:20%">
+                </div>
+            }
+            else if (product != null)
+            {
+                <MudGrid Spacing="3">
 
-            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">ارزش مرسوله</MudInputLabel>
+                    <MudItem xs="12" sm="6" md="3">
 
-            <MudPaper Width="100%" Class="pa-3">@product?.Price</MudPaper>
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
 
-        </MudItem>
+                            <MudIcon Icon="@Icons.Material.Filled.Inventory2" Size="Size.Large" Color="Color.Primary" />
 
-        <MudItem Style="width:20%">
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">نام مرسوله</MudText>
 
-            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">نوع مرسوله</MudInputLabel>
+                            <MudText Typo="Typo.body1">@product?.ProductName</MudText>
 
-            <MudPaper Width="100%" Class="pa-3">@product?.ProductType</MudPaper>
+                        </MudPaper>
 
-        </MudItem>
+                    </MudItem>
 
-        <MudItem Style="width:20%">
+                    <MudItem xs="12" sm="6" md="3">
 
-            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">وضعیت مرسوله</MudInputLabel>
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
 
-            <MudPaper Width="100%" Class="pa-3">@product?.TransportStatus?.Status</MudPaper>
+                            <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Size="Size.Large" Color="Color.Success" />
 
-        </MudItem>
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">ارزش مرسوله</MudText>
 
-    </MudPaper>
+                            <MudText Typo="Typo.body1">
+
+                                @((product?.Price ?? 0).ToString("N0", new System.Globalization.CultureInfo("fa-IR"))) تومان
+
+                            </MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Category" Size="Size.Large" Color="Color.Secondary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">نوع مرسوله</MudText>
+
+                            <MudText Typo="Typo.body1">@product?.ProductType?.Type</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.LocalShipping" Size="Size.Large"
+                                     Color="@(product?.TransportStatus?.Status == "تحویل شده" ? Color.Success : Color.Info)" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">وضعیت مرسوله</MudText>
+
+                            <MudChip T="string" Variant="Variant.Outlined"
+                                     Color="@(product?.TransportStatus?.Status == "تحویل شده" ? Color.Success : Color.Info)">
+
+                                @product?.TransportStatus?.Status
+
+                            </MudChip>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                </MudGrid>
+
+                <div class="d-flex justify-center mt-6">
+
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary"
+                               StartIcon="@Icons.Material.Filled.ArrowBack"
+                               OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
+
+                        بازگشت به صفحه اصلی
+
+                    </MudButton>
+
+                </div>
+
+            }
+            else
+            {
+
+                <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Error">
+
+                    اطلاعاتی یافت نشد
+
+                </MudText>
+
+            }
+
+        </MudPaper>
+
+    </MudContainer>
 
 </MudRTLProvider>
 
@@ -68,75 +137,51 @@
 
     private bool isLoading = false;
 
-    private bool _rightToLeft = true;
-
-    private ProductDto selectedItem = new();
-
-    private ProductDto selectedItem1 = new();
-
-    private ProductDto product = new ProductDto();
+    private ProductDto? product;
 
     protected override async Task OnInitializedAsync()
     {
-
         await LoadProduct();
-
     }
-    
+
     #endregion
 
-    #region StationDataGrid
+    #region LoadProduct
 
     private async Task LoadProduct()
     {
-
         try
         {
 
             isLoading = true;
 
-            product = await productsMiddelware.GetByIdAsync(dataPassHelper.GetProudctId());
+            var id = dataPassHelper.GetProudctId();
+
+            product = await productsMiddelware.GetByIdAsync(id);
 
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
 
-            Snackbar.Add($"خطا: {ex.Message}", Severity.Error);
+            Snackbar.Add($"خطا در دریافت اطلاعات: {ex.Message}", Severity.Error);
 
         }
         finally
         {
+
             isLoading = false;
+
         }
-    }
-
-    #endregion
-
-    #region persian date
-
-    private CultureInfo GetPersianCulture()
-    {
-
-        var persianCulture = new CultureInfo("fa-IR");
-
-        persianCulture.DateTimeFormat.Calendar = new PersianCalendar();
-
-        return persianCulture;
 
     }
 
     #endregion
-
+    
     #region GoToMainPage
 
-    private void GoToMainPage()
-    {
-
-        NavigationManager.NavigateTo("/MainPage");
-
-    }
+    private void GoToMainPage() => NavigationManager.NavigateTo("/MainPage");
 
     #endregion
 
 }
+

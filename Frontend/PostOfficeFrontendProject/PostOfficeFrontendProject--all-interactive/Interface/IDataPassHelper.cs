@@ -18,5 +18,11 @@
         public int GetPostManId();
 
         public void SetPostManId(int postManId);
+
+        //customer
+
+        public int GetCustomerId();
+
+        public void SetCustomerId(int customerId);
     }
 }
