@@ -1,0 +1,142 @@
+﻿@page "/ProductInformations"
+@using CommonDll.Dto
+@using MudBlazor
+@using System.Net.Http.Json
+@using System.Globalization
+@using System.Reflection
+@using System.Threading
+@using System.Diagnostics.Metrics
+@using PostOfficeBackendProject.src.Application.Dto
+@using PostOfficeFrontendProject__all_interactive.Interface
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject IDataPassHelper dataPassHelper
+@inject IDialogService DialogService
+@inject IProductsMiddelware productsMiddelware
+@inject IProductDropdownMiddelware productDropdownMiddelware
+
+<MudRTLProvider RightToLeft="@_rightToLeft">
+
+    <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
+
+        <MudText Typo="Typo.h5"> اطلاعات مرسوله</MudText>
+
+    </MudItem>
+
+    <MudPaper style="margin-bottom:20px;padding:20px" Class="d-flex flex-wrap align-start justify-center  gap-4" Elevation="25">
+
+        <MudItem Style="width:20%">
+
+            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">نام مرسوله</MudInputLabel>
+
+            <MudPaper Width="100%" Class="pa-3">@product?.ProductName</MudPaper>
+
+        </MudItem>
+
+        <MudItem Style="width:20%">
+
+            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">ارزش مرسوله</MudInputLabel>
+
+            <MudPaper Width="100%" Class="pa-3">@product?.Price</MudPaper>
+
+        </MudItem>
+
+        <MudItem Style="width:20%">
+
+            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">نوع مرسوله</MudInputLabel>
+
+            <MudPaper Width="100%" Class="pa-3">@product?.ProductType</MudPaper>
+
+        </MudItem>
+
+        <MudItem Style="width:20%">
+
+            <MudInputLabel style="font-weight:bolder;margin-bottom:10px">وضعیت مرسوله</MudInputLabel>
+
+            <MudPaper Width="100%" Class="pa-3">@product?.TransportStatus?.Status</MudPaper>
+
+        </MudItem>
+
+    </MudPaper>
+
+</MudRTLProvider>
+
+@code {
+
+    #region Props
+
+    private bool isLoading = false;
+
+    private bool _rightToLeft = true;
+
+    private ProductDto selectedItem = new();
+
+    private ProductDto selectedItem1 = new();
+
+    private ProductDto product = new ProductDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await LoadProduct();
+
+    }
+    
+    #endregion
+
+    #region StationDataGrid
+
+    private async Task LoadProduct()
+    {
+
+        try
+        {
+
+            isLoading = true;
+
+            product = await productsMiddelware.GetByIdAsync(dataPassHelper.GetProudctId());
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+
+            Snackbar.Add($"خطا: {ex.Message}", Severity.Error);
+
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    #endregion
+
+    #region persian date
+
+    private CultureInfo GetPersianCulture()
+    {
+
+        var persianCulture = new CultureInfo("fa-IR");
+
+        persianCulture.DateTimeFormat.Calendar = new PersianCalendar();
+
+        return persianCulture;
+
+    }
+
+    #endregion
+
+    #region GoToMainPage
+
+    private void GoToMainPage()
+    {
+
+        NavigationManager.NavigateTo("/MainPage");
+
+    }
+
+    #endregion
+
+}

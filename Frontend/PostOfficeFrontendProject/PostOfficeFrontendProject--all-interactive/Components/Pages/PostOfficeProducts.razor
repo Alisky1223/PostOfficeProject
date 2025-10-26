@@ -24,7 +24,7 @@
 
     </MudItem>
 
-    <MudDataGrid Height="60vh" FixedHeader T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedProduct" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick>
+    <MudDataGrid Height="60vh" FixedHeader @onclick="DoubleClick" T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
 
         <ToolBarContent>
 
@@ -118,9 +118,9 @@
 
     private string searchString = "";
 
-    private ProductDto selectedProduct = null;
+    private ProductDto selectedProducts = new();
 
-    private IEnumerable<ProductDto> products = new List<ProductDto>();
+    private List<ProductDto> products = new List<ProductDto>();
 
     protected async override Task OnInitializedAsync()
     {
@@ -240,6 +240,22 @@
     {
 
         NavigationManager.NavigateTo("/AddProduct");
+
+    }
+
+    #endregion
+
+    #region DoubleClick
+
+    private void DoubleClick()
+    {
+        if (selectedProducts == null)
+        {
+            return;
+        }
+        dataPassHelper.SetProudctId(selectedProducts.Id);
+
+        NavigationManager.NavigateTo("/ProductInformations");
 
     }
 
