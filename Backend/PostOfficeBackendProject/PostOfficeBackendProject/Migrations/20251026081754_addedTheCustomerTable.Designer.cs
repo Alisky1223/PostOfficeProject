@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostOfficeBackendProject.src.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using PostOfficeBackendProject.src.Infrastructure.Data;
 namespace PostOfficeBackendProject.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251026081754_addedTheCustomerTable")]
+    partial class addedTheCustomerTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,12 +177,12 @@ namespace PostOfficeBackendProject.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DeliverCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DeliverdDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliverdTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PostOfficeId")
                         .HasColumnType("int");

@@ -9,5 +9,6 @@
         public int? PostOfficeId { get; set; }
         public int? TransportStatusId { get; set; }
         public int? PostmanId { get; set; }
+        public int? CustomerId { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
                 .Include(c => c.Postman)
                 .Include(c => c.PostOffice)
                 .Include(c => c.Product)
+                .Include(c => c.Customer)
                 .ToListAsync();
         }
 
@@ -35,6 +36,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
                 .Include(c => c.Postman)
                 .Include(c => c.PostOffice)
                 .Include(c => c.Product)
+                .Include(c => c.Customer)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (transport == null) return null;
@@ -48,6 +50,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
                 .Include(c => c.Postman)
                 .Include(c => c.PostOffice)
                 .Include(c => c.Product)
+                .Include(c => c.Customer)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (targetTransport == null) return null;
@@ -56,8 +59,9 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             targetTransport.ProductId = transport.ProductId;
             targetTransport.PostOfficeId = transport.PostOfficeId;
             targetTransport.PostmanId = transport.PostmanId;
+            targetTransport.CustomerId = transport.CustomerId;
             targetTransport.DeliverdDate = transport.DeliverdDate;
-            targetTransport.DeliverdTo = transport.DeliverdTo;
+            targetTransport.DeliverCode = transport.DeliverCode;
 
             await _context.SaveChangesAsync();
             return targetTransport;

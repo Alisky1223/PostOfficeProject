@@ -9,8 +9,8 @@ namespace PostOfficeBackendProject.src.Application.Dto
         public string OfficeAccessCode { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public int StorageCapacity { get; set; }
-        public List<ProductDto> Products { get; set; } = [];
-        public List<PostManDto> PostMans { get; set; } = [];
-        public List<TransportBasicInformationDto> Transport { get; set; } = [];
+        public List<ProductBasicInformationDto> Products { get; set; } = [];
+        public List<PostmanBasicInformationDto> PostMans { get; set; } = [];
+        public List<TransportDto> Transport { get; set; } = [];
     }
 }

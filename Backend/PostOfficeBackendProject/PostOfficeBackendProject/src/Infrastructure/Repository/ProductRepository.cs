@@ -40,6 +40,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
                 .Include(c => c.ProductType)
                 .Include(c => c.TransportStatus)
                 .Include(c => c.Postman)
+                .Include(c => c.Customer)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (targetProduct == null) return null;
@@ -60,6 +61,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             targetProduct.ProductTypeId = product.ProductTypeId;
             targetProduct.TransportStatusId = product.TransportStatusId;
             targetProduct.PostmanId = product.PostmanId;
+            targetProduct.CustomerId = product.CustomerId;
 
             await _dbContext.SaveChangesAsync();
             return targetProduct;

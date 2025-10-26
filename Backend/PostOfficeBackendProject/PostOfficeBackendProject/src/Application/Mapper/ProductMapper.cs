@@ -42,6 +42,7 @@ namespace PostOfficeBackendProject.src.Application.Mapper
                 ProductTypeId = createDto.ProductTypeId,
                 TransportStatusId = createDto.TransportStatusId,
                 PostmanId = createDto.PostmanId,
+                CustomerId = createDto.CustomerId
             };
         }
     }

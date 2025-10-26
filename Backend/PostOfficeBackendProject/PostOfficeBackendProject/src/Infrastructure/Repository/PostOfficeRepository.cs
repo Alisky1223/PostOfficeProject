@@ -28,11 +28,13 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
         public async Task<PostOffice?> GetPostByIdAsync(int id)
         {
             return await _context.PostOffice
-                .Include(c => c.Products).ThenInclude(c => c.ProductType)
-                .Include(c => c.Products).ThenInclude(c => c.TransportStatus)
-                .Include(c => c.Products).ThenInclude(c => c.Postman)
+                //.Include(c => c.Products).ThenInclude(c => c.ProductType)
+                //.Include(c => c.Products).ThenInclude(c => c.TransportStatus)
+                //.Include(c => c.Products).ThenInclude(c => c.Postman)
+                //.Include(c => c.Products).ThenInclude(c => c.Customer)
+                .Include(c => c.Products)
                 .Include(c => c.Postman)
-                .Include(c => c.Transport)
+                .Include(c => c.Transport).ThenInclude(c => c.Customer)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 

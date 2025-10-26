@@ -10,14 +10,14 @@ namespace PostOfficeBackendProject.src.Application.Mapper
         {
             return new PostOfficeDto
             {
-                Id = postOffice.Id,
-                OfficeName = postOffice.OfficeName,
-                OfficeAccessCode = postOffice.OfficeAccessCode,
-                Address = postOffice.Address,
-                StorageCapacity = postOffice.StorageCapacity,
-                Products = postOffice.Products.Select(x => x.ToDto()).ToList(),
-                PostMans = postOffice.Postman.Select(x => x.ToDto()).ToList(),
-                Transport = postOffice.Transport.Select(x => x.ToBasicInformationDto()).ToList(),
+                Id                  = postOffice.Id,
+                OfficeName          = postOffice.OfficeName,
+                OfficeAccessCode    = postOffice.OfficeAccessCode,
+                Address             = postOffice.Address,
+                StorageCapacity     = postOffice.StorageCapacity,
+                Products            = postOffice.Products.Select(x => x.ToBasicInformationDto()).ToList(),
+                PostMans            = postOffice.Postman.Select(x => x.ToBasicInformationDto()).ToList(),
+                Transport           = postOffice.Transport.Select(x => x.ToDto()).ToList(),
             };
         }
 

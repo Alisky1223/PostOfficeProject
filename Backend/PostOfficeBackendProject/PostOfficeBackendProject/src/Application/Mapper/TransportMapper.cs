@@ -7,14 +7,15 @@ namespace PostOfficeBackendProject.src.Application.Mapper
     {
         public static TransportDto ToDto (this Transport transport) 
         {
-            return new TransportDto 
+            return new TransportDto
             {
                 Id = transport.Id,
                 DeliverdDate = transport.DeliverdDate,
-                DeliverdTo = transport.DeliverdTo,
+                DeliverCode = transport.DeliverCode,
                 Postman = transport.Postman?.ToBasicInformationDto() ?? null,
                 PostOffice = transport.PostOffice?.ToBasicInformationDto() ?? null,
-                Product = transport.Product?.ToBasicInformationDto() ?? null
+                Product = transport.Product?.ToBasicInformationDto() ?? null,
+                Customer = transport.Customer?.ToBasicInformationDto() ?? null
             };
         }
 
@@ -24,7 +25,7 @@ namespace PostOfficeBackendProject.src.Application.Mapper
             {
                 Id = transport.Id,
                 DeliverdDate = transport.DeliverdDate,
-                DeliverdTo = transport.DeliverdTo
+                DeliverCode = transport.DeliverCode
             };
         }
 
@@ -32,11 +33,12 @@ namespace PostOfficeBackendProject.src.Application.Mapper
         {
             return new Transport 
             {
-                DeliverdTo = createDto.DeliverdTo,
+                DeliverCode = createDto.DeliverCode,
                 DeliverdDate = createDto.DeliverdDate,
                 PostmanId = createDto.PostmanId,
                 ProductId = createDto.ProductId,
                 PostOfficeId = createDto.PostOfficeId,
+                CustomerId = createDto.CustomerId
             };
         }
     }
