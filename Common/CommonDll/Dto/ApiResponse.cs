@@ -1,4 +1,4 @@
-﻿namespace PostOfficeBackendProject.src.Application.Helper
+﻿namespace CommonDll.Dto
 {
     public class ApiResponse<T>
     {

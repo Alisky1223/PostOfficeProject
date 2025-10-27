@@ -1,6 +1,5 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Mvc;
-using PostOfficeBackendProject.src.Application.Helper;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
 
@@ -28,7 +27,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
 
             var transports = await _repository.GetAllAsync();
             var transportsDto = transports.Select(x => x.ToDto());
-            return Ok(new ApiResponse<object>(transportsDto) );
+            return Ok(new ApiResponse<object>(transportsDto));
         }
 
         [HttpGet(getByIdRequest)]
@@ -39,7 +38,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             var transport = await _repository.GetByIdAsync(id);
             if (transport == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            return Ok(new ApiResponse<object>(transport.ToDto()) );
+            return Ok(new ApiResponse<object>(transport.ToDto()));
         }
 
         [HttpPost(createRequest)]
@@ -49,7 +48,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
 
             var transport = createDto.ToTransportFromUpdateAndCreateDto();
             var createdTransport = await _repository.CreateAsync(transport);
-            return Ok(new ApiResponse<object>(createdTransport.ToDto()) );
+            return Ok(new ApiResponse<object>(createdTransport.ToDto()));
         }
 
         [HttpPut(updateRequest)]
@@ -60,7 +59,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             var transport = await _repository.UpdateAsync(id, updateDto.ToTransportFromUpdateAndCreateDto());
             if (transport == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            return Ok(new ApiResponse<object>(transport.ToDto()) );
+            return Ok(new ApiResponse<object>(transport.ToDto()));
         }
     }
 }

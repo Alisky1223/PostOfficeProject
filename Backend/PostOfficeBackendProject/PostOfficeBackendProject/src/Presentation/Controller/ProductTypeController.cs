@@ -1,6 +1,5 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Mvc;
-using PostOfficeBackendProject.src.Application.Helper;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
 
@@ -21,9 +20,9 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpGet(getallRequest)]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
         {
-            if(!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var allProductTypes = await _repository.GetAllProductTypesAsync();
             var allProductTypesDto = allProductTypes.Select(x => x.ToDto()).ToList();
@@ -32,7 +31,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpPost(createRequest)]
-        public async Task<IActionResult> Create([FromBody] ProductTypeUpdateAndCreateDto createDto) 
+        public async Task<IActionResult> Create([FromBody] ProductTypeUpdateAndCreateDto createDto)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
@@ -41,12 +40,12 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpPut(updateRequest)]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductTypeUpdateAndCreateDto updateDto) 
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductTypeUpdateAndCreateDto updateDto)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var targetUpdated = await _repository.UpdateProductTypeAsync(id, updateDto.ToProductTypeFromCreateDto());
-            if(targetUpdated == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+            if (targetUpdated == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
             return Ok(new ApiResponse<object>(targetUpdated.ToDto()));
         }

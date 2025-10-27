@@ -1,9 +1,7 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Mvc;
-using PostOfficeBackendProject.src.Application.Helper;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
-using System.Threading.Tasks;
 
 namespace PostOfficeBackendProject.src.Presentation.Controller
 {
@@ -23,7 +21,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpGet(getallRequest)]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
             var products = await _repository.GetAllAsync();
@@ -44,7 +42,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpPost(createRequest)]
-        public async Task<IActionResult> Create([FromBody] ProductUpdateAndCreateDto createDto) 
+        public async Task<IActionResult> Create([FromBody] ProductUpdateAndCreateDto createDto)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
@@ -54,12 +52,12 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpPut(updateRequest)]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductUpdateAndCreateDto updateDto) 
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductUpdateAndCreateDto updateDto)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var updatedProduct = await _repository.UpdateAsync(id, updateDto.ToProductFromCreateDto());
-            if(updatedProduct == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+            if (updatedProduct == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
             return Ok(new ApiResponse<object>(updatedProduct.ToDto()));
         }
