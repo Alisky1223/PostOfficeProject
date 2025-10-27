@@ -1,6 +1,5 @@
 ﻿using AAA.src.Domain.Interface;
 using AAA.src.Domain.Model;
-using AAA.src.Infrastructure.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,13 +9,11 @@ namespace AAA.src.Application.Service
 {
     public class TokenService : ITokenService
     {
-        private readonly ApplicationDBContext _context;
         private readonly IConfiguration _configuration;
 
-        public TokenService(ApplicationDBContext context, IConfiguration configuration)
+        public TokenService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _context = context;
         }
 
         public void ChangeTokenExpireDate(string token, out ClaimsPrincipal? claimsPrincipal)

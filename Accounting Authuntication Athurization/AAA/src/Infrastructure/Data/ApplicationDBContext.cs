@@ -20,5 +20,6 @@ namespace AAA.src.Infrastructure.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<LoginAttempt> LoginAttempts { get; set; }
     }
 }

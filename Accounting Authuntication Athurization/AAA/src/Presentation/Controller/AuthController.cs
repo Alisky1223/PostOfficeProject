@@ -19,7 +19,10 @@ namespace AAA.src.Presentation.Controller
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
-            var userToken = await _repository.LoginAsync(model);
+            
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
+
+            var userToken = await _repository.LoginAsync(model, ipAddress);
 
             if (userToken == null) return Unauthorized(new ApiResponse<object>("Invalid credentials", 400));
 

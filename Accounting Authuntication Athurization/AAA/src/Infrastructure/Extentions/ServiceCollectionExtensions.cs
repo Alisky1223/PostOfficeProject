@@ -15,6 +15,8 @@ namespace AAA.src.Infrastructure.Extentions
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ILoginAttemptRepository, LoginAttemptRepository>();
+            
 
             return services;
         }
