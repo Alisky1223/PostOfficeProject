@@ -1,5 +1,6 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Mvc;
+using PostOfficeBackendProject.src.Application.Helper;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
 
@@ -23,43 +24,44 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         [HttpGet(getAllRequest)]
         public async Task<IActionResult> GetAll() 
         {
-            if(!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var postmen = await _repository.GetPostmen();
             var postmenDto = postmen.Select(x => x.ToBasicInformationDto()).ToList();
 
-            return Ok(postmenDto);
+            return Ok(new ApiResponse<object>(postmenDto));
         }
 
         [HttpGet(getByIdRequest)]
         public async Task<IActionResult> GetById([FromRoute] int id) 
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var postMan = await _repository.GetPostmanById(id);
-            if (postMan == null) return NotFound();
+            if (postMan == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
             
-            return Ok(postMan.ToDto());
+            return Ok(new ApiResponse<object>(postMan.ToDto()));
         }
 
         [HttpPost(createRequest)]
         public async Task<IActionResult> Create([FromBody] PostmanUpdateAndCreateDto createDto) 
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var newPostman = await _repository.Create(createDto.ToPostmanFromCreateAndUpdateDto());
-            return Ok(newPostman.ToDto());
+            return Ok(new ApiResponse<object>(newPostman.ToDto()));
         }
 
         [HttpPut(updateRequest)]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] PostmanUpdateAndCreateDto updateDto) 
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var targetPostman = await _repository.Update(id, updateDto.ToPostmanFromCreateAndUpdateDto());
-            if(targetPostman == null) return NotFound();    
 
-            return Ok(targetPostman.ToDto());
+            if(targetPostman == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+
+            return Ok(new ApiResponse<object>(targetPostman.ToDto()));
         }
     }
 }

@@ -26,7 +26,10 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
 
         public async Task<Customer?> GetCustomerByIdAsync(int id)
         {
-            var targetCustomer = await _context.Customer.FirstOrDefaultAsync(c => c.Id == id);
+            var targetCustomer = await _context.Customer
+                .Include(c => c.Products).ThenInclude(c => c.ProductType)
+                .Include(c => c.Products).ThenInclude(c => c.TransportStatus)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (targetCustomer == null) return null;
 

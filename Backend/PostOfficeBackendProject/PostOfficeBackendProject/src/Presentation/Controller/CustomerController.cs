@@ -1,5 +1,6 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Mvc;
+using PostOfficeBackendProject.src.Application.Helper;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
 
@@ -23,48 +24,48 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         [HttpGet(getAllCustomersRequestRoute)]
         public async Task<IActionResult> GetAll()
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var customers = await _repository.GetAllCustomersAsync();
             var customersDto = customers.Select(s => s.ToBasicInformationDto());
 
-            return Ok(customersDto);
+            return Ok(new ApiResponse<object>(customersDto));
         }
 
         [HttpGet(getCustomerByIdRequestRoute)]
         public async Task<IActionResult> GetById(int id)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var customer = await _repository.GetCustomerByIdAsync(id);
 
-            if (customer == null) return NotFound();
+            if (customer == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            return Ok(customer.ToDto());
+            return Ok(new ApiResponse<object>(customer.ToDto()));
         }
 
         [HttpPost(createCustomerRequestRoute)]
         public async Task<IActionResult> CreateAsync([FromBody] CustomerUpdateAndCreateDto createDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var customer = createDto.ToCustomerFromCreateDto();
             var createdCustomer = await _repository.CreateAsync(customer);
 
-            return Ok(createdCustomer.ToDto());
+            return Ok(new ApiResponse<object>(createdCustomer.ToDto()));
         }
 
         [HttpPut(updateCustomerRequestRoute)]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] CustomerUpdateAndCreateDto updateDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var customer = updateDto.ToCustomerFromCreateDto();
             var updatedCustomer = await _repository.UpdateCustomerAsync(id, customer);
 
-            if (updatedCustomer == null) return NotFound();
+            if (updatedCustomer == null) return NotFound(new ApiResponse<object>("The Information Not Found",404));
 
-            return Ok(updatedCustomer.ToDto());
+            return Ok(new ApiResponse<object>(updatedCustomer.ToDto()));
         }
     }
 }

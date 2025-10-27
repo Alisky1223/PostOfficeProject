@@ -1,5 +1,6 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Mvc;
+using PostOfficeBackendProject.src.Application.Helper;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
 
@@ -23,43 +24,43 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         [HttpGet(getAllRequest)]
         public async Task<IActionResult> GetAll()
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var transports = await _repository.GetAllAsync();
             var transportsDto = transports.Select(x => x.ToDto());
-            return Ok(transportsDto);
+            return Ok(new ApiResponse<object>(transportsDto) );
         }
 
         [HttpGet(getByIdRequest)]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var transport = await _repository.GetByIdAsync(id);
-            if (transport == null) return NotFound();
+            if (transport == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            return Ok(transport.ToDto());
+            return Ok(new ApiResponse<object>(transport.ToDto()) );
         }
 
         [HttpPost(createRequest)]
         public async Task<IActionResult> Create([FromBody] TransportUpdateAndCreateDto createDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var transport = createDto.ToTransportFromUpdateAndCreateDto();
             var createdTransport = await _repository.CreateAsync(transport);
-            return Ok(createdTransport.ToDto());
+            return Ok(new ApiResponse<object>(createdTransport.ToDto()) );
         }
 
         [HttpPut(updateRequest)]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TransportUpdateAndCreateDto updateDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var transport = await _repository.UpdateAsync(id, updateDto.ToTransportFromUpdateAndCreateDto());
-            if (transport == null) return NotFound();
+            if (transport == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            return Ok(transport.ToDto());
+            return Ok(new ApiResponse<object>(transport.ToDto()) );
         }
     }
 }

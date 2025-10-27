@@ -1,5 +1,6 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Mvc;
+using PostOfficeBackendProject.src.Application.Helper;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
 using System.Threading.Tasks;
@@ -24,37 +25,43 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         [HttpGet(getallRequest)]
         public async Task<IActionResult> GetAll() 
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
             var products = await _repository.GetAllAsync();
             var productsDto = products.Select(x => x.ToBasicInformationDto()).ToList();
 
-            return Ok(productsDto);
+            return Ok(new ApiResponse<object>(productsDto));
         }
 
         [HttpGet(getbyIdRequest)]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
             var product = await _repository.GetById(id);
-            if (product == null) return NotFound(id);
-            return Ok(product.ToDto());
+
+            if (product == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+
+            return Ok(new ApiResponse<object>(product.ToDto()));
         }
 
         [HttpPost(createRequest)]
         public async Task<IActionResult> Create([FromBody] ProductUpdateAndCreateDto createDto) 
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
+
             var newProduct = await _repository.CreateAsync(createDto.ToProductFromCreateDto());
-            return Ok(newProduct.ToDto());
+
+            return Ok(new ApiResponse<object>(newProduct.ToDto()));
         }
 
         [HttpPut(updateRequest)]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductUpdateAndCreateDto updateDto) 
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
+
             var updatedProduct = await _repository.UpdateAsync(id, updateDto.ToProductFromCreateDto());
-            if(updatedProduct == null) return NotFound(updateDto);
-            return Ok(updatedProduct.ToDto());
+            if(updatedProduct == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+
+            return Ok(new ApiResponse<object>(updatedProduct.ToDto()));
         }
     }
 }

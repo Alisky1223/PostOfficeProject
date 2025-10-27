@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="src\Application\Dictionary\" />
-    <Folder Include="src\Application\Helper\" />
     <Folder Include="src\Application\Job\" />
     <Folder Include="src\Application\Service\" />
     <Folder Include="src\Common\Query\" />
