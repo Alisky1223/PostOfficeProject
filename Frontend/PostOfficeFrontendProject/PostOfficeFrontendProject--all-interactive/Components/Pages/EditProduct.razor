@@ -20,7 +20,7 @@
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
      
-        <MudText Typo="Typo.h5">ویرایش تصحیح کننده</MudText>
+        <MudText Typo="Typo.h5">ویرایش مرسوله</MudText>
   
     </MudItem>
 
@@ -57,6 +57,21 @@
                  
                     }
                
+                </MudSelect>
+
+            </MudItem>
+
+            <MudItem Style="width:20%">
+
+                <MudSelect T="TransportStatusDto" ToStringFunc="@TransportStatusDtoConverter" @bind-Value="EditedProduct.TransportStatus" MultiSelection="false" Label="وضعیت مرسوله" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
+
+                    @foreach (var productStatus in ProductStatus)
+                    {
+
+                        <MudSelectItem Value="productStatus"> @productStatus?.Status</MudSelectItem>
+
+                    }
+
                 </MudSelect>
 
             </MudItem>
@@ -98,7 +113,11 @@
 
     private List<ProductTypeDto> ProductTypes = new();
 
+    private List<TransportStatusDto> ProductStatus = new();
+
     Func<ProductTypeDto, string> ProductTypeDtoConverter = p => p?.Type;
+
+    Func<TransportStatusDto, string> TransportStatusDtoConverter = p => p?.Status;
 
     protected override async Task OnInitializedAsync()
     {
@@ -114,6 +133,8 @@
         EditedProduct = await productsMiddelware.GetByIdAsync(dataHelper.GetProudctId());
 
         ProductTypes = await productDropdownMiddelware.GetAllProductTypeAsync();
+
+        ProductStatus = await productDropdownMiddelware.GetAllStatusAsync();
 
         StateHasChanged();
 
@@ -133,10 +154,12 @@
 
             var update = new ProductUpdateAndCreateDto
                 {
+                    PostOfficeId = EditedProduct.Id,
                     ProductName = EditedProduct.ProductName,
                     Price = EditedProduct.Price,
                     Description = EditedProduct.Description,
                     ProductTypeId = EditedProduct.ProductType.Id,
+                    TransportStatusId = EditedProduct.TransportStatus.Id,
                 };
 
             await productsMiddelware.UpdateProductAsync(dataHelper.GetProudctId(), update);

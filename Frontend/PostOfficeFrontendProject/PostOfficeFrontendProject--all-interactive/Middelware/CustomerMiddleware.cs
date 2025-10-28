@@ -1,14 +1,12 @@
 ﻿using CommonDll.Dto;
-using PostOfficeBackendProject.src.Application.Dto;
-using PostOfficeFrontendProject__all_interactive.Interface;
 
 namespace PostOfficeFrontendProject__all_interactive.Middelware
 {
-    public class ProductsMiddelware : IProductsMiddelware
+    public class CustomerMiddleware
     {
         private readonly HttpClient _httpClient;
 
-        public ProductsMiddelware(HttpClient httpClient)
+        public CustomerMiddleware(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

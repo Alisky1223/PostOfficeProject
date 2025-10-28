@@ -1,4 +1,4 @@
-﻿@page "/PostOfficeProducts"
+﻿@page "/PostMan"
 @using CommonDll.Dto
 @using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
@@ -12,8 +12,9 @@
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
-@inject IProductsMiddelware productsMiddelware
 @inject IDataPassHelper dataPassHelper
+@inject IPostManMiddleware postManMiddleware
+
 
 <MudRTLProvider RightToLeft="@_rightToLeft">
 
@@ -23,29 +24,23 @@
 
     </MudItem>
 
-    <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick"  T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
+    <MudDataGrid Height="60vh" FixedHeader T="PostManDto" Loading="isLoading" Items="@postMans" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="ChoosedPostMan" Filterable="true" QuickFilter="_quickFilterForPostMans" SelectOnRowClick>
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h5" Style="margin:20px"><b>لیست مرسولات</b></MudText>
+            <MudText Typo="Typo.h5" Style="margin:20px"><b>لیست پستچی ها</b></MudText>
 
             <MudSpacer />
 
-            <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="جستجو" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchInPostMans" Immediate="true" Placeholder="جستجو" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 
         </ToolBarContent>
 
         <Columns>
 
-            <PropertyColumn Property="x => x.ProductName" Title="نام مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+            <PropertyColumn Property="x => x.Name" Title="نام پستچی" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
-            <PropertyColumn Property="x => x.Price" Title="ارزش مرسوله" HeaderStyle="background:#ADD8E6;color:#333;"/>
-
-            <PropertyColumn Property="x => x.Description" Title="توضیحات مرسوله" HeaderStyle="background:#ADD8E6;color:#333;"  />
-
-            <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="نوع مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
-
-            <PropertyColumn Property="x => x.TransportStatus.ProductStatusToString()" Title="وضعیت مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
+            <PropertyColumn Property="x => x.PersonalCode" Title="شماره شناسایی پستچی" HeaderStyle="background:#ADD8E6;color:#333;" />
 
             <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="عملیات">
 
@@ -53,16 +48,13 @@
 
                     <MudStack Row>
 
-
-                        <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditProduct(context.Item.Id))">
+                        <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditPostMan(context.Item.Id))">
 
                             ویرایش
 
                         </MudButton>
 
                         <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">حذف</MudButton>
-
-
 
                     </MudStack>
 
@@ -115,29 +107,29 @@
 
     private bool _rightToLeft = true;
 
-    private string searchString = "";
+    private string searchInPostMans = "";
 
-    private ProductDto selectedProducts = new();
+    private PostManDto ChoosedPostMan = null;
 
-    private List<ProductDto> products = new List<ProductDto>();
+    private IEnumerable<PostManDto> postMans = new List<PostManDto>();
 
     protected async override Task OnInitializedAsync()
     {
 
-        await LoadProducts();
+        await LoadPostrMans();
 
     }
 
     #endregion
 
-    #region LoadProducts
+    #region LoadPostrMans
 
-    private async Task LoadProducts()
+    private async Task LoadPostrMans()
     {
         try
         {
             isLoading = true;
-            products = await productsMiddelware.GetAllProductsAsync();  // لیست جدید
+            postMans = await postManMiddleware.GetAllPostMansAsync();  // لیست جدید
         }
         catch (Exception ex)
         {
@@ -155,22 +147,19 @@
 
     #region Filter
 
-    private Func<ProductDto, bool> _quickFilterProducts => x =>
+    private Func<PostManDto, bool> _quickFilterForPostMans => x =>
     {
-        if (string.IsNullOrWhiteSpace(searchString))
+        if (string.IsNullOrWhiteSpace(searchInPostMans))
             return true;
 
         var fields = new List<string?>
-                            {
-        x.ProductName?.ToString(),
-        x.Price.ToString(),
-        x.Description.ToString(),
-        x.ProductType?.ToString(),
-
-                            };
+                                {
+        x.Name?.ToString(),
+        x.PersonalCode.ToString(),
+                                };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
-                               f.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+                               f.Contains(searchInPostMans, StringComparison.OrdinalIgnoreCase));
     };
 
     #endregion
@@ -187,19 +176,19 @@
 
     #region DeleteItem
 
-    private async Task DeletedProduct(ProductDto deletedProduct)
+    private async Task DeletedProduct(PostManDto deletedPostMans)
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(
     "تأیید حذف",
-    $"آیا مطمئن هستید که می‌خواهید محصول '{deletedProduct.ProductName}' را حذف کنید؟",
+    $"آیا مطمئن هستید که می‌خواهید محصول '{deletedPostMans.Name}' را حذف کنید؟",
     yesText: "بله",
     noText: "خیر"
     );
 
         if (confirmed == true)
         {
-            products = products.Where(s => s != deletedProduct).ToList();
+            postMans = postMans.Where(s => s != deletedPostMans).ToList();
         }
 
     }
@@ -208,12 +197,12 @@
 
     #region EditProduct
 
-    private void EditProduct(int id)
+    private void EditPostMan(int id)
     {
 
-        dataPassHelper.SetProudctId(id);
+        dataPassHelper.SetPostManId(id);
 
-        NavigationManager.NavigateTo("/EditProduct");
+        NavigationManager.NavigateTo("/EditPostMan");
 
     }
 
@@ -238,27 +227,11 @@
     private void GoToAddProductPage()
     {
 
-        NavigationManager.NavigateTo("/AddProduct");
+        NavigationManager.NavigateTo("/AddPostMan");
 
     }
 
     #endregion
-
-    #region DoubleClick
-
-    private void DoubleClick()
-    {
-        if (selectedProducts == null)
-        {
-            return;
-        }
-        dataPassHelper.SetProudctId(selectedProducts.Id);
-
-        NavigationManager.NavigateTo("/ProductInformations");
-
-    }
-
-    #endregion
-
 }
+
 
