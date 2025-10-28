@@ -1,3 +1,4 @@
+using AAA.src.Application.Service;
 using AAA.src.Infrastructure.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,12 @@ builder.Services.AddAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
+//Seeding Database with Critical Informations
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeederService>();
+    await seeder.SeedAsync();
+}
 
 if (app.Environment.IsDevelopment())
 {

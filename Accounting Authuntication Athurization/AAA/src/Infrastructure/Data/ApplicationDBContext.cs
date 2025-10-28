@@ -21,5 +21,7 @@ namespace AAA.src.Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<LoginAttempt> LoginAttempts { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
     }
 }
