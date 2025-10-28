@@ -15,19 +15,19 @@ namespace AAA.src.Infrastructure.Repository
 
         public async Task<Role> AddRoles(Role role)
         {
-            var newRole = await _context.Roles.AddAsync(role);
+            var newRole = await _context.Role.AddAsync(role);
             await _context.SaveChangesAsync();
             return newRole.Entity;
         }
 
         public async Task<List<Role>> GetRolesAsync()
         {
-            return await _context.Roles.ToListAsync();
+            return await _context.Role.ToListAsync();
         }
 
         public async Task SeedRolesAsync()
         {
-            var Roles = await _context.Roles.ToListAsync();
+            var Roles = await _context.Role.ToListAsync();
             if (Roles.Count != 0) return;
             
             List<Role> roles = [];
@@ -48,7 +48,7 @@ namespace AAA.src.Infrastructure.Repository
                 Name = "Postman"
             });
             
-            await _context.Roles.AddRangeAsync(roles);
+            await _context.Role.AddRangeAsync(roles);
             await _context.SaveChangesAsync();
 
         }

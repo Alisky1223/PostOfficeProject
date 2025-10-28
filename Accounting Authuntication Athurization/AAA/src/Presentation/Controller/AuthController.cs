@@ -1,5 +1,7 @@
-﻿using AAA.src.Domain.Interface;
+﻿using AAA.src.Application.Mapper;
+using AAA.src.Domain.Interface;
 using CommonDll.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AAA.src.Presentation.Controller
@@ -30,6 +32,7 @@ namespace AAA.src.Presentation.Controller
         }
 
         [HttpPost("register")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             var registerResult = await _repository.RegisterAsync(model);

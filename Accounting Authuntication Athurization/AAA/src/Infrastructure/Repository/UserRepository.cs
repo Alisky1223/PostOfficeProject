@@ -24,6 +24,7 @@ namespace AAA.src.Infrastructure.Repository
         public async Task<string?> LoginAsync(LoginDto loginDto, string ipAddress)
         {
             var user = await _context.Users
+                .Include(c => c.Role)
                 .FirstOrDefaultAsync(u => u.Username == loginDto.Username);
 
             if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
@@ -43,7 +44,7 @@ namespace AAA.src.Infrastructure.Repository
                 return null;
 
 
-            _context.Users.Add(registerDto.ToUserFromRegisterDto());
+            var user = _context.Users.Add(registerDto.ToUserFromRegisterDto());
             await _context.SaveChangesAsync();
             return "User registered successfully";
         }

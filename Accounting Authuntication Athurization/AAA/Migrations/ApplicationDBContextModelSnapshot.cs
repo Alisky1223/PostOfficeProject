@@ -63,7 +63,7 @@ namespace AAA.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("AAA.src.Domain.Model.User", b =>
@@ -78,7 +78,7 @@ namespace AAA.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -96,7 +96,9 @@ namespace AAA.Migrations
                 {
                     b.HasOne("AAA.src.Domain.Model.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });

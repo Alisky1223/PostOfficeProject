@@ -10,7 +10,8 @@ namespace AAA.src.Application.Mapper
             return new User
             {
                 Username = registerDto.Username,
-                PasswordHash = HashPassword(registerDto.Password)
+                PasswordHash = HashPassword(registerDto.Password),
+                RoleId = registerDto.RoleId,
             };
         }
 
