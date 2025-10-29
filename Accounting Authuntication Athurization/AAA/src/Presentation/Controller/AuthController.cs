@@ -21,14 +21,19 @@ namespace AAA.src.Presentation.Controller
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
-            
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse<object>("Invalid request data", 400));
+
             var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
+            var result = await _repository.LoginAsync(model, ipAddress);
 
-            var userToken = await _repository.LoginAsync(model, ipAddress);
-
-            if (userToken == null) return Unauthorized(new ApiResponse<object>("Invalid credentials", 400));
-
-            return Ok(new ApiResponse<object>(userToken));
+            return result.StatusCode switch
+            {
+                200 => Ok(new ApiResponse<object>(result.Token!)),
+                401 => Unauthorized(new ApiResponse<object>(result.Message!, 401)),
+                403 => StatusCode(403, new ApiResponse<object>(result.Message!, 403)),
+                _ => StatusCode(500, new ApiResponse<object>("An unexpected error occurred.", 500))
+            };
         }
 
         [HttpPost("register")]

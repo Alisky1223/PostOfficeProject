@@ -9,5 +9,8 @@
         //Navigator
         public int RoleId { get; set; } 
         public Role Role { get; set; } 
+
+        public int FailedLoginAttempts { get; set; } = 0;
+        public DateTime? LockedUntil { get; set; } // null = not locked
     }
 }

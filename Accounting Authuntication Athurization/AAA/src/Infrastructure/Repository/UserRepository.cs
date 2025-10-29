@@ -1,10 +1,8 @@
 ﻿using AAA.src.Application.Mapper;
 using AAA.src.Domain.Interface;
-using AAA.src.Domain.Model;
 using AAA.src.Infrastructure.Data;
 using CommonDll.Dto;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace AAA.src.Infrastructure.Repository
 {
@@ -13,29 +11,96 @@ namespace AAA.src.Infrastructure.Repository
         private readonly ApplicationDBContext _context;
         private readonly ITokenService _tokenService;
         private readonly ILoginAttemptRepository _loginAttemptRepository;
+        private readonly IConfiguration _configuration;
 
-        public UserRepository(ApplicationDBContext dBContext, ITokenService tokenService, ILoginAttemptRepository loginAttemptRepository)
+        // Configurable thresholds
+        private readonly int MaxAttempts;
+        private readonly TimeSpan LockoutDuration;
+
+        public UserRepository(ApplicationDBContext dBContext, ITokenService tokenService, ILoginAttemptRepository loginAttemptRepository, IConfiguration configuration)
         {
             _context = dBContext;
             _tokenService = tokenService;
             _loginAttemptRepository = loginAttemptRepository;
+            _configuration = configuration;
+
+            MaxAttempts = _configuration.GetValue<int>("Lockout:MaxAttempts", 5);
+            LockoutDuration = TimeSpan.FromMinutes(configuration.GetValue<int>("Lockout:Minutes", 2));
         }
 
-        public async Task<string?> LoginAsync(LoginDto loginDto, string ipAddress)
+        public async Task<LoginResultDto> LoginAsync(LoginDto loginDto, string ipAddress)
         {
             var user = await _context.Users
                 .Include(c => c.Role)
                 .FirstOrDefaultAsync(u => u.Username == loginDto.Username);
 
-            if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
+            //if user not found
+            if (user == null)
             {
                 await _loginAttemptRepository.UnSuccessfullAttempt(loginDto.ToLoginAttemptFromLoginDto(ipAddress));
-                return null;
+                return new LoginResultDto { StatusCode = 401, Message = "Invalid credentials" };
+            }
+
+            //if currently locked
+            if (user.LockedUntil.HasValue && user.LockedUntil.Value > DateTime.Now)
+            {
+                if (user.FailedLoginAttempts != 0)
+                {
+                    user.FailedLoginAttempts = 0;
+                    await _context.SaveChangesAsync();
+                }
+
+                return new LoginResultDto
+                {
+                    StatusCode = 403,
+                    Message = $"Account locked until {user.LockedUntil:HH:mm:ss}.",
+                    LockedUntil = user.LockedUntil
+                };
+            }
+
+            if (!VerifyPassword(loginDto.Password, user.PasswordHash))
+            {
+                user.FailedLoginAttempts++;
+
+                if (user.FailedLoginAttempts >= MaxAttempts)
+                {
+                    user.LockedUntil = DateTime.Now.Add(LockoutDuration);
+                    await _context.SaveChangesAsync();
+
+                    return new LoginResultDto
+                    {
+                        StatusCode = 403,
+                        Message = "Too many failed attempts. Account locked",
+                        LockedUntil = user.LockedUntil
+                    };
+                }
+
+                await _context.SaveChangesAsync();
+
+                await _loginAttemptRepository.UnSuccessfullAttempt(loginDto.ToLoginAttemptFromLoginDto(ipAddress));
+                int left = MaxAttempts - user.FailedLoginAttempts;
+                return new LoginResultDto
+                {
+                    StatusCode = 401,
+                    Message = left > 0 ? $"{left} attempt(s) remaining." : "Last attempt before lockout."
+                };
             }
 
             await _loginAttemptRepository.SuccessfullAttempt(loginDto.ToLoginAttemptFromLoginDto(ipAddress));
 
-            return _tokenService.GenerateJwtToken(user);
+            //Reset FailedAttempt
+            user.FailedLoginAttempts = 0;
+            user.LockedUntil = null;
+            await _context.SaveChangesAsync();
+
+            var token = _tokenService.GenerateJwtToken(user);
+
+            return new LoginResultDto
+            {
+                StatusCode = 200,
+                Token = token,
+                Message = "Login successful"
+            };
         }
 
         public async Task<string?> RegisterAsync(RegisterDto registerDto)
