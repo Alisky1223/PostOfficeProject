@@ -1,7 +1,12 @@
 ﻿using AAA.src.Application.Service;
+using AAA.src.Application.Validator;
 using AAA.src.Domain.Interface;
+using AAA.src.Domain.Model;
 using AAA.src.Infrastructure.Data;
 using AAA.src.Infrastructure.Repository;
+using CommonDll.Dto;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -50,6 +55,21 @@ namespace AAA.src.Infrastructure.Extentions
                             Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
                     };
                 });
+
+            return services;
+        }
+
+        public static IServiceCollection AddPasswordPolicy(this IServiceCollection services, IConfiguration configuration) 
+        {
+            services.Configure<PasswordPolicy>(configuration.GetSection("PasswordPolicy"));
+
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services) 
+        {
+            services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>().AddFluentValidationAutoValidation();
+            services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
 
             return services;
         }

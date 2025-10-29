@@ -2,8 +2,9 @@
 {
     public class RegisterDto
     {
-        public string Username { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
+        public string ConfirmPassword { get; set; } = null!;
         public int RoleId { get; set; }
     }
 }
