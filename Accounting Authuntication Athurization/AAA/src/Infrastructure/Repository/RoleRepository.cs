@@ -47,7 +47,11 @@ namespace AAA.src.Infrastructure.Repository
             {
                 Name = "Postman"
             });
-            
+            roles.Add(new Role
+            {
+                Name = "User"
+            });
+
             await _context.Role.AddRangeAsync(roles);
             await _context.SaveChangesAsync();
 

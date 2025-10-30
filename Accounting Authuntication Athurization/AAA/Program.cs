@@ -14,6 +14,8 @@ builder.Services.AddDatabase(builder.Configuration);
 
 builder.Services.AddAuthentication(builder.Configuration);
 
+builder.Services.AddPolicies();
+
 builder.Services.AddPasswordPolicy(builder.Configuration);
 
 builder.Services.AddValidators();
