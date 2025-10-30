@@ -136,6 +136,26 @@ namespace AAA.src.Infrastructure.Repository
             return "User registered successfully";
         }
 
+        public async Task SeedSuperAdmin()
+        {
+            if (await _context.Users.AnyAsync()) return;
+
+            var superAdmin = new RegisterDto
+            {
+                Username = "Super@Admin",
+                Password = "P@ssword_44",
+                ConfirmPassword = "P@ssword_44",
+            };
+
+            var userRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "SuperAdmin");
+
+            var user = _context.Users.Add(superAdmin.ToUserFromRegisterDto());
+
+            user.Entity.RoleId = userRole.Id;
+
+            await _context.SaveChangesAsync();
+        }
+
         private bool VerifyPassword(string password, string passwordHash)
         {
             return BCrypt.Net.BCrypt.Verify(password, passwordHash);

@@ -9,7 +9,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
@@ -40,7 +39,7 @@ namespace AAA.src.Infrastructure.Extentions
             return services;
         }
 
-        public static IServiceCollection AddAuthentication (this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -61,7 +60,7 @@ namespace AAA.src.Infrastructure.Extentions
             return services;
         }
 
-        public static IServiceCollection AddPolicies(this IServiceCollection services) 
+        public static IServiceCollection AddPolicies(this IServiceCollection services)
         {
             const string Admin = "Admin";
             const string SuperAdmin = "SuperAdmin";
@@ -89,14 +88,14 @@ namespace AAA.src.Infrastructure.Extentions
             return services;
         }
 
-        public static IServiceCollection AddPasswordPolicy(this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddPasswordPolicy(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<PasswordPolicy>(configuration.GetSection("PasswordPolicy"));
 
             return services;
         }
 
-        public static IServiceCollection AddValidators(this IServiceCollection services) 
+        public static IServiceCollection AddValidators(this IServiceCollection services)
         {
             services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>().AddFluentValidationAutoValidation();
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
