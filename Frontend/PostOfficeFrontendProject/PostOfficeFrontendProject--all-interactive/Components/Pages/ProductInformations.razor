@@ -1,0 +1,187 @@
+﻿@page "/ProductInformations"
+@using CommonDll.Dto
+@using MudBlazor
+@using PostOfficeFrontendProject__all_interactive.Interface
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject IDataPassHelper dataPassHelper
+@inject IProductsMiddelware productsMiddelware
+
+<MudRTLProvider RightToLeft="true">
+
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-6 mb-10">
+
+        <MudPaper Elevation="4" Class="rounded-xl pa-6" Style="background: linear-gradient(135deg,#E3F2FD,#F3E5F5);">
+
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="font-weight-bold mb-2">
+
+                📦 اطلاعات مرسوله
+
+            </MudText>
+
+            <MudDivider Class="mb-4" />
+
+            @if (isLoading)
+            {
+                <div class="d-flex justify-center my-6">
+
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+
+                </div>
+            }
+            else if (product != null)
+            {
+                <MudGrid Spacing="3">
+
+                    <MudItem xs="12" sm="6" md="3">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Inventory2" Size="Size.Large" Color="Color.Primary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">نام مرسوله</MudText>
+
+                            <MudText Typo="Typo.body1">@product?.ProductName</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Size="Size.Large" Color="Color.Success" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">ارزش مرسوله</MudText>
+
+                            <MudText Typo="Typo.body1">
+
+                                @((product?.Price ?? 0).ToString("N0", new System.Globalization.CultureInfo("fa-IR"))) تومان
+
+                            </MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Category" Size="Size.Large" Color="Color.Secondary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">نوع مرسوله</MudText>
+
+                            <MudText Typo="Typo.body1">@product?.ProductType?.Type</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.LocalShipping" Size="Size.Large"
+                                     Color="@(product?.TransportStatus?.Status == "تحویل شده" ? Color.Success : Color.Info)" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">وضعیت مرسوله</MudText>
+
+                            <MudChip T="string" Variant="Variant.Outlined"
+                                     Color="@(product?.TransportStatus?.Status == "تحویل شده" ? Color.Success : Color.Info)">
+
+                                @product?.TransportStatus?.Status
+
+                            </MudChip>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                </MudGrid>
+
+                <div class="d-flex justify-center mt-6">
+
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary"
+                               StartIcon="@Icons.Material.Filled.ArrowBack"
+                               OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
+
+                        بازگشت به صفحه اصلی
+
+                    </MudButton>
+
+                </div>
+
+            }
+            else
+            {
+
+                <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Error">
+
+                    اطلاعاتی یافت نشد
+
+                </MudText>
+
+            }
+
+        </MudPaper>
+
+    </MudContainer>
+
+</MudRTLProvider>
+
+@code {
+
+    #region Props
+
+    private bool isLoading = false;
+
+    private ProductDto? product;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProduct();
+    }
+
+    #endregion
+
+    #region LoadProduct
+
+    private async Task LoadProduct()
+    {
+        try
+        {
+
+            isLoading = true;
+
+            var id = dataPassHelper.GetProudctId();
+
+            product = await productsMiddelware.GetByIdAsync(id);
+
+        }
+        catch (Exception ex)
+        {
+
+            Snackbar.Add($"خطا در دریافت اطلاعات: {ex.Message}", Severity.Error);
+
+        }
+        finally
+        {
+
+            isLoading = false;
+
+        }
+
+    }
+
+    #endregion
+    
+    #region GoToMainPage
+
+    private void GoToMainPage() => NavigationManager.NavigateTo("/MainPage");
+
+    #endregion
+
+}
+

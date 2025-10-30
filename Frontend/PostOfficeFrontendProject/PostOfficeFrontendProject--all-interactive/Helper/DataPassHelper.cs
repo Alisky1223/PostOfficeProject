@@ -19,6 +19,22 @@ namespace PostOfficeFrontendProject__all_interactive.Helper
         public int GetProudctId() => _proudctId;
 
         public void SetProudctId(int proudctId) => _proudctId = proudctId;
+        
+        //postMan
+        
+        private int _postManId;
+
+        public int GetPostManId() => _postManId;
+
+        public void SetPostManId(int postManId) => _postManId = postManId;
+
+        //customer
+
+        private int _customerId;
+
+        public int GetCustomerId() => _customerId;
+
+        public void SetCustomerId(int customerId) => _customerId = customerId;
 
     }
 }
