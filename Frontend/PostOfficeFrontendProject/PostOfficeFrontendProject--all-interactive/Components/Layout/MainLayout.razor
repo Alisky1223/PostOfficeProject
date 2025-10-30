@@ -11,9 +11,9 @@
 
 <MudSnackbarProvider />
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
+@* <MudRTLProvider RightToLeft="@_rightToLeft"> *@
 
-    @if (!IsHomePage)
+@if (!IsHomePage && !IsLoginPage)
     {
 
         <MudLayout>
@@ -22,7 +22,7 @@
 
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
 
-                <MudText Typo="Typo.h5" Class="ml-3"> نرم افزار مدیریت و رهگیری پست </MudText>
+                <MudText Typo="Typo.h5" Class="ml-3">Post Management And Tracking</MudText>
 
                 <MudSpacer />
 
@@ -43,7 +43,8 @@
             </MudMainContent>
         </MudLayout>
     }
-    else{
+else
+{
         <MudLayout>
 
             @Body
@@ -51,7 +52,8 @@
         </MudLayout>
 }
 
-</MudRTLProvider>
+
+@* </MudRTLProvider> *@
 
 
 <div id="blazor-error-ui" data-nosnippet>
@@ -259,8 +261,9 @@
     };
 
     private bool IsHomePage =>
-        NavigationManager.Uri.TrimEnd('/') == NavigationManager.BaseUri.TrimEnd('/');
-
+        NavigationManager.Uri.TrimEnd('/') == NavigationManager.BaseUri.TrimEnd('/');   
+    private bool IsLoginPage =>
+    NavigationManager.Uri.ToLower().Contains("/login");
 }
 
 

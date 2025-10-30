@@ -12,57 +12,48 @@
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
-@inject IProductsMiddelware productsMiddelware
+@inject ICustomerMiddleware customerMiddleware
 @inject IDataPassHelper dataPassHelper
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
+@* <MudRTLProvider RightToLeft="@_rightToLeft"> *@
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-        <MudText Typo="Typo.h5">مشاهده اطلاعات مرسوله ها</MudText>
+        <MudText Typo="Typo.h5">Customers Informations</MudText>
 
     </MudItem>
 
-    <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
+    <MudDataGrid Height="60vh" FixedHeader @onclick="DoubleClick" T="CustomerDto" Loading="isLoading" Items="@Customer" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterCustomers" SelectOnRowClick @bind-SelectedItem="@selectedCustomer">
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h5" Style="margin:20px"><b>لیست مرسولات</b></MudText>
+            <MudText Typo="Typo.h5" Style="margin:20px"><b>Customers List</b></MudText>
 
             <MudSpacer />
 
-            <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="جستجو" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 
         </ToolBarContent>
 
         <Columns>
 
-            <PropertyColumn Property="x => x.ProductName" Title="نام مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+            <PropertyColumn Property="x => x.Name" Title="CustomerName" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
-            <PropertyColumn Property="x => x.Price" Title="ارزش مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
+            <PropertyColumn Property="x => x.CustomerNumber" Title="CustomerNumber" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.Description" Title="توضیحات مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
-
-            <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="نوع مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
-
-            <PropertyColumn Property="x => x.TransportStatus.ProductStatusToString()" Title="وضعیت مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
-
-            <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="عملیات">
+            <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="Operations">
 
                 <CellTemplate>
 
                     <MudStack Row>
 
+                        <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditCustomer(context.Item.Id))">
 
-                        <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditProduct(context.Item.Id))">
-
-                            ویرایش
+                            Edit
 
                         </MudButton>
 
-                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">حذف</MudButton>
-
-
+                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">Delete</MudButton>
 
                     </MudStack>
 
@@ -88,7 +79,7 @@
 
     </MudPaper>
 
-</MudRTLProvider>
+@* </MudRTLProvider> *@
 
 <style>
 
@@ -117,27 +108,27 @@
 
     private string searchString = "";
 
-    private ProductDto selectedProducts = new();
+    private CustomerDto selectedCustomer = new();
 
-    private List<ProductDto> products = new List<ProductDto>();
+    private List<CustomerDto> Customer = new List<CustomerDto>();
 
     protected async override Task OnInitializedAsync()
     {
 
-        await LoadProducts();
+        await LoadCustomer();
 
     }
 
     #endregion
 
-    #region LoadProducts
+    #region LoadCustomer
 
-    private async Task LoadProducts()
+    private async Task LoadCustomer()
     {
         try
         {
             isLoading = true;
-            products = await productsMiddelware.GetAllProductsAsync();  // لیست جدید
+            Customer = await customerMiddleware.GetAllCustomersAsync();  // لیست جدید
         }
         catch (Exception ex)
         {
@@ -155,17 +146,15 @@
 
     #region Filter
 
-    private Func<ProductDto, bool> _quickFilterProducts => x =>
+    private Func<CustomerDto, bool> _quickFilterCustomers => x =>
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
 
         var fields = new List<string?>
                                 {
-        x.ProductName?.ToString(),
-        x.Price.ToString(),
-        x.Description.ToString(),
-        x.ProductType?.ToString(),
+        x.Name?.ToString(),
+        x.CustomerNumber.ToString(),
 
                                 };
 
@@ -187,33 +176,33 @@
 
     #region DeleteItem
 
-    private async Task DeletedProduct(ProductDto deletedProduct)
+    private async Task DeletedProduct(CustomerDto deletedCustomer)
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(
     "تأیید حذف",
-    $"آیا مطمئن هستید که می‌خواهید محصول '{deletedProduct.ProductName}' را حذف کنید؟",
-    yesText: "بله",
-    noText: "خیر"
+    $"Do You Want To Remove '{deletedCustomer.Name}' From This List ?",
+    yesText: "Yes",
+    noText: "No"
     );
 
         if (confirmed == true)
         {
-            products = products.Where(s => s != deletedProduct).ToList();
+            Customer = Customer.Where(s => s != deletedCustomer).ToList();
         }
 
     }
 
     #endregion
 
-    #region EditProduct
+    #region EditCustomer
 
-    private void EditProduct(int id)
+    private void EditCustomer(int id)
     {
 
-        dataPassHelper.SetProudctId(id);
+        dataPassHelper.SetCustomerId(id);
 
-        NavigationManager.NavigateTo("/EditProduct");
+        NavigationManager.NavigateTo("/EditCustomer");
 
     }
 
@@ -238,7 +227,7 @@
     private void GoToAddProductPage()
     {
 
-        NavigationManager.NavigateTo("/AddProduct");
+        NavigationManager.NavigateTo("/AddCustomer");
 
     }
 
@@ -248,13 +237,13 @@
 
     private void DoubleClick()
     {
-        if (selectedProducts == null)
+        if (selectedCustomer == null)
         {
             return;
         }
-        dataPassHelper.SetProudctId(selectedProducts.Id);
+        dataPassHelper.SetCustomerId(selectedCustomer.Id);
 
-        NavigationManager.NavigateTo("/ProductInformations");
+        NavigationManager.NavigateTo("/CustomerInformations");
 
     }
 

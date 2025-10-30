@@ -1,0 +1,229 @@
+﻿@page "/CustomerInformations"
+@using CommonDll.Dto
+@using MudBlazor
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Mapper
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject IDataPassHelper dataPassHelper
+@inject ICustomerMiddleware customerMiddleware
+
+<MudRTLProvider RightToLeft="true">
+
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-6 mb-10">
+
+        <MudPaper Elevation="4" Class="rounded-xl pa-6" Style="background: linear-gradient(135deg,#E3F2FD,#F3E5F5);">
+
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="font-weight-bold mb-2">
+
+                📦  CustomerInformations
+
+            </MudText>
+
+            <MudDivider Class="mb-4" />
+
+            @if (isLoading)
+            {
+                <div class="d-flex justify-center my-6">
+
+                    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+
+                </div>
+            }
+            else if (customer != null)
+            {
+                <MudGrid Spacing="3">
+
+                    <MudItem xs="12" sm="6">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Inventory2" Size="Size.Large" Color="Color.Primary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">CustomerName</MudText>
+
+                            <MudText Typo="Typo.body1">@customer?.Name</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Category" Size="Size.Large" Color="Color.Secondary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">CustomerNunmber</MudText>
+
+                            <MudText Typo="Typo.body1">@customer?.CustomerNumber</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>   
+
+                </MudGrid>
+
+                <MudDataGrid Style="margin-top:30px" Height="60vh" FixedHeader T="ProductDto" Loading="isLoading" Items="@customerProducts" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProduct">
+
+                    <ToolBarContent>
+
+                        <MudText Typo="Typo.h5" Style="margin:20px"><b>Customers Products</b></MudText>
+
+                        <MudSpacer />
+
+                        <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
+                    </ToolBarContent>
+
+                    <Columns>
+
+                        <PropertyColumn Property="x => x.ProductName" Title="ProductName" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+
+                        <PropertyColumn Property="x => x.Price" Title="ProductPrice" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+                        <PropertyColumn Property="x => x.Description" Title="Description" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+                        <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="ProductType" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+                        <PropertyColumn Property="x => x.TransportStatus.ProductStatusToString()" Title="TransportStatus" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+                    </Columns>
+
+                    <PagerContent>
+
+                        <MudDataGridPager />
+
+                    </PagerContent>
+
+                </MudDataGrid>
+
+
+
+
+                <div class="d-flex justify-center mt-6">
+
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary"
+                               StartIcon="@Icons.Material.Filled.ArrowBack"
+                               OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
+
+                        Return
+
+                    </MudButton>
+
+                </div>
+
+            }
+            else
+            {
+
+                <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Error">
+
+                     Informations Not Found
+
+                </MudText>
+
+            }
+
+        </MudPaper>
+
+    </MudContainer>
+
+</MudRTLProvider>
+
+@code {
+
+    #region Props
+
+    private bool hover = true;
+
+    private bool dense = true;
+
+    private bool striped = true;
+
+    private bool bordered = true;
+
+    private bool isLoading = false;
+
+    private bool _rightToLeft = true;
+
+    private string searchString = "";
+
+    private CustomerDto? customer;
+
+    private ProductDto selectedProduct = new();
+
+    private List<ProductDto> customerProducts = new List<ProductDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCustomer();
+    }
+
+    #endregion
+
+    #region LoadCustomer
+
+    private async Task LoadCustomer()
+    {
+        try
+        {
+
+            isLoading = true;
+
+            var id = dataPassHelper.GetCustomerId();
+
+            customer = await customerMiddleware.GetByIdAsync(id);
+
+            customerProducts = customer.Products;
+
+
+        }
+        catch (Exception ex)
+        {
+
+            Snackbar.Add($"Error To Find Informations: {ex.Message}", Severity.Error);
+
+        }
+        finally
+        {
+
+            isLoading = false;
+
+        }
+
+    }
+
+    #endregion
+
+        #region Filter
+
+    private Func<ProductDto, bool> _quickFilterProducts => x =>
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+
+        var fields = new List<string?>
+                            {
+        x.ProductName?.ToString(),
+        x.Price.ToString(),
+        x.Description.ToString(),
+        x.ProductType?.ProductsTypeToString(),
+        x.TransportStatus?.ProductStatusToString(),
+
+                            };
+
+        return fields.Any(f => !string.IsNullOrEmpty(f) &&
+                               f.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+    };
+
+    #endregion
+
+    #region GoToMainPage
+
+    private void GoToMainPage() => NavigationManager.NavigateTo("/");
+
+    #endregion
+
+}
+

@@ -30,6 +30,10 @@ namespace PostOfficeFrontendProject__all_interactive.Extention
             services.AddHttpClient<IPostManMiddleware, PostManMiddleware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
+            });     
+            services.AddHttpClient<ICustomerMiddleware, CustomerMiddleware>(client =>
+            {
+                client.BaseAddress = new Uri(baseAddress);
             });
 
             services.AddMudServices();
