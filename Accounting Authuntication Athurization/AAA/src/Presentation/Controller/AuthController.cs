@@ -1,5 +1,7 @@
-﻿using AAA.src.Domain.Interface;
+﻿using AAA.src.Application.Mapper;
+using AAA.src.Domain.Interface;
 using CommonDll.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AAA.src.Presentation.Controller
@@ -8,6 +10,10 @@ namespace AAA.src.Presentation.Controller
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private const string loginRequest = "login";
+        private const string registerRequest = "register";
+        private const string changeUserRoleRequest = "changeUserRole/{id:int}";
+
         private readonly IUserRepository _repository;
 
         public AuthController(IUserRepository repository)
@@ -16,7 +22,7 @@ namespace AAA.src.Presentation.Controller
         }
 
 
-        [HttpPost("login")]
+        [HttpPost(loginRequest)]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
             if (!ModelState.IsValid)
@@ -34,7 +40,7 @@ namespace AAA.src.Presentation.Controller
             };
         }
 
-        [HttpPost("register")]
+        [HttpPost(registerRequest)]
         //[Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
@@ -45,6 +51,19 @@ namespace AAA.src.Presentation.Controller
             if (registerResult == null) return Unauthorized(new ApiResponse<object>("Username already exists", 400));
 
             return Ok(new ApiResponse<object>(registerResult));
+        }
+
+        [HttpPut(changeUserRoleRequest)]
+        [Authorize(Policy = "AdminOrSuperAdminPolicy")]
+        public async Task<IActionResult> ChangeUserRole([FromRoute] int id, [FromBody] int newRoleId) 
+        {
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(string.Join(" ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)), 400));
+
+            var targetUser = await _repository.ChangeUserRole(id, newRoleId);
+
+            if (targetUser == null) return NotFound(new ApiResponse<object>("User not found", 404));
+
+            return Ok(new ApiResponse<object>(targetUser.ToDto())); 
         }
     }
 }

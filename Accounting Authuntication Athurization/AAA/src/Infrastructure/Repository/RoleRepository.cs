@@ -27,8 +27,7 @@ namespace AAA.src.Infrastructure.Repository
 
         public async Task SeedRolesAsync()
         {
-            var Roles = await _context.Role.ToListAsync();
-            if (Roles.Count != 0) return;
+            if(await _context.Role.AnyAsync()) return;
             
             List<Role> roles = [];
             roles.Add(new Role 
@@ -47,7 +46,11 @@ namespace AAA.src.Infrastructure.Repository
             {
                 Name = "Postman"
             });
-            
+            roles.Add(new Role
+            {
+                Name = "User"
+            });
+
             await _context.Role.AddRangeAsync(roles);
             await _context.SaveChangesAsync();
 

@@ -1,5 +1,6 @@
 ﻿using AAA.src.Application.Mapper;
 using AAA.src.Domain.Interface;
+using AAA.src.Domain.Model;
 using AAA.src.Infrastructure.Data;
 using CommonDll.Dto;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,21 @@ namespace AAA.src.Infrastructure.Repository
 
             MaxAttempts = _configuration.GetValue<int>("Lockout:MaxAttempts", 5);
             LockoutDuration = TimeSpan.FromMinutes(configuration.GetValue<int>("Lockout:Minutes", 2));
+        }
+
+
+        public async Task<User?> ChangeUserRole(int id, int RoleId)
+        {
+            var targetUser = await _context.Users
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (targetUser == null)  return null;
+
+            targetUser.RoleId = RoleId;
+
+            await _context.SaveChangesAsync();
+            return targetUser;
         }
 
         public async Task<LoginResultDto> LoginAsync(LoginDto loginDto, string ipAddress)
@@ -108,10 +124,36 @@ namespace AAA.src.Infrastructure.Repository
             if (await _context.Users.AnyAsync(u => u.Username == registerDto.Username))
                 return null;
 
+            var userRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "User");
+
+            if (userRole == null) return null;
 
             var user = _context.Users.Add(registerDto.ToUserFromRegisterDto());
+
+            user.Entity.RoleId = userRole.Id;
+
             await _context.SaveChangesAsync();
             return "User registered successfully";
+        }
+
+        public async Task SeedSuperAdmin()
+        {
+            if (await _context.Users.AnyAsync()) return;
+
+            var superAdmin = new RegisterDto
+            {
+                Username = "Super@Admin",
+                Password = "P@ssword_44",
+                ConfirmPassword = "P@ssword_44",
+            };
+
+            var userRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "SuperAdmin");
+
+            var user = _context.Users.Add(superAdmin.ToUserFromRegisterDto());
+
+            user.Entity.RoleId = userRole.Id;
+
+            await _context.SaveChangesAsync();
         }
 
         private bool VerifyPassword(string password, string passwordHash)
