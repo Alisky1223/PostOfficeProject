@@ -1,4 +1,5 @@
 ﻿using CommonDll.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
@@ -32,6 +33,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpGet(getCustomerByIdRequestRoute)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById(int id)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));

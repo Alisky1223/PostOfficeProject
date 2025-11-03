@@ -10,9 +10,10 @@ namespace AAA.src.Application.Mapper
             return new UserDto
             {
                 Id = user.Id,
-                PasswordHash = user.PasswordHash,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Username = user.Username,
-                Role = user.Role?.ToDto() ?? null
+                Role = user.Role?.ToDto() ?? null,
             };
         }
         
@@ -22,6 +23,23 @@ namespace AAA.src.Application.Mapper
             {
                 Username = registerDto.Username,
                 PasswordHash = HashPassword(registerDto.Password),
+                FirstName = registerDto.FirstName,
+                LastName = registerDto.LastName,
+                UserEmail = registerDto.UserEmail,
+                UserPhone = registerDto.UserPhone
+            };
+        }
+
+        public static UserPersonalInformationDto ToUserPersonalInformationDto(this User user) 
+        {
+            return new UserPersonalInformationDto 
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserEmail = user.UserEmail,
+                Username = user.Username,
+                UserPhone = user.UserPhone
             };
         }
 
@@ -29,5 +47,7 @@ namespace AAA.src.Application.Mapper
         {
             return BCrypt.Net.BCrypt.HashPassword(password);
         }
+
+
     }
 }
