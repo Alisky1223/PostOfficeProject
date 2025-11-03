@@ -9,5 +9,7 @@ namespace AAA.src.Domain.Interface
         Task<string?> RegisterAsync(RegisterDto registerDto);
         Task<User?> ChangeUserRole(int id, int RoleId);
         Task SeedSuperAdmin();
+        Task<User?> GetUserById(int id);
+        Task<List<User>> GetUsers();
     }
 }

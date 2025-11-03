@@ -54,7 +54,7 @@ namespace AAA.src.Presentation.Controller
         }
 
         [HttpPut(changeUserRoleRequest)]
-        [Authorize(Policy = "AdminOrSuperAdminPolicy")]
+        //[Authorize(Policy = "AdminOrSuperAdminPolicy")]
         public async Task<IActionResult> ChangeUserRole([FromRoute] int id, [FromBody] int newRoleId) 
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(string.Join(" ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)), 400));

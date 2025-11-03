@@ -44,6 +44,21 @@ namespace AAA.src.Infrastructure.Repository
             return targetUser;
         }
 
+        public async Task<User?> GetUserById(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (user == null) return null;
+
+            return user;
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+           return await _context.Users
+                .Include(c => c.Role)
+                .ToListAsync();
+        }
+
         public async Task<LoginResultDto> LoginAsync(LoginDto loginDto, string ipAddress)
         {
             var user = await _context.Users
