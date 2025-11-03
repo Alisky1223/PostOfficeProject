@@ -40,7 +40,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
 
         public async Task<ProductDto?> GetByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<ProductDto>($"api/product/getByIdPostOffice/{id}");
+            return await _httpClient.GetFromJsonAsync<ProductDto>($"api/product/getbyId/{id}");
         }
     }
 }

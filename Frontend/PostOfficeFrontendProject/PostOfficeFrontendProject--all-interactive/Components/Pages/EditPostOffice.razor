@@ -7,12 +7,14 @@
 @using System.Diagnostics.Metrics
 @using PostOfficeBackendProject.src.Application.Dto
 @using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataHelper
 @inject IDialogService DialogService
 @inject IPostOfficeMiddelware postOfficeMiddelware
+@inject NotificationService notificationService  // فیکس: inject کن (نام کوچک‌تر)
 
 <MudRTLProvider RightToLeft="@_rightToLeft">
 
@@ -82,17 +84,41 @@
 
     #endregion
 
-    #region LoadOffice
+#region LoadOffice
 
-    private async Task GetData()
+private async Task GetData()
     {
-        EditedPostOffice = await postOfficeMiddelware.GetByIdAsync(dataHelper.GetPostOfficeId());
+        try
+        {
+            var apiResponse = await postOfficeMiddelware.GetByIdAsync(dataHelper.GetPostOfficeId()); 
 
-        StateHasChanged();
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                EditedPostOffice = apiResponse.Data;  
+                notificationService.ShowSuccess(apiResponse.Message ?? "پستخانه با موفقیت بارگذاری شد.");
+            }
+            else
+            {
+               
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "خطا در بارگذاری پستخانه.");
+                EditedPostOffice = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"خطای غیرمنتظره: {ex.Message}");
+            EditedPostOffice = null;
+        }
 
+        StateHasChanged();  
     }
 
     #endregion
+
+
 
     #region SubmitOrCancele
 
