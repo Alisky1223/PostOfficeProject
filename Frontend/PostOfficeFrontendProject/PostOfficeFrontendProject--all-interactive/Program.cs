@@ -1,7 +1,9 @@
+﻿using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using MudBlazor.Services;
 using PostOfficeFrontendProject__all_interactive.Components;
 using PostOfficeFrontendProject__all_interactive.Extention;
+using PostOfficeFrontendProject__all_interactive.Provider;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,12 @@ builder.Services.AddMudServices(config =>
 builder.Services.AddMudServices();
 
 builder.Services.AddRepositoryServices(builder.Configuration);
+
+builder.Services.AddScoped<CustomAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
+    sp.GetRequiredService<CustomAuthStateProvider>());
+
+builder.Services.AddAuthorizationCore();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

@@ -3,11 +3,12 @@
 @using CommonDll.Dto
 @using PostOfficeBackendProject.src.Application.Dto
 @using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
 @inject IDataPassHelper dataHelper
-
+@inject NotificationService notificationService 
 @inject IPostOfficeMiddelware postOfficeMiddelware
 
 <MudRTLProvider RightToLeft="@_rightToLeft">
@@ -106,7 +107,36 @@
 
     protected override async Task OnInitializedAsync()
     {
-        postOffice = await postOfficeMiddelware.GetAllPostOfficesAsync();
+        await LoadPostOffices(); 
+    }
+
+    private async Task LoadPostOffices()
+    {
+        try
+        {
+            var apiResponse = await postOfficeMiddelware.GetAllPostOfficesAsync();  
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                postOffice = apiResponse.Data;  
+                notificationService.ShowSuccess(apiResponse.Message ?? "لیست پستخانه‌ها با موفقیت بارگذاری شد.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "خطا در بارگذاری لیست پستخانه‌ها.");
+                postOffice = new List<PostOfficeBasicInformationDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"خطای غیرمنتظره در بارگذاری: {ex.Message}");
+            postOffice = new List<PostOfficeBasicInformationDto>();
+        }
+
+        StateHasChanged();  
     }
 
     #endregion

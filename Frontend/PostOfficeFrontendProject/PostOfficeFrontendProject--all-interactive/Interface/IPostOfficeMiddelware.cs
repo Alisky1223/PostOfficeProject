@@ -5,9 +5,9 @@ namespace PostOfficeFrontendProject__all_interactive.Interface
 {
     public interface IPostOfficeMiddelware
     {
-        Task<PostOfficeDto?> GetByIdAsync(int id);
-        Task<List<PostOfficeBasicInformationDto>> GetAllPostOfficesAsync();
-        Task<PostOfficeDto?> UpdatePostOfficeAsync(int id, PostOfficeUpdateAndCreateDto updateDto);
-        Task<PostOfficeDto?> CreatePostOfficeAsync(PostOfficeUpdateAndCreateDto createDto);
+        Task<ApiResponse<PostOfficeDto>> GetByIdAsync(int id);
+        Task<ApiResponse<List<PostOfficeBasicInformationDto>>> GetAllPostOfficesAsync();
+        Task<ApiResponse<PostOfficeDto>> UpdatePostOfficeAsync(int id, PostOfficeUpdateAndCreateDto updateDto);
+        Task<ApiResponse<PostOfficeDto>> CreatePostOfficeAsync(PostOfficeUpdateAndCreateDto createDto);
     }
 }

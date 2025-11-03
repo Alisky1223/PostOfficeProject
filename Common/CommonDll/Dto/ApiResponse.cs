@@ -5,8 +5,13 @@
         public bool Success { get; set; }
         public T? Data { get; set; } // Made nullable to handle cases where Data is null
         public string? Message { get; set; }
-        public List<string> Errors { get; set; }
+        public List<string> Errors { get; set; } = [];
         public int StatusCode { get; set; } // New property for HTTP status code
+
+        public ApiResponse()
+        {
+            
+        }
 
         // Constructor for successful response
         public ApiResponse(T data, int statusCode = 200)

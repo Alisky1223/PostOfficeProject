@@ -1,0 +1,41 @@
+﻿@page "/Admin"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@attribute [Authorize(Roles = "SuperAdmin")]
+@inject AuthenticationStateProvider AuthStateProvider
+
+<h3>پنل مدیریت</h3>
+
+<p>فقط کاربرانی که نقش Admin دارند می‌توانند این بخش را ببینند.</p>
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <div style="padding:10px; border:1px solid green; margin-top:10px;">
+            <p>خوش آمدید ادمین! می‌توانید کارهای مدیریتی را انجام دهید.</p>
+            <button @onclick="DoAdminTask">انجام وظیفه مدیریتی</button>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p style="color:red;">شما دسترسی لازم برای مشاهده این بخش را ندارید.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private void DoAdminTask()
+    {
+        // کد وظیفه مدیریتی
+        Console.WriteLine("Admin task executed!");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            Console.WriteLine($"کاربر: {user.Identity.Name}");
+            Console.WriteLine($"Roles: {string.Join(", ", user.FindAll(System.Security.Claims.ClaimTypes.Role).Select(r => r.Value))}");
+        }
+    }
+}

@@ -3,6 +3,7 @@ using MudBlazor.Services;
 using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
 using PostOfficeFrontendProject__all_interactive.Middelware;
+using PostOfficeFrontendProject__all_interactive.Service;
 
 namespace PostOfficeFrontendProject__all_interactive.Extention
 {
@@ -34,13 +35,20 @@ namespace PostOfficeFrontendProject__all_interactive.Extention
             services.AddHttpClient<ICustomerMiddleware, CustomerMiddleware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
+            });   
+            services.AddHttpClient<ILoginMiddleware, LoginMiddleware>(client =>
+            {
+                client.BaseAddress = new Uri(AAAbaseAddress);
             });
 
             services.AddMudServices();
             services.AddScoped<IDataPassHelper, DataPassHelper>();
+            services.AddScoped<NotificationService>();
 
 
             return services;
         }
+
+        
     }
 }
