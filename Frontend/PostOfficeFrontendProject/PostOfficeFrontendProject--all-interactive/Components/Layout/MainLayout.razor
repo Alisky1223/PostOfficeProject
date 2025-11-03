@@ -6,17 +6,19 @@
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ISnackbar Snackbar
 
-<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
+<CascadingAuthenticationState>
 
-<MudPopoverProvider />
+    <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
 
-<MudDialogProvider />
+    <MudPopoverProvider />
 
-<MudSnackbarProvider />
+    <MudDialogProvider />
 
-@* <MudRTLProvider RightToLeft="@_rightToLeft"> *@
+    <MudSnackbarProvider />
 
-@if (!IsHomePage && !IsLoginPage)
+    @* <MudRTLProvider RightToLeft="@_rightToLeft"> *@
+
+    @if (!IsHomePage && !IsLoginPage)
     {
 
         <MudLayout>
@@ -44,17 +46,19 @@
                 @Body
 
             </MudMainContent>
+
         </MudLayout>
     }
-else
-{
+    else
+    {
         <MudLayout>
 
             @Body
 
         </MudLayout>
-}
+    }
 
+</CascadingAuthenticationState>
 
 @* </MudRTLProvider> *@
 
@@ -264,9 +268,10 @@ else
     };
 
     private bool IsHomePage =>
-        NavigationManager.Uri.TrimEnd('/') == NavigationManager.BaseUri.TrimEnd('/');   
+        NavigationManager.Uri.TrimEnd('/') == NavigationManager.BaseUri.TrimEnd('/');
+
     private bool IsLoginPage =>
-    NavigationManager.Uri.ToLower().Contains("/Login");
+    NavigationManager.Uri.ToLower().Contains("/login");
 
     private bool _checkedAuth = false;
 
@@ -291,8 +296,6 @@ else
             NavigationManager.NavigateTo("/login", forceLoad: false);
         }
     }
-
-
 
 }
 
