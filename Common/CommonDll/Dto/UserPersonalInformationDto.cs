@@ -8,5 +8,6 @@
         public string Username { get; set; } = string.Empty;
         public string UserEmail { get; set; } = string.Empty;
         public string UserPhone { get; set; } = string.Empty;
+        public RoleDto? Role { get; set; }
     }
 }

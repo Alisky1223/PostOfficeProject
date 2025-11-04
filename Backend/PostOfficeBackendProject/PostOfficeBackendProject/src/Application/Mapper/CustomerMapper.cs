@@ -5,13 +5,14 @@ namespace PostOfficeBackendProject.src.Application.Mapper
 {
     public static class CustomerMapper
     {
-        public static CustomerDto ToDto(this Customer customer)
+        public static CustomerDto ToDto(this Customer customer, UserPersonalInformationDto userPersonalInformation)
         {
             return new CustomerDto
             {
                 Id = customer.Id,
                 Name = customer.Name,
                 CustomerNumber = customer.CustomerNumber,
+                PersonalInformation = userPersonalInformation,
                 Products = customer.Products.Select(p => p.ToDto()).ToList()
             };
         }

@@ -45,6 +45,7 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             targetCustomer.Id = id;
             targetCustomer.Name = customer.Name;
             targetCustomer.CustomerNumber = customer.CustomerNumber;
+            targetCustomer.UserId = customer.UserId;
 
             await _context.SaveChangesAsync();
 

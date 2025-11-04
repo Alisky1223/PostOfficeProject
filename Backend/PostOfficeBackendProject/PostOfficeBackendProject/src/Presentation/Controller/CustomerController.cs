@@ -16,9 +16,11 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         private const string updateCustomerRequestRoute = "UpdateCustomer/{id}";
 
         private readonly ICustomerRepository _repository;
-        public CustomerController(ICustomerRepository repository)
+        private readonly IUsersMiddleware _middleware;
+        public CustomerController(ICustomerRepository repository, IUsersMiddleware middleware)
         {
             _repository = repository;
+            _middleware = middleware;
         }
 
         [HttpGet(getAllCustomersRequestRoute)]
@@ -33,7 +35,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         }
 
         [HttpGet(getCustomerByIdRequestRoute)]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById(int id)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
@@ -42,7 +44,11 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
 
             if (customer == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            return Ok(new ApiResponse<object>(customer.ToDto()));
+            var personalInformation = await _middleware.GetUserInformation(customer.UserId);
+
+            if(!personalInformation.Success) return BadRequest(new ApiResponse<object>(personalInformation.Message, 500));
+
+            return Ok(new ApiResponse<object>(customer.ToDto(personalInformation.Data)));
         }
 
         [HttpPost(createCustomerRequestRoute)]
@@ -53,7 +59,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             var customer = createDto.ToCustomerFromCreateDto();
             var createdCustomer = await _repository.CreateAsync(customer);
 
-            return Ok(new ApiResponse<object>(createdCustomer.ToDto()));
+            return Ok(new ApiResponse<object>("Done"));//createdCustomer.ToDto()
         }
 
         [HttpPut(updateCustomerRequestRoute)]
@@ -66,7 +72,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
 
             if (updatedCustomer == null) return NotFound(new ApiResponse<object>("The Information Not Found",404));
 
-            return Ok(new ApiResponse<object>(updatedCustomer.ToDto()));
+            return Ok(new ApiResponse<object>("Done"));//updatedCustomer.ToDto()
         }
     }
 }

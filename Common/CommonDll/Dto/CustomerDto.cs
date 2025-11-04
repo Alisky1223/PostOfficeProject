@@ -6,6 +6,8 @@
         public string Name { get; set; } = string.Empty;
         public string CustomerNumber { get; set; } = string.Empty;
 
+        public UserPersonalInformationDto? PersonalInformation { get; set; }
+
         public List<ProductDto> Products { get; set; } = [];
     }
 }
