@@ -23,7 +23,7 @@
 
     </MudItem>
 
-    <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick"  T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
+<MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="ProductBasicInformationDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
 
         <ToolBarContent>
 
@@ -40,12 +40,6 @@
             <PropertyColumn Property="x => x.ProductName" Title="ProductName" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
             <PropertyColumn Property="x => x.Price" Title="Price" HeaderStyle="background:#ADD8E6;color:#333;" />
-
-            <PropertyColumn Property="x => x.Description" Title="Description" HeaderStyle="background:#ADD8E6;color:#333;" />
-
-            <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="ProductType" HeaderStyle="background:#ADD8E6;color:#333;" />
-
-            <PropertyColumn Property="x => x.TransportStatus.ProductStatusToString()" Title="TransportStatus" HeaderStyle="background:#ADD8E6;color:#333;" />
 
             <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="Operations">
 
@@ -114,9 +108,9 @@
 
     private string searchString = "";
 
-    private ProductDto selectedProducts = new();
+    private ProductBasicInformationDto selectedProducts = new();
 
-    private List<ProductDto> products = new List<ProductDto>();
+    private List<ProductBasicInformationDto> products = new List<ProductBasicInformationDto>();
 
     protected async override Task OnInitializedAsync()
     {
@@ -147,13 +141,13 @@
                     ? string.Join(", ", apiResponse.Errors ?? new List<string>())
                     : apiResponse.Message;
                 notificationService.ShowError(errorMsg ?? "Error To Load.");
-                products = new List<ProductDto>();
+                products = new List<ProductBasicInformationDto>();
             }
         }
         catch (Exception ex)
         {
             notificationService.ShowError($"Unexpected Error: {ex.Message}");
-            products = new List<ProductDto>();
+            products = new List<ProductBasicInformationDto>();
         }
 
         StateHasChanged();
@@ -163,7 +157,7 @@
 
     #region Filter
 
-    private Func<ProductDto, bool> _quickFilterProducts => x =>
+    private Func<ProductBasicInformationDto, bool> _quickFilterProducts => x =>
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
@@ -172,8 +166,7 @@
                             {
         x.ProductName?.ToString(),
         x.Price.ToString(),
-        x.Description.ToString(),
-        x.ProductType?.ProductsTypeToString(),
+     
 
                             };
 
@@ -195,7 +188,7 @@
 
     #region DeleteItem
 
-    private async Task DeletedProduct(ProductDto deletedProduct)
+    private async Task DeletedProduct(ProductBasicInformationDto deletedProduct)
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(

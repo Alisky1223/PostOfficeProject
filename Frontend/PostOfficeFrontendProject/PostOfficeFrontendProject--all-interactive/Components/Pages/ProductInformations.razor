@@ -2,7 +2,9 @@
 @using CommonDll.Dto
 @using MudBlazor
 @using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataPassHelper
 @inject IProductsMiddelware productsMiddelware
@@ -150,21 +152,32 @@
 
     private async Task LoadProduct()
     {
+
         try
         {
-
             isLoading = true;
 
-            var id = dataPassHelper.GetProudctId();
+            var apiResponse = await productsMiddelware.GetByIdAsync(dataPassHelper.GetProudctId());
 
-            // product = await productsMiddelware.GetByIdAsync(id);
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                product = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
 
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                product = null;
+            }
         }
         catch (Exception ex)
         {
-
-            Snackbar.Add($"خطا در دریافت اطلاعات: {ex.Message}", Severity.Error);
-
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            product = null;
         }
         finally
         {
@@ -172,11 +185,10 @@
             isLoading = false;
 
         }
-
     }
 
     #endregion
-    
+
     #region GoToMainPage
 
     private void GoToMainPage() => NavigationManager.NavigateTo("/MainPage");

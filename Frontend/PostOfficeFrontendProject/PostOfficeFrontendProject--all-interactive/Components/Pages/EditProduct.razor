@@ -21,9 +21,9 @@
 <MudRTLProvider RightToLeft="@_rightToLeft">
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
-     
+
         <MudText Typo="Typo.h5">Edit Products</MudText>
-  
+
     </MudItem>
 
     <MudForm @ref="form">
@@ -31,34 +31,34 @@
         <MudPaper Class="d-flex flex-wrap align-start justify-center gap-4" Style="margin-bottom:20px;padding:20px" Elevation="25">
 
             <MudItem Style="width:20%">
-             
+
                 <MudTextField @bind-Value="EditedProduct.ProductName" Label="ProductName" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
-        
+
             </MudItem>
 
             <MudItem Style="width:20%">
-            
+
                 <MudTextField @bind-Value="EditedProduct.Price" Label="Price" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
-        
+
             </MudItem>
 
             <MudItem Style="width:20%">
 
                 <MudTextField @bind-Value="EditedProduct.Description" Label="Description" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
-           
+
             </MudItem>
 
             <MudItem Style="width:20%">
 
                 <MudSelect T="ProductTypeDto" ToStringFunc="@ProductTypeDtoConverter" @bind-Value="EditedProduct.ProductType" MultiSelection="false" Label="ProductType" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
-               
+
                     @foreach (var productType in ProductTypes)
                     {
 
                         <MudSelectItem Value="productType"> @productType?.Type</MudSelectItem>
-                 
+
                     }
-               
+
                 </MudSelect>
 
             </MudItem>
@@ -229,6 +229,8 @@
                     Description = EditedProduct.Description,
                     ProductTypeId = EditedProduct.ProductType.Id,
                     TransportStatusId = EditedProduct.TransportStatus.Id,
+                    CustomerId = 1,
+                    PostmanId = 1,
                 };
 
             await productsMiddelware.UpdateProductAsync(dataHelper.GetProudctId(), update);

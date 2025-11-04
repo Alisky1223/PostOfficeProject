@@ -14,16 +14,16 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             _httpClient = httpClient;
         }
 
-        public async Task<ApiResponse<List<ProductDto>>> GetAllProductsAsync()
+        public async Task<ApiResponse<List<ProductBasicInformationDto>>> GetAllProductsAsync()
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<ApiResponse<List<ProductDto>>>("api/product/getall") ?? throw new Exception("API Response Is Null");
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<ProductBasicInformationDto>>>("api/product/getall") ?? throw new Exception("API Response Is Null");
 
             }
             catch (Exception e)
             {
-                return new ApiResponse<List<ProductDto>>(e.Message, 500);
+                return new ApiResponse<List<ProductBasicInformationDto>>(e.Message, 500);
             }
 
         }
