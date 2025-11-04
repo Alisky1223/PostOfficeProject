@@ -6,8 +6,10 @@
 @using System.Reflection
 @using System.Threading
 @using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
 @inject IProductDropdownMiddelware productDropdownMiddelware
@@ -33,7 +35,7 @@
         </ToolBarContent>
 
         <Columns>
-         
+
             <SelectColumn T="ProductTypeDto" />
 
             <PropertyColumn Property="x => x.Type" Title="نوع" HeaderStyle="background:#ADD8E6;color:#333;">
@@ -151,19 +153,40 @@
 
         try
         {
+
             isLoading = true;
-            productTypes = await productDropdownMiddelware.GetAllProductTypeAsync();
+
+            var apiResponse = await productDropdownMiddelware.GetAllProductTypeAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                productTypes = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                productTypes = new List<ProductTypeDto>();
+            }
 
         }
+
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            Snackbar.Add(ex.Message);
+
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            productTypes = new List<ProductTypeDto>();
 
         }
+
         finally
         {
+
             isLoading = false;
+
         }
 
     }
@@ -178,9 +201,9 @@
             return true;
 
         var fields = new List<string?>
-                                                   {
+                                                       {
         x.Type,
-                                                    };
+                                                        };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
                                f.Contains(searchType, StringComparison.OrdinalIgnoreCase));

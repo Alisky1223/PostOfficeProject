@@ -18,7 +18,7 @@
 
     @* <MudRTLProvider RightToLeft="@_rightToLeft"> *@
 
-    @if (!IsHomePage && !IsLoginPage)
+    @if (!IsHomePage && !IsLoginPage && !IsRegisterPage)
     {
 
         <MudLayout>
@@ -271,7 +271,10 @@
         NavigationManager.Uri.TrimEnd('/') == NavigationManager.BaseUri.TrimEnd('/');
 
     private bool IsLoginPage =>
-    NavigationManager.Uri.ToLower().Contains("/login");
+    NavigationManager.Uri.ToLower().Contains("/login"); 
+    
+    private bool IsRegisterPage =>
+    NavigationManager.Uri.ToLower().Contains("/registeruser");
 
     private bool _checkedAuth = false;
 

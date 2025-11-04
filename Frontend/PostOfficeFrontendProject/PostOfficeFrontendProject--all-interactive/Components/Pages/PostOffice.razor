@@ -6,16 +6,14 @@
 @using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService 
 @inject IDialogService DialogService
 @inject IDataPassHelper dataHelper
-@inject NotificationService notificationService 
 @inject IPostOfficeMiddelware postOfficeMiddelware
-
-<MudRTLProvider RightToLeft="@_rightToLeft">
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-        <MudText Typo="Typo.h5">اطلاعات مراکز پست</MudText>
+    <MudText Typo="Typo.h5">Post Office Information</MudText>
 
     </MudItem>
 
@@ -24,7 +22,7 @@
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h6">مراکز پست</MudText>
+        <MudText Typo="Typo.h6">PostOffices</MudText>
 
             <MudSpacer />
 
@@ -39,30 +37,30 @@
 
             <SelectColumn T="PostOfficeDto" />
 
-            <PropertyColumn Property="x => x.OfficeAccessCode" Title="کد مرکز" Sortable="false" Filterable="false" StickyRight="true" HeaderStyle="background:#ADD8E6;color:#333;" />
+        <PropertyColumn Property="x => x.OfficeAccessCode" Title="OfficeAccessCode" Sortable="false" Filterable="false" StickyRight="true" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.OfficeName" SortBy="@_sortBy" Title="نام مرکز" StickyRight="true" HeaderStyle="background:#ADD8E6;color:#333;" />
+        <PropertyColumn Property="x => x.OfficeName" SortBy="@_sortBy" Title="OfficeName" StickyRight="true" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.Address" Title="آدرس مرکز" HeaderStyle="background:#ADD8E6;color:#333;" />
+        <PropertyColumn Property="x => x.Address" Title="Address" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.StorageCapacity" Title="ظرفیت مرکز" HeaderStyle="background:#ADD8E6;color:#333;" />
+        <PropertyColumn Property="x => x.StorageCapacity" Title="StorageCapacity" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <TemplateColumn Title="عملیات" HeaderStyle="background:#ADD8E6;color:#333;">
+            <TemplateColumn Title="Oprations" HeaderStyle="background:#ADD8E6;color:#333;">
 
                 <CellTemplate>
 
                     <MudStack Row>
 
-                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeletedOffice(context.Item))">
-                         
-                            حذف
-                     
-                        </MudButton>
-
                         <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditedPostOffice(context.Item.Id))">
                         
-                            ویرایش
+                            Edit
 
+                        </MudButton>
+                       
+                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeletedOffice(context.Item))">
+                         
+                            Delete
+                     
                         </MudButton>
 
                     </MudStack>
@@ -83,21 +81,17 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center justify-end " Style="margin-top:20px">
 
-        <MudButton Class="main-button" Style="margin-left:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddPostOfficePage">افزودن</MudButton>
+        <MudButton Class="main-button" Style="margin-right:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddPostOfficePage">Add</MudButton>
 
-        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
 
     </MudPaper>
-
-</MudRTLProvider>
 
 @code {
 
     #region Props
 
     private bool _sortNameByLength;
-
-    private bool _rightToLeft = true;
 
     private List<string> _events = new();
 
@@ -119,20 +113,20 @@
             if (apiResponse.Success && apiResponse.Data != null)
             {
                 postOffice = apiResponse.Data;  
-                notificationService.ShowSuccess(apiResponse.Message ?? "لیست پستخانه‌ها با موفقیت بارگذاری شد.");
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
             }
             else
             {
                 var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
                     ? string.Join(", ", apiResponse.Errors ?? new List<string>())
                     : apiResponse.Message;
-                notificationService.ShowError(errorMsg ?? "خطا در بارگذاری لیست پستخانه‌ها.");
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
                 postOffice = new List<PostOfficeBasicInformationDto>();
             }
         }
         catch (Exception ex)
         {
-            notificationService.ShowError($"خطای غیرمنتظره در بارگذاری: {ex.Message}");
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
             postOffice = new List<PostOfficeBasicInformationDto>();
         }
 
@@ -197,10 +191,10 @@
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(
-    "تأیید حذف",
-    $"آیا مطمئن هستید که می‌خواهید ایستگاه '{deletedPostOffice.OfficeName}' را حذف کنید؟",
-    yesText: "بله",
-    noText: "خیر"
+    "Delete Confirm",
+    $"Are You Sure To Delete '{deletedPostOffice.OfficeName}'? ",
+    noText: "No",
+    yesText: "Yes"
     );
 
         if (confirmed == true)

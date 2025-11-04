@@ -8,8 +8,10 @@
 @using System.Diagnostics.Metrics
 @using PostOfficeBackendProject.src.Application.Dto
 @using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataHelper
 @inject IDialogService DialogService
@@ -20,7 +22,7 @@
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
      
-        <MudText Typo="Typo.h5">ویرایش مرسوله</MudText>
+        <MudText Typo="Typo.h5">Edit Products</MudText>
   
     </MudItem>
 
@@ -30,25 +32,25 @@
 
             <MudItem Style="width:20%">
              
-                <MudTextField @bind-Value="EditedProduct.ProductName" Label="کد مرسوله" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="EditedProduct.ProductName" Label="ProductName" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
         
             </MudItem>
 
             <MudItem Style="width:20%">
             
-                <MudTextField @bind-Value="EditedProduct.Price" Label="ارزش مرسوله" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="EditedProduct.Price" Label="Price" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
         
             </MudItem>
 
             <MudItem Style="width:20%">
 
-                <MudTextField @bind-Value="EditedProduct.Description" Label="توضیحات مرسوله" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="EditedProduct.Description" Label="Description" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
            
             </MudItem>
 
             <MudItem Style="width:20%">
 
-                <MudSelect T="ProductTypeDto" ToStringFunc="@ProductTypeDtoConverter" @bind-Value="EditedProduct.ProductType" MultiSelection="false" Label="نوع مرسوله" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
+                <MudSelect T="ProductTypeDto" ToStringFunc="@ProductTypeDtoConverter" @bind-Value="EditedProduct.ProductType" MultiSelection="false" Label="ProductType" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
                
                     @foreach (var productType in ProductTypes)
                     {
@@ -63,7 +65,7 @@
 
             <MudItem Style="width:20%">
 
-                <MudSelect T="TransportStatusDto" ToStringFunc="@TransportStatusDtoConverter" @bind-Value="EditedProduct.TransportStatus" MultiSelection="false" Label="وضعیت مرسوله" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
+                <MudSelect T="TransportStatusDto" ToStringFunc="@TransportStatusDtoConverter" @bind-Value="EditedProduct.TransportStatus" MultiSelection="false" Label="TransportStatus" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
 
                     @foreach (var productStatus in ProductStatus)
                     {
@@ -82,11 +84,11 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
 
-        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditProducts">ذخیره تغییرات</MudButton>
+        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditProducts">Save</MudButton>
 
-        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">لغو</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">Cancel</MudButton>
 
-        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
 
     </MudPaper>
 
@@ -130,11 +132,78 @@
 
     private async Task GetData()
     {
-        EditedProduct = await productsMiddelware.GetByIdAsync(dataHelper.GetProudctId());
+        try
+        {
+            var apiResponse = await productsMiddelware.GetByIdAsync(dataHelper.GetProudctId());
 
-        ProductTypes = await productDropdownMiddelware.GetAllProductTypeAsync();
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                EditedProduct = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
 
-        ProductStatus = await productDropdownMiddelware.GetAllStatusAsync();
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                EditedProduct = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            EditedProduct = null;
+        }
+
+        try
+        {
+            var apiResponse = await productDropdownMiddelware.GetAllProductTypeAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                ProductTypes = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                ProductTypes = new List<ProductTypeDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            ProductTypes = new List<ProductTypeDto>();
+        }
+
+        try
+        {
+            var apiResponse = await productDropdownMiddelware.GetAllStatusAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                ProductStatus = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                ProductStatus = new List<TransportStatusDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            ProductStatus = new List<TransportStatusDto>();
+        }
 
         StateHasChanged();
 
@@ -164,14 +233,13 @@
 
             await productsMiddelware.UpdateProductAsync(dataHelper.GetProudctId(), update);
 
-            Snackbar.Add("تغییرات با موفقیت ذخیره شد.", Severity.Success);
+            Snackbar.Add("Changes Saved.", Severity.Success);
 
             NavigationManager.NavigateTo("/PostOfficeProducts");
         }
-
         else
         {
-            Snackbar.Add("لطفاً تمام فیلدهای ضروری را تکمیل کنید.", Severity.Error);
+            Snackbar.Add("Please Fill The Necessary field", Severity.Error);
         }
     }
 

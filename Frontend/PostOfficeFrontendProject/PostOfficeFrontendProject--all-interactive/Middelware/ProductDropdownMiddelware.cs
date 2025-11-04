@@ -1,5 +1,6 @@
 ﻿using CommonDll.Dto;
 using PostOfficeFrontendProject__all_interactive.Interface;
+using System.Text.Json;
 namespace PostOfficeFrontendProject__all_interactive.Middelware
 {
     public class ProductDropdownMiddelware : IProductDropdownMiddelware
@@ -12,68 +13,108 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
 
         //Type
 
-        public async Task<List<ProductTypeDto>> GetAllProductTypeAsync()
+        public async Task<ApiResponse<List<ProductTypeDto>>> GetAllProductTypeAsync()
         {
-           
-            return await _httpClient.GetFromJsonAsync<List<ProductTypeDto>>("api/productType/getAll");
+
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<ProductTypeDto>>>("api/productType/getAll") ?? throw new Exception("API Response Is Null");
+
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<List<ProductTypeDto>>(e.Message, 500);
+            }
         }
 
-        public async Task<ProductTypeDto> CreateProductTypeAsync(ProductTypeUpdateAndCreateDto createDto)
+        public async Task<ApiResponse<ProductTypeDto>>CreateProductTypeAsync(ProductTypeUpdateAndCreateDto createDto)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/productType/createMeterClass", createDto);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<ProductTypeDto>();
+
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/productType/create", createDto);
+
+                return await HandleResponse<ApiResponse<ProductTypeDto>>(response, "Create failed");
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<ProductTypeDto>(e.Message, 500);
+            }
+
         }
         
-        public async Task<ProductTypeDto?> UpdateProductTypeAsync(int id, ProductTypeUpdateAndCreateDto updateDto)
+        public async Task<ApiResponse<ProductTypeDto>> UpdateProductTypeAsync(int id, ProductTypeUpdateAndCreateDto updateDto)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/productType/updateMeterClass/{id}", updateDto);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response.Content.ReadFromJsonAsync<ProductTypeDto>();
+                var response = await _httpClient.PutAsJsonAsync($"api/productType/update/{id}", updateDto);
+
+                return await HandleResponse<ApiResponse<ProductTypeDto>>(response, "Update failed");
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            catch (Exception e)
             {
-                return null;
+                return new ApiResponse<ProductTypeDto>(e.Message, 500);
             }
-            else
-            {
-                response.EnsureSuccessStatusCode();
-                return null;
-            }
+
         }
 
         //Status
 
-        public async Task<List<TransportStatusDto>> GetAllStatusAsync()
+        public async Task<ApiResponse<List<TransportStatusDto>>> GetAllStatusAsync()
         {
 
-            return await _httpClient.GetFromJsonAsync<List<TransportStatusDto>>("api/TransportStatus/getAll");
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<TransportStatusDto>>>("api/TransportStatus/getAll") ?? throw new Exception("API Response Is Null");
+
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<List<TransportStatusDto>>(e.Message, 500);
+            }
+
         }
 
-        public async Task<TransportStatusDto> CreateStatusAsync(TransportStatusUpdateAndCreateDto create)
+        public async Task<ApiResponse<TransportStatusDto>> CreateStatusAsync(TransportStatusUpdateAndCreateDto create)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/TransportStatus/create", create);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<TransportStatusDto>();
+
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/TransportStatus/create", create);
+
+                return await HandleResponse<ApiResponse<TransportStatusDto>>(response, "Create failed");
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<TransportStatusDto>(e.Message, 500);
+            }
+            
         }
 
-        public async Task<TransportStatusDto?> UpdateStatusAsync(int id, TransportStatusUpdateAndCreateDto update)
+        public async Task<ApiResponse<TransportStatusDto>> UpdateStatusAsync(int id, TransportStatusUpdateAndCreateDto update)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/TransportStatus/{id}", update);
-            if (response.IsSuccessStatusCode)
+
+            try
             {
-                return await response.Content.ReadFromJsonAsync<TransportStatusDto>();
+                var response = await _httpClient.PutAsJsonAsync($"api/TransportStatus/update/{id}", update);
+
+                return await HandleResponse<ApiResponse<TransportStatusDto>>(response, "Update failed");
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            catch (Exception e)
             {
-                return null;
+                return new ApiResponse<TransportStatusDto>(e.Message, 500);
             }
-            else
-            {
-                response.EnsureSuccessStatusCode();
-                return null;
-            }
+
+        }
+
+        //handler
+
+        private static async Task<T> HandleResponse<T>(HttpResponseMessage response, string action)
+        {
+            var result = await response.Content.ReadFromJsonAsync<T>(
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return result ?? throw new InvalidOperationException($"{action}: Deserialized response is null.");
         }
 
     }

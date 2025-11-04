@@ -13,13 +13,11 @@
 @inject IDialogService DialogService
 @inject IPostOfficeMiddelware postOfficeMiddelware
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
-
     <MudForm @ref="form">
 
         <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
           
-            <MudText Typo="Typo.h5">ثبت تصحیح کننده</MudText>
+            <MudText Typo="Typo.h5">Add Post Office</MudText>
        
         </MudItem>
 
@@ -29,25 +27,25 @@
             
                 <MudItem Style="width:20%">
                  
-                    <MudTextField @bind-Value="addOffice.OfficeAccessCode" Label="کد مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                    <MudTextField @bind-Value="addOffice.OfficeAccessCode" Label="OfficeAccessCode" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
              
                 </MudItem>
 
                 <MudItem Style="width:20%">
                   
-                    <MudTextField @bind-Value="addOffice.OfficeName" Label="نام مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                    <MudTextField @bind-Value="addOffice.OfficeName" Label="OfficeName" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
                
                 </MudItem>
 
                 <MudItem Style="width:20%">
 
-                    <MudTextField @bind-Value="addOffice.Address" Label="آدرس مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                    <MudTextField @bind-Value="addOffice.Address" Label="Address" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
 
                 </MudItem>
 
                 <MudItem Style="width:20%">
 
-                    <MudTextField @bind-Value="addOffice.StorageCapacity" Label="ظرفیت مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                    <MudTextField @bind-Value="addOffice.StorageCapacity" Label="StorageCapacity" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
 
                 </MudItem>
 
@@ -57,23 +55,21 @@
 
     </MudForm>
 
-    <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
+<MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
 
-        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="AddCorreector">ذخیره تغییرات</MudButton>
+        <MudButton Style="margin-right:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="AddCorreector">Save</MudButton>
 
-        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">لغو</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">Cancel</MudButton>
 
-        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">Main Page</MudButton>
 
     </MudPaper>
-
-</MudRTLProvider>
 
 <style>
 
     .main-button {
         position: fixed;
-        left: 15px;
+        right: 15px;
     }
 
 </style>
@@ -83,8 +79,6 @@
     #region Props
 
     private MudForm form;
-
-    private bool _rightToLeft = true;
 
     private PostOfficeDto addOffice = new PostOfficeDto();
 
@@ -108,13 +102,13 @@
 
             await postOfficeMiddelware.CreatePostOfficeAsync(create);
 
-            Snackbar.Add("تغییرات با موفقیت ذخیره شد.", Severity.Success);
+            Snackbar.Add("Changes Saved.", Severity.Success);
 
             NavigationManager.NavigateTo("/PostOffice");
         }
         else
         {
-            Snackbar.Add("لطفاً تمام فیلدهای ضروری را تکمیل کنید.", Severity.Error);
+            Snackbar.Add("Please Fill The Necessary field", Severity.Error);
         }
 
     }

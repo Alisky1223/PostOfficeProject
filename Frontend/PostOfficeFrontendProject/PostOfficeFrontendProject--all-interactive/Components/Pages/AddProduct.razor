@@ -8,8 +8,10 @@
 @using System.Diagnostics.Metrics
 @using PostOfficeBackendProject.src.Application.Dto
 @using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataHelper
 @inject IDialogService DialogService
@@ -67,7 +69,7 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
 
-        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditProducts">ذخیره تغییرات</MudButton>
+        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="CreateProducts">ذخیره تغییرات</MudButton>
 
         <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">لغو</MudButton>
 
@@ -100,28 +102,11 @@
 
     Func<ProductTypeDto, string> ProductTypeDtoConverter = p => p?.Type;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await GetData();
-    }
-
-    #endregion
-
-    #region LoadOffice
-
-    private async Task GetData()
-    {
-        ProductTypes = await productDropdownMiddelware.GetAllProductTypeAsync();
-
-        StateHasChanged();
-
-    }
-
     #endregion
 
     #region SubmitOrCancele
 
-    private async Task EditProducts()
+    private async Task CreateProducts()
     {
 
         await form.Validate();
@@ -139,14 +124,13 @@
 
             await productsMiddelware.CreateProductAsync(create);
 
-            Snackbar.Add("تغییرات با موفقیت ذخیره شد.", Severity.Success);
+            Snackbar.Add("Changes Saved.", Severity.Success);
 
             NavigationManager.NavigateTo("/PostOfficeProducts");
         }
-
         else
         {
-            Snackbar.Add("لطفاً تمام فیلدهای ضروری را تکمیل کنید.", Severity.Error);
+            Snackbar.Add("Please Fill The Necessary field", Severity.Error);
         }
     }
 

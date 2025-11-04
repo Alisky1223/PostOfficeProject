@@ -41,7 +41,11 @@ namespace PostOfficeFrontendProject__all_interactive.Extention
             });   
             services.AddHttpClient<ILoginMiddleware, LoginMiddleware>(client =>
             {
-                client.BaseAddress = new Uri(AAAbaseAddress);
+                client.BaseAddress = new Uri(baseAddress);
+            });
+            services.AddHttpClient<IRegisterMiddleware, RegisterMiddleware>(client =>
+            {
+                client.BaseAddress = new Uri(baseAddress);
             });
 
             services.AddMudServices();

@@ -8,18 +8,18 @@
 @using System.Threading
 @using PostOfficeFrontendProject__all_interactive.Interface
 @using PostOfficeFrontendProject__all_interactive.Mapper
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
-@inject IProductsMiddelware productsMiddelware
 @inject IDataPassHelper dataPassHelper
-
-<MudRTLProvider RightToLeft="@_rightToLeft">
+@inject IProductsMiddelware productsMiddelware
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-        <MudText Typo="Typo.h5">مشاهده اطلاعات مرسوله ها</MudText>
+        <MudText Typo="Typo.h5">Packets Informations</MudText>
 
     </MudItem>
 
@@ -27,7 +27,7 @@
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h5" Style="margin:20px"><b>لیست مرسولات</b></MudText>
+            <MudText Typo="Typo.h5" Style="margin:20px"><b>Packets List</b></MudText>
 
             <MudSpacer />
 
@@ -37,17 +37,17 @@
 
         <Columns>
 
-            <PropertyColumn Property="x => x.ProductName" Title="نام مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+            <PropertyColumn Property="x => x.ProductName" Title="ProductName" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
-            <PropertyColumn Property="x => x.Price" Title="ارزش مرسوله" HeaderStyle="background:#ADD8E6;color:#333;"/>
+            <PropertyColumn Property="x => x.Price" Title="Price" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.Description" Title="توضیحات مرسوله" HeaderStyle="background:#ADD8E6;color:#333;"  />
+            <PropertyColumn Property="x => x.Description" Title="Description" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="نوع مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
+            <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="ProductType" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.TransportStatus.ProductStatusToString()" Title="وضعیت مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" />
+            <PropertyColumn Property="x => x.TransportStatus.ProductStatusToString()" Title="TransportStatus" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="عملیات">
+            <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="Operations">
 
                 <CellTemplate>
 
@@ -56,11 +56,11 @@
 
                         <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditProduct(context.Item.Id))">
 
-                            ویرایش
+                            Edit
 
                         </MudButton>
 
-                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">حذف</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">Delete</MudButton>
 
 
 
@@ -82,19 +82,18 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center justify-end " Style="margin-top:20px">
 
-        <MudButton Class="main-button" Style="margin-left:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddProductPage">افزودن</MudButton>
+        <MudButton Class="main-button" Style="margin-right:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddProductPage">Add</MudButton>
 
-        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
 
     </MudPaper>
 
-</MudRTLProvider>
 
 <style>
 
     .red-header {
-        background-color: #87CEFA;
-        color: #fff; /* سفید برای خوانایی متن */
+    background-color: #87CEFA;
+    color: #fff; /* سفید برای خوانایی متن */
     }
 
 </style>
@@ -112,8 +111,6 @@
     private bool bordered = true;
 
     private bool isLoading = false;
-
-    private bool _rightToLeft = true;
 
     private string searchString = "";
 
@@ -134,21 +131,32 @@
 
     private async Task LoadProducts()
     {
+
         try
         {
-            isLoading = true;
-            products = await productsMiddelware.GetAllProductsAsync();  // لیست جدید
+            var apiResponse = await productsMiddelware.GetAllProductsAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                products = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                products = new List<ProductDto>();
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            Snackbar.Add(ex.Message);
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            products = new List<ProductDto>();
+        }
 
-        }
-        finally
-        {
-            isLoading = false;
-        }
+        StateHasChanged();
     }
 
     #endregion

@@ -10,16 +10,14 @@
 @using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataHelper
 @inject IDialogService DialogService
 @inject IPostOfficeMiddelware postOfficeMiddelware
-@inject NotificationService notificationService  // فیکس: inject کن (نام کوچک‌تر)
-
-<MudRTLProvider RightToLeft="@_rightToLeft">
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
-        <MudText Typo="Typo.h5">ویرایش تصحیح کننده</MudText>
+        <MudText Typo="Typo.h5">Edit Post Office</MudText>
     </MudItem>
 
     <MudForm @ref="form">
@@ -27,19 +25,19 @@
         <MudPaper Class="d-flex flex-wrap align-start justify-center gap-4" Style="margin-bottom:20px;padding:20px" Elevation="25">
 
             <MudItem Style="width:20%">
-                <MudTextField @bind-Value="EditedPostOffice.OfficeAccessCode" Label="کد مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="EditedPostOffice.OfficeAccessCode" Label="OfficeAccessCode" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
             </MudItem>
 
             <MudItem Style="width:20%">
-                <MudTextField @bind-Value="EditedPostOffice.OfficeName" Label="نام مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="EditedPostOffice.OfficeName" Label="OfficeName" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
             </MudItem>
 
             <MudItem Style="width:20%">
-                <MudTextField @bind-Value="EditedPostOffice.Address" Label="آدرس مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="EditedPostOffice.Address" Label="Address" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
             </MudItem>
 
             <MudItem Style="width:20%">
-                <MudTextField @bind-Value="EditedPostOffice.StorageCapacity" Label="ظرفیت مرکز" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="EditedPostOffice.StorageCapacity" Label="StorageCapacity" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
             </MudItem>
 
         </MudPaper>
@@ -48,21 +46,20 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
 
-        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditCorreector">ذخیره تغییرات</MudButton>
+    <MudButton Style="margin-right:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditCorreector">Save</MudButton>
 
-        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">لغو</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">Cancel</MudButton>
 
-        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">Main Page</MudButton>
 
     </MudPaper>
 
-</MudRTLProvider>
 
 <style>
 
     .main-button {
         position: fixed;
-        left: 15px;
+        right: 15px;
     }
 
 </style>
@@ -72,8 +69,6 @@
     #region Props
 
     private MudForm form;
-
-    private bool _rightToLeft = true;
 
     private PostOfficeDto EditedPostOffice = new PostOfficeDto();
 
@@ -95,7 +90,7 @@ private async Task GetData()
             if (apiResponse.Success && apiResponse.Data != null)
             {
                 EditedPostOffice = apiResponse.Data;  
-                notificationService.ShowSuccess(apiResponse.Message ?? "پستخانه با موفقیت بارگذاری شد.");
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
             }
             else
             {
@@ -103,13 +98,13 @@ private async Task GetData()
                 var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
                     ? string.Join(", ", apiResponse.Errors ?? new List<string>())
                     : apiResponse.Message;
-                notificationService.ShowError(errorMsg ?? "خطا در بارگذاری پستخانه.");
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
                 EditedPostOffice = null;
             }
         }
         catch (Exception ex)
         {
-            notificationService.ShowError($"خطای غیرمنتظره: {ex.Message}");
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
             EditedPostOffice = null;
         }
 
@@ -139,14 +134,14 @@ private async Task GetData()
 
             await postOfficeMiddelware.UpdatePostOfficeAsync(dataHelper.GetPostOfficeId(), update);
 
-            Snackbar.Add("تغییرات با موفقیت ذخیره شد.", Severity.Success);
+            Snackbar.Add("Changes Saved.", Severity.Success);
 
             NavigationManager.NavigateTo("/PostOffice");
         }
 
         else
         {
-            Snackbar.Add("لطفاً تمام فیلدهای ضروری را تکمیل کنید.", Severity.Error);
+            Snackbar.Add("Please Fill The Necessary field", Severity.Error);
         }
     }
 

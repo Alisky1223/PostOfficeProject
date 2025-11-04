@@ -6,8 +6,10 @@
 @using System.Reflection
 @using System.Threading
 @using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
 @inject IProductDropdownMiddelware productDropdownMiddelware
@@ -151,16 +153,35 @@
 
         try
         {
+
             isLoading = true;
-            Status = await productDropdownMiddelware.GetAllStatusAsync();
+
+            var apiResponse = await productDropdownMiddelware.GetAllStatusAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                Status = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                Status = new List<TransportStatusDto>();
+            }
 
         }
+
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            Snackbar.Add(ex.Message);
+
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            Status = new List<TransportStatusDto>();
 
         }
+
         finally
         {
             isLoading = false;
@@ -178,9 +199,9 @@
             return true;
 
         var fields = new List<string?>
-                                                       {
+                                                           {
         x.Status,
-                                                        };
+                                                            };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
                                f.Contains(searchStatus, StringComparison.OrdinalIgnoreCase));
@@ -260,7 +281,7 @@
         Snackbar.Add("تغییرات ذخیره شد", Severity.Success);
 
     }
-    
+
 
     #endregion
 
