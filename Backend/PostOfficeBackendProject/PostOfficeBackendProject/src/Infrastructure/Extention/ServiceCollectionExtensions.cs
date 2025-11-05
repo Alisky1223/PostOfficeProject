@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PostOfficeBackendProject.src.Application.Service;
 using PostOfficeBackendProject.src.Domain.Interface;
 using PostOfficeBackendProject.src.Infrastructure.Data;
 using PostOfficeBackendProject.src.Infrastructure.Midleware;
@@ -21,6 +22,8 @@ namespace PostOfficeBackendProject.src.Infrastructure.Extention
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<ITransportStatusRepository, TransportStatusRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddScoped<DatabaseSeederService>();
 
             return services;
         }
