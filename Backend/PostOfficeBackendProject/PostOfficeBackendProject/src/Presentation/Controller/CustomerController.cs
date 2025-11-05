@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
+using PostOfficeBackendProject.src.Domain.Model;
 
 namespace PostOfficeBackendProject.src.Presentation.Controller
 {
@@ -44,11 +45,14 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
 
             if (customer == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            var personalInformation = await _middleware.GetUserInformation(customer.UserId);
+            //var personalInformation = await _middleware.GetUserInformation(customer.UserId);
 
-            if(!personalInformation.Success) return BadRequest(new ApiResponse<object>(personalInformation.Message, 500));
+            //if(!personalInformation.Success) return BadRequest(new ApiResponse<object>(personalInformation.Message, 500));
 
-            return Ok(new ApiResponse<object>(customer.ToDto(personalInformation.Data)));
+            var postmanUserResult = await _middleware.GetUserInformation(customer.UserId);
+
+            return Ok(postmanUserResult);
+
         }
 
         [HttpPost(createCustomerRequestRoute)]

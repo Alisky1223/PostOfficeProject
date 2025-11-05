@@ -5,15 +5,14 @@ namespace PostOfficeBackendProject.src.Application.Mapper
 {
     public static class CustomerMapper
     {
-        public static CustomerDto ToDto(this Customer customer, UserPersonalInformationDto userPersonalInformation)
+        public static CustomerDto ToDto(this Customer customer)
         {
             return new CustomerDto
             {
                 Id = customer.Id,
-                Name = customer.Name,
                 CustomerNumber = customer.CustomerNumber,
-                PersonalInformation = userPersonalInformation,
-                Products = customer.Products.Select(p => p.ToDto()).ToList()
+                Products = customer.Products.Select(p => p.ToDto()).ToList(),
+                UserId = customer.UserId
             };
         }
 
@@ -22,8 +21,8 @@ namespace PostOfficeBackendProject.src.Application.Mapper
             return new CustomerBasicInformationDto
             {
                 Id = customer.Id,
-                Name = customer.Name,
-                CustomerNumber = customer.CustomerNumber
+                CustomerNumber = customer.CustomerNumber,
+                UserId = customer.UserId,
             };
         }
 
@@ -31,8 +30,8 @@ namespace PostOfficeBackendProject.src.Application.Mapper
         {
             return new Customer
             {
-                Name = createDto.Name,
                 CustomerNumber = createDto.CustomerNumber,
+                UserId = createDto.UserId
             };
         }
     }

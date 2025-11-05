@@ -14,6 +14,10 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
         }
         public async Task<Customer> CreateAsync(Customer customer)
         {
+            var allreadyCreated = await _context.Customer.FirstOrDefaultAsync(x => x.UserId == customer.UserId);
+
+            if (allreadyCreated != null) return allreadyCreated;
+
             var newCustomer = await _context.Customer.AddAsync(customer);
             await _context.SaveChangesAsync();
             return newCustomer.Entity;
@@ -27,9 +31,21 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
         public async Task<Customer?> GetCustomerByIdAsync(int id)
         {
             var targetCustomer = await _context.Customer
+                //.Include(c => c.Products).ThenInclude(c => c.ProductType)
+                //.Include(c => c.Products).ThenInclude(c => c.TransportStatus)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (targetCustomer == null) return null;
+
+            return targetCustomer;
+        }
+
+        public async Task<Customer?> GetCustomerByUserIdAsync(int id)
+        {
+            var targetCustomer = await _context.Customer
                 .Include(c => c.Products).ThenInclude(c => c.ProductType)
                 .Include(c => c.Products).ThenInclude(c => c.TransportStatus)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.UserId == id);
 
             if (targetCustomer == null) return null;
 
@@ -43,7 +59,6 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             if (targetCustomer == null) return null;
 
             targetCustomer.Id = id;
-            targetCustomer.Name = customer.Name;
             targetCustomer.CustomerNumber = customer.CustomerNumber;
             targetCustomer.UserId = customer.UserId;
 

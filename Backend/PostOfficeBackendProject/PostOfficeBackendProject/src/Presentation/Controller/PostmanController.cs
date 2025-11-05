@@ -15,9 +15,12 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         private const string updateRequest = "update/{id:int}";
 
         private readonly IPostmanRepository _repository;
-        public PostmanController(IPostmanRepository repository)
+        private readonly IUsersMiddleware _middleware;
+
+        public PostmanController(IPostmanRepository repository, IUsersMiddleware middleware)
         {
             _repository = repository;
+            _middleware = middleware;
         }
 
         [HttpGet(getAllRequest)]
@@ -38,8 +41,10 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
 
             var postMan = await _repository.GetPostmanById(id);
             if (postMan == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+
+            var postmanUserResult = await _middleware.GetUserInformation(postMan.UserId);
             
-            return Ok(new ApiResponse<object>(postMan.ToDto()));
+            return Ok(postmanUserResult);
         }
 
         [HttpPost(createRequest)]

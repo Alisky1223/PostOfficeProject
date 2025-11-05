@@ -31,6 +31,21 @@ namespace PostOfficeBackendProject.src.Infrastructure.Repository
             return targetStatus;
         }
 
+        public async Task SeedTransportStatus()
+        {
+            if (await _context.TransportStatus.AnyAsync()) return;
+
+            var instation = new TransportStatus { Status = "In Station" };
+            var postmanDelivering = new TransportStatus { Status = "Postman Delivering" };
+            var postmanDelivered = new TransportStatus { Status = "Postman Delivered" };
+
+            await _context.TransportStatus.AddAsync(instation);
+            await _context.TransportStatus.AddAsync(postmanDelivering);
+            await _context.TransportStatus.AddAsync(postmanDelivered);
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<TransportStatus?> Update(int id, TransportStatus transportStatus)
         {
             var targetStatus = await _context.TransportStatus.FirstOrDefaultAsync(x => x.Id == id);
