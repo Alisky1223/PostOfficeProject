@@ -1,3 +1,4 @@
+using PostOfficeBackendProject.src.Application.Service;
 using PostOfficeBackendProject.src.Infrastructure.Extention;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,13 @@ builder.Services.AddPolicies();
 builder.Services.AddMiddleware(builder.Configuration);
 
 var app = builder.Build();
+
+//Seeding Database with Critical Informations
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeederService>();
+    await seeder.SeedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

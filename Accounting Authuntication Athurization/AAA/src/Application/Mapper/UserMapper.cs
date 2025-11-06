@@ -39,7 +39,8 @@ namespace AAA.src.Application.Mapper
                 LastName = user.LastName,
                 UserEmail = user.UserEmail,
                 Username = user.Username,
-                UserPhone = user.UserPhone
+                UserPhone = user.UserPhone,
+                Role = user.Role?.ToDto() ?? null,
             };
         }
 

@@ -10,9 +10,9 @@ namespace PostOfficeBackendProject.src.Application.Mapper
             return new PostManDto 
             {
                 Id = postman.Id,
-                Name = postman.Name,
                 PersonalCode = postman.PersonalCode,  
                 Products = postman.Products.Select(x => x.ToDto()).ToList(),
+                UserId = postman.UserId,
             };
         }
 
@@ -21,8 +21,8 @@ namespace PostOfficeBackendProject.src.Application.Mapper
             return new PostmanBasicInformationDto
             {
                 Id = postman.Id,
-                Name = postman.Name,
                 PersonalCode = postman.PersonalCode,
+                UserId = postman.UserId
             };
         }
 
@@ -30,9 +30,9 @@ namespace PostOfficeBackendProject.src.Application.Mapper
         {
             return new Postman 
             {
-                Name = createDto.Name,
                 PersonalCode = createDto.PersonalCode,
                 PostOfficeId = createDto.PostOfficeId,
+                UserId = createDto.UserId
             };
         }
     }

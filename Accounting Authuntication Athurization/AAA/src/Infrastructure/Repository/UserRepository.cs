@@ -46,7 +46,9 @@ namespace AAA.src.Infrastructure.Repository
 
         public async Task<User?> GetUserById(int id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (user == null) return null;
 
             return user;

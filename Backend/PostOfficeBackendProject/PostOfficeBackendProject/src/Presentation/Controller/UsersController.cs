@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CommonDll.Dto;
+using Microsoft.AspNetCore.Mvc;
+using PostOfficeBackendProject.src.Application.Mapper;
 using PostOfficeBackendProject.src.Domain.Interface;
 
 namespace PostOfficeBackendProject.src.Presentation.Controller
@@ -7,21 +9,27 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private const string getUserByUserIdRequest = "getUserById/{id:int}";
+        private const string getAllUsersRequest = "getAllUsers";
+
         private readonly IUsersMiddleware _middleware;
+        
         public UsersController(IUsersMiddleware middleware)
         {
             _middleware = middleware;
+            
         }
 
-        [HttpGet("getUserById/{id}")]
+        [HttpGet(getUserByUserIdRequest)]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
             var result = await _middleware.GetUserInformation(id);
 
-            return Ok(result);
+            return Ok(new ApiResponse<object>(result));
+
         }
 
-        [HttpGet("getAllUsers")]
+        [HttpGet(getAllUsersRequest)]
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _middleware.GetAllUsers();

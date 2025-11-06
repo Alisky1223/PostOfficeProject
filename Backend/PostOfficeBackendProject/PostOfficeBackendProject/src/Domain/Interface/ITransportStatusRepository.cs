@@ -8,5 +8,6 @@ namespace PostOfficeBackendProject.src.Domain.Interface
         Task<TransportStatus?> GetById(int id);
         Task<TransportStatus> Create(TransportStatus transportStatus);
         Task<TransportStatus?> Update(int id, TransportStatus transportStatus);
+        Task SeedTransportStatus();
     }
 }

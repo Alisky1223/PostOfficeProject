@@ -1,13 +1,16 @@
 ﻿namespace CommonDll.Dto
 {
-    public class UserPersonalInformationDto
+    public class UserCustomerPostmanDto
     {
-        public int Id { get; set; }
+        public string PersonalCode { get; set; } = string.Empty;
+        //personal information
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         public string UserEmail { get; set; } = string.Empty;
         public string UserPhone { get; set; } = string.Empty;
-        public RoleDto? Role { get; set; }
+
+        public List<ProductDto> Products { get; set; } = [];
+
     }
 }
