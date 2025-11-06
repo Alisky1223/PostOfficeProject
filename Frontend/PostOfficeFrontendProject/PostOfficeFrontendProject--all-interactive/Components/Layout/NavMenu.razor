@@ -1,15 +1,56 @@
-﻿
-<MudNavMenu>
-    <MudNavLink Href="Login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Login</MudNavLink>
+﻿@using PostOfficeFrontendProject__all_interactive.Provider
+@inject CustomAuthStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+
+<MudNavMenu Style="position: relative; min-height: 93vh;">
+
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Main</MudNavLink>
-    @* <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink> *@
-    @* <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink> *@
+
+    <MudNavLink Href="Admin" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">Admin</MudNavLink>
+
     <MudNavLink Href="PostOffice" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">PostOfiices</MudNavLink>
-    <MudNavLink Href="PostOfficeProducts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">Packets</MudNavLink>
-    <MudNavLink Href="PostMan" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">PostMans</MudNavLink>
-    <MudNavLink Href="Customers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">Customers</MudNavLink>
-    <MudNavLink Href="Admin" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">Admin</MudNavLink>
+
+    <MudNavLink Href="PostOfficeProducts" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ProductionQuantityLimits">Packets</MudNavLink>
+
+    <MudNavLink Href="PostMan" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PostAdd">PostMans</MudNavLink>
+
+    <MudNavLink Href="Customers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LineStyle">Customers</MudNavLink>
+
+    <MudNavGroup Title="ManageBasicInfo" Expanded="false" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">
+
+        <MudNavLink Href="Customers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.MergeType">Product Type</MudNavLink>
+
+        <MudNavLink Href="Customers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.SignalWifiStatusbar4Bar">Product Status</MudNavLink>
+
+    </MudNavGroup>
+
+@* <MudNavLink Href="Login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Login">Login</MudNavLink> *@
+
+    <MudButton Class="logOut" Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Medium" OnClick="LogOut">LogOut</MudButton>
 
 </MudNavMenu>
 
+<style>
 
+    .logOut
+    {
+        position: absolute;
+        bottom: 20px;
+        left: 10px;
+        width: calc(100% - 20px);
+    }
+
+</style>
+
+@code {
+
+    private async Task LogOut()
+    {
+
+    await AuthStateProvider.LogoutAsync();
+
+    Navigation.NavigateTo("Login", forceLoad: true);
+
+    }
+
+}

@@ -18,7 +18,7 @@
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-        <MudText Typo="Typo.h5"> نقل و انتقال مرسوله ها  </MudText>
+        <MudText Typo="Typo.h5"> Product Transport Status  </MudText>
 
     </MudItem>
 
@@ -26,11 +26,11 @@
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h6">وضعیت نقل و انتقال مرسوله</MudText>
+            <MudText Typo="Typo.h6">Transport Status</MudText>
 
             <MudSpacer />
 
-            <MudTextField @bind-Value="searchStatus" Immediate="true" Placeholder="جستجو" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchStatus" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 
         </ToolBarContent>
 
@@ -45,7 +45,7 @@
                     @if (editingStatus == context.Item)
                     {
 
-                        <MudTextField @bind-Value="context.Item.Status" Immediate="true" Placeholder="مقدار جدید" />
+                        <MudTextField @bind-Value="context.Item.Status" Immediate="true" Placeholder="New Value" />
 
                     }
                     else
@@ -59,7 +59,7 @@
 
             </PropertyColumn>
 
-            <TemplateColumn Title="عملیات" HeaderStyle="background:#ADD8E6;color:#333;">
+            <TemplateColumn Title="Operation" HeaderStyle="background:#ADD8E6;color:#333;">
 
                 <CellTemplate>
 
@@ -70,7 +70,7 @@
 
                             <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="SaveEdit">
 
-                                ذخیره
+                                Save
 
                             </MudButton>
 
@@ -80,7 +80,7 @@
 
                             <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditStatus(context.Item))">
 
-                                ویرایش
+                                Edit
 
                             </MudButton>
 
@@ -108,9 +108,9 @@
 
     <div style="display:inline;">
 
-        <MudTextField Label="مقدار جدید" @bind-Value="_newStatus.Status" Placeholder="وضعیت" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Add" Class="mt-2" />
+        <MudTextField Label="New Value" @bind-Value="_newStatus.Status" Placeholder="Product Status" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Add" Class="mt-2" />
 
-        <MudButton Style="margin-top:10px;" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNewStatus">ثبت</MudButton>
+        <MudButton Style="margin-top:10px;" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNewStatus">Save</MudButton>
 
     </div>
 
@@ -238,16 +238,17 @@
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(
-            "تأیید حذف",
-            $"آیا مطمئن هستید که می‌خواهید  '{status.Status}' را حذف کنید؟",
-            yesText: "بله",
-            noText: "خیر"
+        " Delete Confirm",
+            $"Do You Want Delete  '{status.Status}'?",
+          yesText: "Yes",
+        noText: "No"
         );
 
         if (confirmed == true)
         {
 
             Status = Status.Where(s => s.Id != status.Id).ToList();
+
         }
 
     }
@@ -278,7 +279,7 @@
 
         await productDropdownMiddelware.UpdateStatusAsync(editingItemId, update);
 
-        Snackbar.Add("تغییرات ذخیره شد", Severity.Success);
+        Snackbar.Add("Changes Saved", Severity.Success);
 
     }
 
@@ -301,13 +302,13 @@
 
             await productDropdownMiddelware.CreateStatusAsync(_newStatus);
 
-            Snackbar.Add("وضعیت جدید اضافه شد", Severity.Success);
+            Snackbar.Add("Add New Product Type", Severity.Success);
 
         }
         else
         {
 
-            Snackbar.Add("لطفاً مقدار را وارد کنید", Severity.Error);
+            Snackbar.Add("Please Enter The Value", Severity.Error);
 
         }
 

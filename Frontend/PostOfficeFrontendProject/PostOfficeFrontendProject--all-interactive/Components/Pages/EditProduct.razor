@@ -229,8 +229,8 @@
                     Description = EditedProduct.Description,
                     ProductTypeId = EditedProduct.ProductType.Id,
                     TransportStatusId = EditedProduct.TransportStatus.Id,
-                    CustomerId = 1,
-                    PostmanId = 1,
+                    CustomerId =2,
+                    PostmanId = 2,
                 };
 
             await productsMiddelware.UpdateProductAsync(dataHelper.GetProudctId(), update);
