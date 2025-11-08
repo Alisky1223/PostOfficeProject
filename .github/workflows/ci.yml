@@ -8,6 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Debug - List Directory Structure
+      run: ls -R # This will print the full repo structure in the logs for debugging
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' # Adjust to your .NET version if different
     - name: Restore dependencies
       run: dotnet restore MainAPISolution/MainAPISolution.sln
     - name: Build
