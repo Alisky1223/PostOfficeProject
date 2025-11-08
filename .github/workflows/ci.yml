@@ -23,10 +23,10 @@ jobs:
         dotnet-version: '8.0.x'  # Adjust to your .NET version if different
 
     - name: Restore dependencies
-      run: dotnet restore PostOfficeProject/Backend/PostOfficeBackendProject/PostOfficeBackendProject/PostOfficeBackendProject.csproj
+      run: dotnet restore Backend/PostOfficeBackendProject/PostOfficeBackendProject/PostOfficeBackendProject.csproj
 
     - name: Build
-      run: dotnet build PostOfficeProject/Backend/PostOfficeBackendProject/PostOfficeBackendProject/PostOfficeBackendProject.csproj --no-restore --configuration Release
+      run: dotnet build Backend/PostOfficeBackendProject/PostOfficeBackendProject/PostOfficeBackendProject.csproj --no-restore --configuration Release
 
     - name: Test with Coverage
-      run: dotnet test PostOfficeProject/Backend/PostOfficeBackendProject/PostOfficeProject.Tests/PostOfficeProject.Tests.csproj --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test Backend/PostOfficeBackendProject/PostOfficeProject.Tests/PostOfficeProject.Tests.csproj --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
