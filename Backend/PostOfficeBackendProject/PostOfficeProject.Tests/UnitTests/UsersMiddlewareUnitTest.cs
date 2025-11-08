@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using Xunit;
 
-namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
+namespace PostOfficeProject.Tests.UnitTests
 {
     public class UsersMiddlewareUnitTest
     {

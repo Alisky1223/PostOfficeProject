@@ -4,10 +4,11 @@ using PostOfficeBackendProject.src.Infrastructure.Data;
 using PostOfficeBackendProject.src.Infrastructure.Repository;
 using Xunit;
 
-namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
+namespace PostOfficeProject.Tests.UnitTests
 {
     public class CustomerRepositoryUnitTest : IAsyncLifetime
     {
+
         private ApplicationDBContext _dbContext;
         private CustomerRepository _repository;
 
@@ -28,7 +29,7 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
         }
 
         [Fact]
-        public async Task CreateNewCustomer_ShouldAddAndRetrieveCorrectly() 
+        public async Task CreateNewCustomer_ShouldAddAndRetrieveCorrectly()
         {
             //Arrange
             var newCustomer = new Customer
@@ -52,7 +53,7 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
         }
 
         [Fact]
-        public async Task UpdateCustomer_ShouldModifyExistingAndRetrieveUpdated() 
+        public async Task UpdateCustomer_ShouldModifyExistingAndRetrieveUpdated()
         {
             //Arrange
 
@@ -120,7 +121,7 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
 
             var productType = new ProductType { Id = 1, Type = "Soft" };
 
-            var transportStatus = new TransportStatus { Id = 1, Status = "Dliverd"};
+            var transportStatus = new TransportStatus { Id = 1, Status = "Dliverd" };
 
             _dbContext.ProductType.Add(productType);
             _dbContext.TransportStatus.Add(transportStatus);
@@ -132,7 +133,7 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
                 Id = 1,
                 UserId = 1,
                 CustomerNumber = "WithProducts",
-                Products = [new Product { ProductName = "Test Product", CustomerId = 1, Description = "Test Description", PostmanId = null, PostOfficeId = null, ProductTypeId = 1, Id = 1, Price = 489.50m, TransportStatusId = 1}]
+                Products = [new Product { ProductName = "Test Product", CustomerId = 1, Description = "Test Description", PostmanId = null, PostOfficeId = null, ProductTypeId = 1, Id = 1, Price = 489.50m, TransportStatusId = 1 }]
             };
             await _repository.CreateAsync(customer);
 
@@ -141,8 +142,9 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotEmpty(result.Products); 
-                                              
+            Assert.NotEmpty(result.Products);
+
         }
+
     }
 }

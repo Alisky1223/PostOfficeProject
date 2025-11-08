@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOfficeBackendProject", "PostOfficeBackendProject\PostOfficeBackendProject.csproj", "{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostOfficeProject.Tests", "PostOfficeProject.Tests\PostOfficeProject.Tests.csproj", "{FDA7A77B-249A-433C-925C-26E5E96E3731}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13A8CE17-BE2D-4718-9F2C-C975D0FB1F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA7A77B-249A-433C-925C-26E5E96E3731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA7A77B-249A-433C-925C-26E5E96E3731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA7A77B-249A-433C-925C-26E5E96E3731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA7A77B-249A-433C-925C-26E5E96E3731}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

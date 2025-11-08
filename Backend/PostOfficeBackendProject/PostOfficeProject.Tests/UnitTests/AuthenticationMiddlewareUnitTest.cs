@@ -5,8 +5,7 @@ using System.Text;
 using System.Text.Json;
 using Xunit;
 
-
-namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
+namespace PostOfficeProject.Tests.UnitTests
 {
     public class AuthenticationMiddlewareUnitTest
     {
@@ -19,7 +18,7 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
             var handler = new MockHttpMessageHandler(responseMessage);
             var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri("http://localhost:7157") 
+                BaseAddress = new Uri("http://localhost:7157")
             };
             return httpClient;
         }
@@ -41,7 +40,7 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
         }
 
         [Fact]
-        public async Task Login_SuccessfulResponse_ReturnsApiResponseWithData() 
+        public async Task Login_SuccessfulResponse_ReturnsApiResponseWithData()
         {
             //Arrange
             var expectedResponse = new ApiResponse<string>("Login success") { Data = "auth-token" };
@@ -64,10 +63,10 @@ namespace PostOfficeBackendProject.src.Tests.ServiceTest.TestCases
         }
 
         [Fact]
-        public async Task Login_FailedResponse_ReturnsErrorApiResponse() 
+        public async Task Login_FailedResponse_ReturnsErrorApiResponse()
         {
             // Arrange
-            var expectedResponse = new ApiResponse<string>("Invalid Response",500);
+            var expectedResponse = new ApiResponse<string>("Invalid Response", 500);
             var jsonResponse = JsonSerializer.Serialize(expectedResponse);
             var mockResponse = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
