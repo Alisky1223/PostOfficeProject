@@ -1,12 +1,29 @@
 name: CI
-on: [push, pull_request]
+
+on:
+  push:
+    branches: [ main, 16-unittest ]  # Adjust branches as needed
+  pull_request:
+    branches: [ main, 16-unittest ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
-      with: { dotnet-version: '8.0.x' }
+      with:
+        dotnet-version: '8.0.x'  # Adjust to your .NET version if different
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
     - name: Test with Coverage
-      run: dotnet test --collect:"XPlat Code Coverage"
+      run: dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover

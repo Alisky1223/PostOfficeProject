@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "sT7Q3uKMFGU=",
+  "dgSpecHash": "MMIF0UNW3ak=",
   "success": true,
   "projectFilePath": "D:\\Projects\\MyProjects\\TestProjects\\PostOffice\\PostOfficeProject\\Backend\\PostOfficeBackendProject\\PostOfficeBackendProject\\PostOfficeBackendProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alireza Asadi\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\Alireza Asadi\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
     "C:\\Users\\Alireza Asadi\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
+    "C:\\Users\\Alireza Asadi\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
+    "C:\\Users\\Alireza Asadi\\.nuget\\packages\\coverlet.msbuild\\6.0.4\\coverlet.msbuild.6.0.4.nupkg.sha512",
     "C:\\Users\\Alireza Asadi\\.nuget\\packages\\epplus\\8.2.0\\epplus.8.2.0.nupkg.sha512",
     "C:\\Users\\Alireza Asadi\\.nuget\\packages\\epplus.interfaces\\8.1.0\\epplus.interfaces.8.1.0.nupkg.sha512",
     "C:\\Users\\Alireza Asadi\\.nuget\\packages\\fluentassertions\\8.7.1\\fluentassertions.8.7.1.nupkg.sha512",
