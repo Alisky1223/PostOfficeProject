@@ -8,21 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Debug - List Directory Structure
-      run: ls -R # Prints all files/folders recursively in logs
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x' # Adjust to your .NET version if different
-    - name: Restore Common dependencies
-      run: dotnet restore Common/CommonDll/CommonDll.csproj # Adjust path if .csproj is elsewhere, e.g., Common/src/Common.csproj
-    - name: Build Common
-      run: dotnet build Common/CommonDll/CommonDll.csproj --no-restore --configuration Release
-    - name: Restore Main dependencies
-      run: dotnet restore Backend/PostOfficeBackendProject/PostOfficeBackendProject/PostOfficeBackendProject.csproj
-    - name: Build Main
-      run: dotnet build Backend/PostOfficeBackendProject/PostOfficeBackendProject/PostOfficeBackendProject.csproj --no-restore --configuration Release
+    - name: Restore dependencies
+      run: dotnet restore MainAPISolution/MainAPISolution.sln
+    - name: Build
+      run: dotnet build MainAPISolution/MainAPISolution.sln --no-restore --configuration Release
     - name: Test with Coverage
-      run: dotnet test Backend/PostOfficeBackendProject/PostOfficeProject.Tests/PostOfficeProject.Tests.csproj --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test MainAPISolution/MainAPISolution.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
