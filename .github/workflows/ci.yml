@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: [ main, 16-unittest ] # Adjust branches as needed
+    branches: [ main, 16-unittest ]
   pull_request:
     branches: [ main, 16-unittest ]
 jobs:
@@ -11,14 +11,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Debug - List Directory Structure
-      run: ls -R # This will print the full repo structure in the logs for debugging
+      run: ls -R
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x' # Adjust to your .NET version if different
+        dotnet-version: '8.0.x'
     - name: Restore dependencies
-      run: dotnet restore MainAPISolution/MainAPISolution.sln
+      run: dotnet restore MainAPISolution/MainAPISolution.sln  # Adjust this path based on ls -R output
     - name: Build
-      run: dotnet build MainAPISolution/MainAPISolution.sln --no-restore --configuration Release
+      run: dotnet build MainAPISolution/MainAPISolution.sln --no-restore --configuration Release  # Adjust path
     - name: Test with Coverage
-      run: dotnet test MainAPISolution/MainAPISolution.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test MainAPISolution/MainAPISolution.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  # Adjust path
