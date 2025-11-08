@@ -25,5 +25,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
+    - name: Debug - List Directory Structure
+      run: ls -R  # This will print all files and folders recursively in the logs for debugging
+
     - name: Test with Coverage
-      run: dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test PostOfficeProject.Tests/PostOfficeProject.Tests.csproj --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
