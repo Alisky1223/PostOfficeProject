@@ -14,6 +14,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Debug - List Directory Structure
+      run: ls -R  # Prints all files/folders recursively in logs
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -24,9 +27,6 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore --configuration Release
-
-    - name: Debug - List Directory Structure
-      run: ls -R  # This will print all files and folders recursively in the logs for debugging
 
     - name: Test with Coverage
       run: dotnet test PostOfficeProject.Tests/PostOfficeProject.Tests.csproj --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
