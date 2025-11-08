@@ -17,9 +17,9 @@ jobs:
       with:
         dotnet-version: '8.0.x' # Adjust to your .NET version if different
     - name: Restore Common dependencies
-      run: dotnet restore Common/Common.csproj # Adjust path if .csproj is elsewhere, e.g., Common/src/Common.csproj
+      run: dotnet restore Common/CommonDll/CommonDll.csproj # Adjust path if .csproj is elsewhere, e.g., Common/src/Common.csproj
     - name: Build Common
-      run: dotnet build Common/Common.csproj --no-restore --configuration Release
+      run: dotnet build Common/CommonDll/CommonDll.csproj --no-restore --configuration Release
     - name: Restore Main dependencies
       run: dotnet restore Backend/PostOfficeBackendProject/PostOfficeBackendProject/PostOfficeBackendProject.csproj
     - name: Build Main
