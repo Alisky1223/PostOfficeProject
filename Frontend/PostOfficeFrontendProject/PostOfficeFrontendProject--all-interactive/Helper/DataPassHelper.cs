@@ -34,7 +34,15 @@ namespace PostOfficeFrontendProject__all_interactive.Helper
 
         public int GetCustomerId() => _customerId;
 
-        public void SetCustomerId(int customerId) => _customerId = customerId;
+        public void SetCustomerId(int customerId) => _customerId = customerId;  
+        
+        //user
+
+        private int _userId;
+
+        public int GetUserId() => _userId;
+
+        public void SetUserId(int userId) => _userId = userId;
 
     }
 }

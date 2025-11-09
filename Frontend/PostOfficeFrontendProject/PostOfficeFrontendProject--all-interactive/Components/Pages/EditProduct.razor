@@ -18,8 +18,6 @@
 @inject IProductsMiddelware productsMiddelware
 @inject IProductDropdownMiddelware productDropdownMiddelware
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
-
     <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
         <MudText Typo="Typo.h5">Edit Products</MudText>
@@ -84,7 +82,7 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
 
-        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditProducts">Save</MudButton>
+        <MudButton Style="margin-right:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="EditProducts">Save</MudButton>
 
         <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">Cancel</MudButton>
 
@@ -92,13 +90,12 @@
 
     </MudPaper>
 
-</MudRTLProvider>
 
 <style>
 
     .main-button {
         position: fixed;
-        left: 15px;
+        right: 15px;
     }
 
 </style>
@@ -108,8 +105,6 @@
     #region Props
 
     private MudForm form;
-
-    private bool _rightToLeft = true;
 
     private ProductDto EditedProduct = new ProductDto();
 

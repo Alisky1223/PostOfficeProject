@@ -1,12 +1,14 @@
-﻿@page "/CustomerInformations"
+﻿@page "/UserInformations"
 @using CommonDll.Dto
 @using MudBlazor
 @using PostOfficeFrontendProject__all_interactive.Interface
 @using PostOfficeFrontendProject__all_interactive.Mapper
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataPassHelper
-@inject ICustomerMiddleware customerMiddleware
+@inject IUsersMiddleware usersMiddleware
 
 <MudRTLProvider RightToLeft="true">
 
@@ -16,7 +18,7 @@
 
             <MudText Typo="Typo.h5" Align="Align.Center" Class="font-weight-bold mb-2">
 
-                📦  CustomerInformations
+                📦  UserInformations
 
             </MudText>
 
@@ -30,25 +32,25 @@
 
                 </div>
             }
-            else if (customer != null)
+            else if (user != null)
             {
                 <MudGrid Spacing="3">
 
-                    <MudItem xs="12" sm="6">
+                    <MudItem xs="12" sm="6" md="2">
 
                         <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
 
                             <MudIcon Icon="@Icons.Material.Filled.Inventory2" Size="Size.Large" Color="Color.Primary" />
 
-                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">CustomerId</MudText>
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">FirstName</MudText>
 
-                            <MudText Typo="Typo.body1">@customer?.UserId</MudText>
+                            <MudText Typo="Typo.body1">@user?.FirstName</MudText>
 
                         </MudPaper>
 
                     </MudItem>
 
-                    <MudItem xs="12" sm="6">
+                    <MudItem xs="12" sm="6" md="2">
 
                         <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
 
@@ -56,19 +58,61 @@
 
                             <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">CustomerNunmber</MudText>
 
-                            <MudText Typo="Typo.body1">@customer?.CustomerNumber</MudText>
+                            <MudText Typo="Typo.body1">@user?.LastName</MudText>
 
                         </MudPaper>
 
-                    </MudItem>   
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="2">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Category" Size="Size.Large" Color="Color.Secondary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">CustomerNunmber</MudText>
+
+                            <MudText Typo="Typo.body1">@user?.Username</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="2">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Category" Size="Size.Large" Color="Color.Secondary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">CustomerNunmber</MudText>
+
+                            <MudText Typo="Typo.body1">@user?.UserEmail</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="2">
+
+                        <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                            <MudIcon Icon="@Icons.Material.Filled.Category" Size="Size.Large" Color="Color.Secondary" />
+
+                            <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">CustomerNunmber</MudText>
+
+                            <MudText Typo="Typo.body1">@user?.UserPhone</MudText>
+
+                        </MudPaper>
+
+                    </MudItem>
 
                 </MudGrid>
 
-                <MudDataGrid Style="margin-top:30px" Height="60vh" FixedHeader T="ProductDto" Loading="isLoading" Items="@customerProducts" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProduct">
+                <MudDataGrid Style="margin-top:30px" Height="60vh" FixedHeader T="ProductDto" Loading="isLoading" Items="@userPackets" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedPacket">
 
                     <ToolBarContent>
 
-                        <MudText Typo="Typo.h5" Style="margin:20px"><b>Customers Products</b></MudText>
+                        <MudText Typo="Typo.h5" Style="margin:20px"><b>User Packets</b></MudText>
 
                         <MudSpacer />
 
@@ -98,14 +142,11 @@
 
                 </MudDataGrid>
 
-
-
-
                 <div class="d-flex justify-center mt-6">
 
                     <MudButton Variant="Variant.Filled" Color="Color.Secondary"
-                               StartIcon="@Icons.Material.Filled.ArrowBack"
-                               OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
+                    StartIcon="@Icons.Material.Filled.ArrowBack"
+                    OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
 
                         Return
 
@@ -119,7 +160,7 @@
 
                 <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Error">
 
-                     Informations Not Found
+                    Informations Not Found
 
                 </MudText>
 
@@ -149,41 +190,49 @@
 
     private string searchString = "";
 
-    private CustomerDto? customer;
+    private UserCustomerPostmanDto user = new UserCustomerPostmanDto();
 
-    private ProductDto selectedProduct = new();
+    private ProductDto selectedPacket = new();
 
-    private List<ProductDto> customerProducts = new List<ProductDto>();
+    private List<ProductDto> userPackets = new List<ProductDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadCustomer();
+        await LoadUser();
     }
 
     #endregion
 
-    #region LoadCustomer
+    #region LoadUser
 
-    private async Task LoadCustomer()
+    private async Task LoadUser()
     {
         try
         {
-
             isLoading = true;
 
-            var id = dataPassHelper.GetCustomerId();
+            var apiResponse = await usersMiddleware.GetByIdAsync(dataPassHelper.GetUserId());
 
-            customer = await customerMiddleware.GetByIdAsync(id);
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                user = apiResponse.Data;
+                userPackets = user.Products;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
 
-            customerProducts = customer.Products;
-
-
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                user = null;
+            }
         }
         catch (Exception ex)
         {
-
-            Snackbar.Add($"Error To Find Informations: {ex.Message}", Severity.Error);
-
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            user = null;
         }
         finally
         {
@@ -196,7 +245,7 @@
 
     #endregion
 
-        #region Filter
+    #region Filter
 
     private Func<ProductDto, bool> _quickFilterProducts => x =>
     {
@@ -204,14 +253,14 @@
             return true;
 
         var fields = new List<string?>
-                            {
+                                {
         x.ProductName?.ToString(),
         x.Price.ToString(),
         x.Description.ToString(),
         x.ProductType?.ProductsTypeToString(),
         x.TransportStatus?.ProductStatusToString(),
 
-                            };
+                                };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
                                f.Contains(searchString, StringComparison.OrdinalIgnoreCase));
@@ -226,4 +275,5 @@
     #endregion
 
 }
+
 

@@ -1,4 +1,5 @@
-﻿@using PostOfficeFrontendProject__all_interactive.Provider
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using PostOfficeFrontendProject__all_interactive.Provider
 @inject CustomAuthStateProvider AuthStateProvider
 @inject NavigationManager Navigation
 
@@ -6,7 +7,17 @@
 
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Main</MudNavLink>
 
-    <MudNavLink Href="Admin" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">Admin</MudNavLink>
+    <AuthorizeView Roles="SuperAdmin">
+
+        <Authorized>
+
+            <MudNavLink Href="Admin" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">Admin</MudNavLink>
+
+
+        </Authorized>
+
+    </AuthorizeView>
+            <MudNavLink Href="AllUsers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">Users</MudNavLink>
 
     <MudNavLink Href="PostOffice" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">PostOfiices</MudNavLink>
 
@@ -24,7 +35,7 @@
 
     </MudNavGroup>
 
-@* <MudNavLink Href="Login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Login">Login</MudNavLink> *@
+    @* <MudNavLink Href="Login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Login">Login</MudNavLink> *@
 
     <MudButton Class="logOut" Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Medium" OnClick="LogOut">LogOut</MudButton>
 
@@ -32,8 +43,7 @@
 
 <style>
 
-    .logOut
-    {
+    .logOut {
         position: absolute;
         bottom: 20px;
         left: 10px;
@@ -47,9 +57,9 @@
     private async Task LogOut()
     {
 
-    await AuthStateProvider.LogoutAsync();
+        await AuthStateProvider.LogoutAsync();
 
-    Navigation.NavigateTo("Login", forceLoad: true);
+        Navigation.NavigateTo("Login", forceLoad: true);
 
     }
 

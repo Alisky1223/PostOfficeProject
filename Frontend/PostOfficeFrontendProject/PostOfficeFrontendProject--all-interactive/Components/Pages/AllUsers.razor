@@ -1,11 +1,14 @@
 ﻿@page "/AllUsers"
 @using CommonDll.Dto
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
 @using System.Net.Http.Json
 @using System.Globalization
 @using System.Reflection
 @using System.Threading
+@using MudBlazor
+@using PostOfficeFrontendProject__all_interactive.Components.Dialogs
 @using PostOfficeFrontendProject__all_interactive.Interface
 @using PostOfficeFrontendProject__all_interactive.Mapper
 @using PostOfficeFrontendProject__all_interactive.Service
@@ -15,78 +18,101 @@
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
 @inject IDataPassHelper dataPassHelper
-@inject IProductsMiddelware productsMiddelware
+@inject IUsersMiddleware usersMiddleware
+@inject ILoginMiddleware loginMiddleware
+@* <AuthorizeView Roles="SuperAdmin">
 
-<MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
+    <Authorized> *@
 
-    <MudText Typo="Typo.h5">All Users</MudText>
+        <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-</MudItem>
+            <MudText Typo="Typo.h5">All Users</MudText>
 
-<MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="ProductBasicInformationDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
+        </MudItem>
 
-    <ToolBarContent>
+        <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="UserDto" Loading="isLoading" Items="@users" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedUser">
 
-        <MudText Typo="Typo.h5" Style="margin:20px"><b>User List</b></MudText>
+            <ToolBarContent>
 
-        <MudSpacer />
+                <MudText Typo="Typo.h5" Style="margin:20px"><b>User List</b></MudText>
 
-        <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudSpacer />
 
-    </ToolBarContent>
+                <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 
-    <Columns>
+            </ToolBarContent>
 
-        <PropertyColumn Property="x => x.ProductName" Title="ProductName" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+            <Columns>
 
-        <PropertyColumn Property="x => x.Price" Title="Price" HeaderStyle="background:#ADD8E6;color:#333;" />
+                <PropertyColumn Property="x => x.Username" Title="Username" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
-        <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="Operations">
+                <PropertyColumn Property="x => x.FirstName" Title="FirstName" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <CellTemplate>
+                <PropertyColumn Property="x => x.LastName" Title="LastName" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-                <MudStack Row>
+                <PropertyColumn Property="x => x.Role.RoleNameToString()" Title="Role" HeaderStyle="background:#ADD8E6;color:#333;" />
 
+                <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="Operations">
 
-                    <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditProduct(context.Item.Id))">
+                    <CellTemplate Context="cellContext">
 
-                        Edit
-
-                    </MudButton>
-
-                    <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">Delete</MudButton>
-
+                        <MudStack Row>
 
 
-                </MudStack>
+                            <MudSelect T="RoleDto" SelectedValuesChanged="ChangeRoles" @bind-Value="selectedRole" Label="Select a State" FitContent="true" Variant="Variant.Outlined"  ToStringFunc="x => x?.Name">
 
-            </CellTemplate>
+                                @foreach (var Role in changeRole)
+                                {
 
-        </TemplateColumn>
+                                    <MudSelectItem Value="@Role">@Role.Name</MudSelectItem>
 
-    </Columns>
+                                }
 
-    <PagerContent>
+                            </MudSelect>
 
-        <MudDataGridPager />
+                            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedUser(cellContext.Item))">Delete</MudButton>
 
-    </PagerContent>
 
-</MudDataGrid>
 
-<MudPaper Elevation="0" Class="d-flex align-center justify-end " Style="margin-top:20px">
+                        </MudStack>
 
-    <MudButton Class="main-button" Style="margin-right:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddProductPage">Add</MudButton>
+                    </CellTemplate>
 
-    <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
+                </TemplateColumn>
 
-</MudPaper>
+            </Columns>
+
+            <PagerContent>
+
+                <MudDataGridPager />
+
+            </PagerContent>
+
+        </MudDataGrid>
+
+        <MudPaper Elevation="0" Class="d-flex align-center justify-start " Style="margin-top:20px">
+
+            <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
+
+            <MudButton Class="main-button" Style="margin-left:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddUserPage">Add</MudButton>
+
+        </MudPaper>
+
+@*     </Authorized>
+
+    <NotAuthorized>
+
+        <p style="color:red;"><b>Access Denied.</b></p>
+
+    </NotAuthorized>
+
+</AuthorizeView> *@
 
 <style>
 
     .red-header {
-        background-color: #87CEFA;
-        color: #fff;
+    background-color: #87CEFA;
+    color: #fff;
     }
 
 </style>
@@ -105,33 +131,51 @@
 
     private bool isLoading = false;
 
+    private bool isImport = false;
+
+    private bool isMethodExecuted = false;
+
     private string searchString = "";
 
-    private ProductBasicInformationDto selectedProducts = new();
+    private RoleDto selectedRole = new();
 
-    private List<ProductBasicInformationDto> products = new List<ProductBasicInformationDto>();
+    private UserDto selectedUser = new();
+
+    private List<RoleDto> changeRole = new();
+
+    private List<UserDto> users = new List<UserDto>();
+
+    [Parameter]
+
+    public EventCallback OnStatusChanged { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
-
-        await LoadProducts();
+        changeRole = new List<RoleDto>
+    {
+        new RoleDto { Id = 1, Name = "Customer" },
+        new RoleDto { Id = 2, Name = "Postman" },
+        new RoleDto { Id = 3, Name = "Admin" },
+        new RoleDto { Id = 4, Name = "Manager" }
+    };
+        await LoadUsers();
 
     }
 
     #endregion
 
-    #region LoadProducts
+    #region LoadUsers
 
-    private async Task LoadProducts()
+    private async Task LoadUsers()
     {
 
         try
         {
-            var apiResponse = await productsMiddelware.GetAllProductsAsync();
+            var apiResponse = await usersMiddleware.GetAllUsersAsync();
 
             if (apiResponse.Success && apiResponse.Data != null)
             {
-                products = apiResponse.Data;
+                users = apiResponse.Data;
                 notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
             }
             else
@@ -140,13 +184,13 @@
                     ? string.Join(", ", apiResponse.Errors ?? new List<string>())
                     : apiResponse.Message;
                 notificationService.ShowError(errorMsg ?? "Error To Load.");
-                products = new List<ProductBasicInformationDto>();
+                users = new List<UserDto>();
             }
         }
         catch (Exception ex)
         {
             notificationService.ShowError($"Unexpected Error: {ex.Message}");
-            products = new List<ProductBasicInformationDto>();
+            users = new List<UserDto>();
         }
 
         StateHasChanged();
@@ -156,18 +200,19 @@
 
     #region Filter
 
-    private Func<ProductBasicInformationDto, bool> _quickFilterProducts => x =>
+    private Func<UserDto, bool> _quickFilterProducts => x =>
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
 
         var fields = new List<string?>
-                                {
-        x.ProductName?.ToString(),
-        x.Price.ToString(),
+                                            {
+        x.FirstName?.ToString(),
+        x.LastName.ToString(),
+        x.Username.ToString(),
+        x.Role?.Name.ToString(),
 
-
-                                };
+                                            };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
                                f.Contains(searchString, StringComparison.OrdinalIgnoreCase));
@@ -180,40 +225,40 @@
     private void GoToMainPage()
     {
 
-        NavigationManager.NavigateTo("/MainPage");
+        NavigationManager.NavigateTo("/");
 
     }
     #endregion
 
     #region DeleteItem
 
-    private async Task DeletedProduct(ProductBasicInformationDto deletedProduct)
+    private async Task DeletedUser(UserDto deletedUser)
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(
-    "تأیید حذف",
-    $"آیا مطمئن هستید که می‌خواهید محصول '{deletedProduct.ProductName}' را حذف کنید؟",
-    yesText: "بله",
-    noText: "خیر"
+    "Delete Confirm",
+    $"Are You Sure You Want to Delete '{deletedUser.Username}' ?",
+    yesText: "Yes",
+    noText: "No"
     );
 
         if (confirmed == true)
         {
-            products = products.Where(s => s != deletedProduct).ToList();
+            users = users.Where(s => s != deletedUser).ToList();
         }
 
     }
 
     #endregion
 
-    #region EditProduct
+    #region EditUser
 
-    private void EditProduct(int id)
+    private void EditUser(int id)
     {
 
-        dataPassHelper.SetProudctId(id);
+        dataPassHelper.SetUserId(id);
 
-        NavigationManager.NavigateTo("/EditProduct");
+        NavigationManager.NavigateTo("/EditUser");
 
     }
 
@@ -233,12 +278,12 @@
 
     #endregion
 
-    #region GoToAddProductPage
+    #region GoToAddUserPage
 
-    private void GoToAddProductPage()
+    private void GoToAddUserPage()
     {
 
-        NavigationManager.NavigateTo("/AddProduct");
+        NavigationManager.NavigateTo("/RegisterUser");
 
     }
 
@@ -248,17 +293,111 @@
 
     private void DoubleClick()
     {
-        if (selectedProducts == null)
+
+        if (selectedUser == null)
         {
             return;
         }
-        dataPassHelper.SetProudctId(selectedProducts.Id);
 
-        NavigationManager.NavigateTo("/ProductInformations");
+        dataPassHelper.SetUserId(selectedUser.Id);
+
+        NavigationManager.NavigateTo("/UserInformations");
 
     }
 
     #endregion
+
+    #region ChangeRoles
+
+
+    private async Task ChangeRoles()
+    {
+        if (selectedRole.Name == "Postman")
+        {
+            var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+            var parameters = new DialogParameters<ChangeRoleDialog>
+        {
+            { x => x.UserId, selectedUser.Id }
+        };
+
+            var dialog = DialogService.Show<ChangeRoleDialog>("Warning", parameters, options);
+
+            var result = await dialog.Result;
+
+            if (result.Canceled)
+                return;
+
+            // دریافت کد پرسنلی
+            var personalCodeFromDialog = result.Data as string;
+            if (string.IsNullOrWhiteSpace(personalCodeFromDialog))
+            {
+                Snackbar.Add("Personal Code can't be null", Severity.Error);
+                return;
+            }
+
+
+            var postmanDto = new PostmanUpdateAndCreateDto
+                {
+                    UserId = selectedUser.Id,
+                    PersonalCode = personalCodeFromDialog
+                };
+
+            if (selectedRole != null)
+            {
+                var apiResult = await loginMiddleware.UpdateRoleAsync(selectedUser.Id, selectedRole.Id);
+
+                if (apiResult.Success)
+                {
+                    Snackbar.Add("اطلاعات با موفقیت ثبت شد", Severity.Success);
+
+                    // اینجا می‌توانی postmanDto را هم به متد ثبت یا سرور پاس بدهی
+                }
+            }
+
+            await OnStatusChanged.InvokeAsync();
+        }
+    }
+
+
+    // else
+    // {
+    //     var options = new DialogOptions { CloseOnEscapeKey = true };
+
+    //     var parameters = new DialogParameters<CheckIfCorrectorInStationDialog>
+
+    //     {
+
+    //         { x => x.ContentText, $"ایا از انتخاب خود اطمینان دارید؟" }
+
+    //     };
+
+    //     var dialog = DialogService.Show<CheckIfCorrectorInStationDialog>("اخطار", parameters, options);
+
+    //     var result = await dialog.Result;
+
+
+
+    //     if (result.Canceled || !(result.Data is bool confirmed && confirmed))
+    //     {
+
+    //         // selectedStatus = null;
+    //         return;
+    //     }
+
+    //     if (selectedStatus != null)
+    //     {
+
+    //         await correctorService.ChangeCorrectorTransferStatusAsync(selectedCorrector.CorrectorId, selectedStatus.Id);
+
+    //         Snackbar.Add("اطلاعات با موفقیت ثبت شد", Severity.Success);
+
+    //     }
+
+    //     await OnStatusChanged.InvokeAsync();
+    // }
+
+#endregion
 
 }
 

@@ -38,7 +38,7 @@
 
         <Columns>
 
-            <PropertyColumn Property="x => x.Name" Title="نام پستچی" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+            <PropertyColumn Property="x => x.UserId" Title="نام پستچی" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
             <PropertyColumn Property="x => x.PersonalCode" Title="شماره شناسایی پستچی" HeaderStyle="background:#ADD8E6;color:#333;" />
 
@@ -154,7 +154,7 @@
 
         var fields = new List<string?>
                                 {
-        x.Name?.ToString(),
+        x.UserId.ToString(),
         x.PersonalCode.ToString(),
                                 };
 
@@ -181,7 +181,7 @@
 
         bool? confirmed = await DialogService.ShowMessageBox(
     "تأیید حذف",
-    $"آیا مطمئن هستید که می‌خواهید محصول '{deletedPostMans.Name}' را حذف کنید؟",
+    $"آیا مطمئن هستید که می‌خواهید محصول '{deletedPostMans.UserId}' را حذف کنید؟",
     yesText: "بله",
     noText: "خیر"
     );

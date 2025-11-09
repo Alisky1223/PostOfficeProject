@@ -24,5 +24,12 @@
         public int GetCustomerId();
 
         public void SetCustomerId(int customerId);
+
+        // user
+
+        public int GetUserId();
+
+        public void SetUserId(int userrId);
+
     }
 }

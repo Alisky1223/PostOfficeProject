@@ -29,7 +29,7 @@
 
             <MudItem Style="width:20%">
 
-                <MudTextField @bind-Value="addPostMan.Name" Label="نام پستچی" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="addPostMan.UserId" Label="نام پستچی" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
 
             </MudItem>
 
@@ -88,8 +88,7 @@
 
             var create = new PostmanUpdateAndCreateDto
                 {
-
-                    Name = addPostMan.Name,
+                    UserId = addPostMan.UserId,
                     PersonalCode = addPostMan.PersonalCode,
                 };
 

@@ -29,7 +29,7 @@
 
             <MudItem Style="width:20%">
 
-                <MudTextField @bind-Value="AddedCustomer.Name" Label="CustomerName" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="AddedCustomer.UserId" Label="CustomerId" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
 
             </MudItem>
 
@@ -89,7 +89,7 @@
 
             var create = new CustomerUpdateAndCreateDto
                 {
-                    Name = AddedCustomer.Name,
+                    UserId = AddedCustomer.UserId,
                     CustomerNumber = AddedCustomer.CustomerNumber
                 };
 

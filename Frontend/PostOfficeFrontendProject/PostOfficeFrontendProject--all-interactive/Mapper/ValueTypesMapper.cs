@@ -40,6 +40,19 @@ namespace PostOfficeFrontendProject__all_interactive.Mapper
             {
                 return "";
             }
+        }       
+        
+        public static string RoleNameToString(this RoleDto roleName)
+        {
+            if (roleName != null)
+            {
+                return roleName.Name;
+
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Authentication;
 using PostOfficeBackendProject.src.Application.Dto;
+using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -28,6 +29,23 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             {
                 return new ApiResponse<string>(e.Message, 500);
             }
+        }
+
+
+        public async Task<ApiResponse<UserDto>> UpdateRoleAsync(int id, int roleId)
+        {
+
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"api/auth/changeUserRole/{id}", roleId);
+
+                return await ApiHandler.HandleResponse<ApiResponse<UserDto>>(response, "Update failed");
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<UserDto>(e.Message, 500);
+            }
+
         }
 
         private static async Task<T> HandleResponse<T>(HttpResponseMessage response, string action)
