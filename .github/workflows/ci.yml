@@ -32,6 +32,9 @@ jobs:
             /p:CoverletOutputFormat=cobertura \
             /p:CoverletOutput=TestResults/
 
+    - name: Debug - List Coverage Files
+      run: find . -name "coverage.cobertura.xml" || echo "No cobertura files"
+
     - name: Combine Coverage Reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18
       with:
