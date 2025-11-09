@@ -8,15 +8,21 @@
 
   <ItemGroup>
     <Folder Include="src\Application\Dictionary\" />
-    <Folder Include="src\Application\Helper\" />
     <Folder Include="src\Application\Job\" />
     <Folder Include="src\Common\Query\" />
     <Folder Include="src\Configurations\" />
     <Folder Include="src\Infrastructure\Interceptor\" />
-    <Folder Include="src\Tests\ServiceTest\TestCases\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="EPPlus" Version="8.2.0" />
     <PackageReference Include="FluentAssertions" Version="8.7.1" />
     <PackageReference Include="Hangfire" Version="1.8.21" />
@@ -45,9 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CommonDll">
-      <HintPath>..\..\..\Common\CommonDll\bin\Debug\net8.0\CommonDll.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\..\Common\CommonDll\CommonDll.csproj" />
   </ItemGroup>
 
 </Project>

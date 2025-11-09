@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    branches: [ main, 16-unittest ]
+  pull_request:
+    branches: [ main, 16-unittest ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Debug - List Directory Structure
+      run: ls -R
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    - name: Restore dependencies
+      run: dotnet restore MainAPI/MainAPISolution.sln  # Adjust this path based on ls -R output
+    - name: Build
+      run: dotnet build MainAPI/MainAPISolution.sln --no-restore --configuration Release  # Adjust path
+    - name: Test with Coverage
+      run: dotnet test MainAPI/MainAPISolution.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  # Adjust path
