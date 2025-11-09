@@ -23,12 +23,19 @@ jobs:
       run: dotnet build MainAPI/MainAPISolution.sln --no-restore --configuration Release  # Adjust path
 
     - name: Test with Coverage
-      run: dotnet test MainAPI/MainAPISolution.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  # Adjust path
+      run: |
+            dotnet test MainAPI/MainAPISolution.sln \
+            --no-build \
+            --configuration Release \
+            --verbosity detailed \
+            /p:CollectCoverage=true \
+            /p:CoverletOutputFormat=cobertura \
+            /p:CoverletOutput=TestResults/
 
     - name: Combine Coverage Reports
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18  # Latest valid version
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18
       with:
-        reports: "**/*.cobertura.xml"
+        reports: "**/TestResults/coverage.cobertura.xml"
         targetdir: "coveragereport"
         reporttypes: "HtmlInline;Cobertura"
         verbosity: "Info"
