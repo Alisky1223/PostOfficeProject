@@ -1,4 +1,5 @@
 ﻿using CommonDll.Dto;
+using Microsoft.EntityFrameworkCore;
 using PostOfficeBackendProject.src.Domain.Interface;
 using System.Text.Json;
 
@@ -53,6 +54,18 @@ namespace PostOfficeBackendProject.src.Infrastructure.Midleware
             catch (Exception e)
             {
                 return new ApiResponse<UserDto>(e.Message, 500);
+            }
+        }
+
+        public async Task<ApiResponse<List<RoleDto>>> GetallRoles() 
+        {
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<RoleDto>>>("/api/auth/getallRoles") ?? throw new Exception("API response is null");
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<List<RoleDto>>(e.Message, 500);
             }
         }
 

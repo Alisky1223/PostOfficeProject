@@ -13,6 +13,7 @@ namespace AAA.src.Presentation.Controller
         private const string loginRequest = "login";
         private const string registerRequest = "register";
         private const string changeUserRoleRequest = "changeUserRole/{id:int}";
+        private const string getallrolesRequest = "getallRoles";
 
         private readonly IUserRepository _repository;
 
@@ -64,6 +65,17 @@ namespace AAA.src.Presentation.Controller
             if (targetUser == null) return NotFound(new ApiResponse<object>("User not found", 404));
 
             return Ok(new ApiResponse<object>(targetUser.ToDto())); 
+        }
+
+        [HttpGet(getallrolesRequest)]
+        public async Task<IActionResult> GetAllRoles()
+        {
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(string.Join(" ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)), 400));
+
+            var roles = await _repository.GetAllRoles();
+            var rolesDto = roles.Select(x => x.ToDto());
+
+            return Ok(new ApiResponse<object>(rolesDto));
         }
     }
 }

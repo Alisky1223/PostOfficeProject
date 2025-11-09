@@ -44,6 +44,11 @@ namespace AAA.src.Infrastructure.Repository
             return targetUser;
         }
 
+        public async Task<List<Role>> GetAllRoles()
+        {
+            return await _context.Role.ToListAsync();
+        }
+
         public async Task<User?> GetUserById(int id)
         {
             var user = await _context.Users
