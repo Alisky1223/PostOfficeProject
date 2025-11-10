@@ -83,12 +83,5 @@ dotnet test MainAPI/PostOfficeBackendProject/PostOfficeProject.Tests
 ## CI/CD
 GitHub Actions workflow (`ci.yml`) automates builds and tests on push/pull requests.
 
-## Improvements and Future Work
-- Add Swagger for API docs.
-- Implement full authentication with JWT.
-- Expand frontend with React.
-- Docker support for deployment.
-- More tests and error handling.
-
 ## License
 MIT License (see LICENSE file).
