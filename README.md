@@ -26,6 +26,8 @@ This is a backend project built with .NET Core to demonstrate over 2 years of ex
 - ASP.NET Core for API development
 - GitHub Actions for CI
 - JWT for auth
+- Blazor server side .Net 8
+- Mud Blazor 9
 
 ## Project Structure
 - **MainAPI**: Core API solution with the backend project, including controllers, services, and configurations.
