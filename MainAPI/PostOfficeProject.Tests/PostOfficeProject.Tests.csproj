@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\CommonDll\CommonDll.csproj" />
+    <ProjectReference Include="..\..\Common\CommonDll\CommonDll.csproj" />
   </ItemGroup>
 
 </Project>
