@@ -21,11 +21,11 @@ This is a backend project built with .NET Core to demonstrate over 2 years of ex
 - Unit testing for core components.
 
 ## Technologies
-- .NET Core 8 (or specify your version)
+- .NET Core 8 
 - Entity Framework Core for ORM and migrations
 - ASP.NET Core for API development
 - GitHub Actions for CI
-- (Add more: e.g., JWT for auth, Serilog for logging)
+- JWT for auth
 
 ## Project Structure
 - **MainAPI**: Core API solution with the backend project, including controllers, services, and configurations.
