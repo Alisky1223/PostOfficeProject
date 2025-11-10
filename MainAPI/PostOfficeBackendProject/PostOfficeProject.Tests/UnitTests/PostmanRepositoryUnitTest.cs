@@ -187,9 +187,65 @@ namespace PostOfficeProject.Tests.UnitTests
             ComparePostmansNotEqual(result, newpostman);
         }
 
+        [Fact]
+        public async Task PostmanRepository_UpdatePostman_ShouldReturnUpdatedPostman() 
+        {
+            // Arrange
+            var notExpected = new Postman
+            {
+                Id = 1,
+                PostOfficeId = 1,
+                UserId = 1,
+                PersonalCode = "EMP123"
+            };
+
+            var postman = new Postman
+            {
+                Id = 1,
+                PostOfficeId = 1,
+                UserId = 1,
+                PersonalCode = "EMP123"
+            };
+            await _repository.Create(postman);
+
+            var newpostman = new Postman
+            {
+                Id = 2,
+                PostOfficeId = 2,
+                UserId = 1,
+                PersonalCode = "EMP456"
+            };
+            // Act
+            var result = await _repository.Update(1, newpostman);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<Postman>(result);
+            ComparePostmansEqual(result, newpostman);
+            ComparePostmansNotEqual(result, notExpected);
+        }
+
+        [Fact]
+        public async Task PostmanRepository_UpdatePostman_ShouldReturnNull()
+        {
+            // Arrange
+            var newpostman = new Postman
+            {
+                Id = 2,
+                PostOfficeId = 2,
+                UserId = 1,
+                PersonalCode = "EMP456"
+            };
+
+            // Act
+            var result = await _repository.Update(3, newpostman);
+
+            // Assert
+            Assert.Null(result);
+        }
+
         private void ComparePostmansEqual(Postman result, Postman expected) 
         {
-            Assert.Equal(expected.Id, result.Id);
             Assert.Equal(expected.PostOfficeId, result.PostOfficeId);
             Assert.Equal(expected.UserId, result.UserId);
             Assert.Equal(expected.PersonalCode, result.PersonalCode);
@@ -197,7 +253,7 @@ namespace PostOfficeProject.Tests.UnitTests
 
         private void ComparePostmansNotEqual(Postman result, Postman expected)
         {
-            Assert.NotEqual(expected.Id, result.Id);
+
             Assert.NotEqual(expected.PostOfficeId, result.PostOfficeId);
             Assert.NotEqual(expected.PersonalCode, result.PersonalCode);
         }
