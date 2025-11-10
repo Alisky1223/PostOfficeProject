@@ -11,7 +11,6 @@ This is a backend project built with .NET Core to demonstrate over 2 years of ex
 - [API Endpoints](#api-endpoints)
 - [Testing](#testing)
 - [CI/CD](#cicd)
-- [Improvements and Future Work](#improvements-and-future-work)
 - [License](#license)
 
 ## Features
