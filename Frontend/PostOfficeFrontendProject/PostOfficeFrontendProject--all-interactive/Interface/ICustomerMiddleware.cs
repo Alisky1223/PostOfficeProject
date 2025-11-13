@@ -4,9 +4,10 @@ namespace PostOfficeFrontendProject__all_interactive.Interface
 {
     public interface ICustomerMiddleware
     {
-        Task<List<CustomerDto>> GetAllCustomersAsync();
-        Task<CustomerDto?> UpdateCustomersAsync(int id, CustomerUpdateAndCreateDto updateDto);
-        Task<CustomerDto?> CreateCustomersAsync(CustomerUpdateAndCreateDto createDto);
-        Task<CustomerDto?> GetByIdAsync(int id);
+        Task<ApiResponse<List<CustomerDto>>> GetAllCustomersAsync();
+        Task<ApiResponse<CustomerDto>> UpdateCustomersAsync(int id, CustomerUpdateAndCreateDto updateDto);
+        Task<ApiResponse<CustomerDto>> CreateCustomersAsync(CustomerUpdateAndCreateDto createDto);
+        Task<ApiResponse<CustomerDto>> GetByIdAsync(int id);
+
     }
 }

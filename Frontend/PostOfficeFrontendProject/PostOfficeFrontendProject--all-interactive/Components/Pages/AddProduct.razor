@@ -22,7 +22,7 @@
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-        <MudText Typo="Typo.h5">افزودن مرسوله </MudText>
+        <MudText Typo="Typo.h5">Add Products</MudText>
 
     </MudItem>
 
@@ -32,25 +32,25 @@
 
             <MudItem Style="width:20%">
 
-                <MudTextField @bind-Value="addProduct.ProductName" Label="کد مرسوله" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="addProduct.ProductName" Label="ProductName" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
 
             </MudItem>
 
             <MudItem Style="width:20%">
 
-                <MudTextField @bind-Value="addProduct.Price" Label="ارزش مرسوله" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="addProduct.Price" Label="Price" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
 
             </MudItem>
 
             <MudItem Style="width:20%">
 
-                <MudTextField @bind-Value="addProduct.Description" Label="توضیحات مرسوله" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
+                <MudTextField @bind-Value="addProduct.Description" Label="Description" Variant="Variant.Outlined" Immediate="true" Required></MudTextField>
 
             </MudItem>
 
             <MudItem Style="width:20%">
 
-                <MudSelect T="ProductTypeDto" ToStringFunc="@ProductTypeDtoConverter" @bind-Value="addProduct.ProductType" MultiSelection="false" Label="نوع مرسوله" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
+                <MudSelect T="ProductTypeDto" ToStringFunc="@ProductTypeDtoConverter" @bind-Value="addProduct.ProductType" MultiSelection="false" Label="ProductType" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable Required>
 
                     @foreach (var productType in ProductTypes)
                     {
@@ -69,11 +69,11 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center" Style="margin-top:20px">
 
-        <MudButton Style="margin-left:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="CreateProducts">ذخیره تغییرات</MudButton>
+        <MudButton Style="margin-right:20px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="CreateProducts">Save</MudButton>
 
-        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">لغو</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" OnClick="CanceleOpration">Cancel</MudButton>
 
-        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
 
     </MudPaper>
 
@@ -83,7 +83,7 @@
 
     .main-button {
         position: fixed;
-        left: 15px;
+        right: 15px;
     }
 
 </style>

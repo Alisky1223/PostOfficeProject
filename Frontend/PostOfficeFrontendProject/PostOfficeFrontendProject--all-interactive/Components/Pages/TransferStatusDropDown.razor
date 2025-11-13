@@ -14,7 +14,6 @@
 @inject IDialogService DialogService
 @inject IProductDropdownMiddelware productDropdownMiddelware
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
@@ -26,11 +25,9 @@
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h6">Transport Status</MudText>
+            <MudText style="margin-right: 40px" Typo="Typo.h6">Transport Status</MudText>
 
-            <MudSpacer />
-
-            <MudTextField @bind-Value="searchStatus" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField Style="width:30%" @bind-Value="searchStatus" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 
         </ToolBarContent>
 
@@ -38,7 +35,7 @@
 
             <SelectColumn T="TransportStatusDto" />
 
-            <PropertyColumn Property="x => x.Status" Title="وضعیت" HeaderStyle="background:#ADD8E6;color:#333;">
+        <PropertyColumn Property="x => x.Status" Title="Status" HeaderStyle="background:#ADD8E6;color:#333;">
 
                 <CellTemplate>
 
@@ -114,7 +111,6 @@
 
     </div>
 
-</MudRTLProvider>
 
 @code {
 
@@ -133,8 +129,6 @@
     private string searchStatus = "";
 
     private bool isLoading = false;
-
-    private bool _rightToLeft = true;
 
     public MudDataGrid<TransportStatusDto> grid;
 

@@ -3,12 +3,12 @@
 @using MudBlazor
 @using PostOfficeFrontendProject__all_interactive.Interface
 @using PostOfficeFrontendProject__all_interactive.Mapper
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDataPassHelper dataPassHelper
 @inject ICustomerMiddleware customerMiddleware
-
-<MudRTLProvider RightToLeft="true">
 
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-6 mb-10">
 
@@ -104,8 +104,8 @@
                 <div class="d-flex justify-center mt-6">
 
                     <MudButton Variant="Variant.Filled" Color="Color.Secondary"
-                               StartIcon="@Icons.Material.Filled.ArrowBack"
-                               OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
+                    StartIcon="@Icons.Material.Filled.ArrowBack"
+                    OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
 
                         Return
 
@@ -119,7 +119,7 @@
 
                 <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Error">
 
-                     Informations Not Found
+                    Informations Not Found
 
                 </MudText>
 
@@ -128,8 +128,6 @@
         </MudPaper>
 
     </MudContainer>
-
-</MudRTLProvider>
 
 @code {
 
@@ -143,13 +141,11 @@
 
     private bool bordered = true;
 
+    private CustomerDto? customer;
+
     private bool isLoading = false;
 
-    private bool _rightToLeft = true;
-
     private string searchString = "";
-
-    private CustomerDto? customer;
 
     private ProductDto selectedProduct = new();
 
@@ -166,23 +162,41 @@
 
     private async Task LoadCustomer()
     {
+
         try
         {
-
             isLoading = true;
 
             var id = dataPassHelper.GetCustomerId();
 
-            customer = await customerMiddleware.GetByIdAsync(id);
+            var apiResponse = await customerMiddleware.GetByIdAsync(id);
 
-            customerProducts = customer.Products;
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                customer = apiResponse.Data;
 
+                customerProducts = customer.Products;
 
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+
+                customer = null;
+
+            }
         }
         catch (Exception ex)
         {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
 
-            Snackbar.Add($"Error To Find Informations: {ex.Message}", Severity.Error);
+            customer = null;
 
         }
         finally
@@ -193,10 +207,9 @@
         }
 
     }
-
     #endregion
 
-        #region Filter
+    #region Filter
 
     private Func<ProductDto, bool> _quickFilterProducts => x =>
     {
@@ -215,6 +228,7 @@
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
                                f.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+
     };
 
     #endregion

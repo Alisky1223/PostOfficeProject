@@ -4,18 +4,24 @@
 
 <MudDialog MaxWidth="MaxWidth.Small" FullWidth="true">
 
-    <!-- عنوان -->
     <TitleContent>
+
         <MudText Style="text-align:center" Typo="Typo.h5" Color="Color.Error">
+
             if you change role your current data will lost
+
         </MudText>
+
     </TitleContent>
 
-    <!-- محتوای دیالوگ -->
     <DialogContent>
+
         <MudStack Spacing="2">
+
             <MudText Typo="Typo.subtitle1">
+
                 Enter Your Personal Code
+
             </MudText>
 
             <MudTextField @bind-Value="personalcode"
@@ -24,19 +30,24 @@
                           FullWidth="true"
                           Immediate="true"
                           Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Lock"
-                          />
+                          AdornmentIcon="@Icons.Material.Filled.Lock" />
+
         </MudStack>
+
     </DialogContent>
 
-    <!-- دکمه‌ها -->
     <DialogActions>
+
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">
+
             Ok
+
         </MudButton>
 
         <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="Cancel">
+
             Cancel
+
         </MudButton>
 
     </DialogActions>
@@ -44,6 +55,7 @@
 </MudDialog>
 
 @code {
+
     [Parameter] public int? UserId { get; set; }
 
     [CascadingParameter]
@@ -54,10 +66,16 @@
     private void Submit()
     {
         if (string.IsNullOrWhiteSpace(personalcode))
-            return; // اگر خالی بود، چیزی ارسال نمی‌کنیم
+        {
 
-        // ✅ مقدار را به caller برمی‌گردانیم
+            Snackbar.Add("Personal Code can't be null", Severity.Error);
+
+            return;
+
+        }
+
         MudDialog?.Close(DialogResult.Ok(personalcode));
+
     }
 
     private void Cancel() => MudDialog?.Cancel();

@@ -6,5 +6,6 @@ namespace PostOfficeFrontendProject__all_interactive.Interface
     {
         Task<ApiResponse<string>> Login(LoginDto user);
         Task<ApiResponse<UserDto>> UpdateRoleAsync(int id, int roleId);
+        Task<ApiResponse<List<RoleDto>>> GetAllRoleAsync();
     }
 }

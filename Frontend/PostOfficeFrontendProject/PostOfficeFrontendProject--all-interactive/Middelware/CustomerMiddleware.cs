@@ -1,4 +1,6 @@
 ﻿using CommonDll.Dto;
+using PostOfficeBackendProject.src.Application.Dto;
+using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
 
 namespace PostOfficeFrontendProject__all_interactive.Middelware
@@ -12,34 +14,67 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             _httpClient = httpClient;
         }
 
-        public async Task<List<CustomerDto>> GetAllCustomersAsync()
+        public async Task<ApiResponse<List<CustomerDto>>> GetAllCustomersAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<CustomerDto>>("api/Customer/GetAllCustomers");
-        }
-
-        public async Task<CustomerDto?> UpdateCustomersAsync(int id, CustomerUpdateAndCreateDto updateDto)
-        {
-            var response = await _httpClient.PutAsJsonAsync($"api/Customer/UpdateCustomer/{id}", updateDto);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return await response.Content.ReadFromJsonAsync<CustomerDto>();
-            }
-            return null;
-        }
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<CustomerDto>>>("api/Customer/GetAllCustomers") ?? throw new Exception("API Response Is Null");
 
-        public async Task<CustomerDto?> CreateCustomersAsync(CustomerUpdateAndCreateDto createDto)
-        {
-            var response = await _httpClient.PostAsJsonAsync("api/Customer/CreateCustomer", createDto);
-            if (response.IsSuccessStatusCode)
+            }
+            catch (Exception e)
             {
-                return await response.Content.ReadFromJsonAsync<CustomerDto>();
+                return new ApiResponse<List<CustomerDto>>(e.Message, 500);
             }
-            return null;
+
         }
 
-        public async Task<CustomerDto?> GetByIdAsync(int id)
+        public async Task<ApiResponse<CustomerDto>>UpdateCustomersAsync(int id, CustomerUpdateAndCreateDto updateDto)
         {
-            return await _httpClient.GetFromJsonAsync<CustomerDto>($"api/Customer/GetCustomerById/{id}");
+
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"api/Customer/UpdateCustomer/{id}", updateDto);
+
+                return await ApiHandler.HandleResponse<ApiResponse<CustomerDto>>(response, "Update failed");
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<CustomerDto>(e.Message, 500);
+            }
+
         }
+
+        public async Task<ApiResponse<string>> CreateCustomersAsync(CustomerUpdateAndCreateDto createDto)
+        {
+
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/Customer/CreateCustomer", createDto);
+
+                return await ApiHandler.HandleResponse<ApiResponse<string>>(response, "Create failed");
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<string>(e.Message, 500);
+            }
+
+        }
+
+        public async Task<ApiResponse<CustomerDto>> GetByIdAsync(int id)
+        {
+
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ApiResponse<CustomerDto>>($"api/Customer/GetCustomerById/{id}") ?? throw new Exception("API Response Is Null");
+
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<CustomerDto>(e.Message, 500);
+            }
+
+        }
+
     }
+
 }

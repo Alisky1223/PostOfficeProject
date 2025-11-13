@@ -1,6 +1,7 @@
 ﻿using Azure;
 using CommonDll.Dto;
 using PostOfficeBackendProject.src.Application.Dto;
+using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -35,7 +36,6 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
         public async Task<ApiResponse<PostOfficeDto>> GetByIdAsync(int id)
         {
 
-
             try
             {
                 return await _httpClient.GetFromJsonAsync<ApiResponse<PostOfficeDto>>($"api/postOffice/getByIdPostOffice/{id}") ?? throw new Exception("API Response Is Null");
@@ -55,7 +55,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             {
                 var response = await _httpClient.PutAsJsonAsync($"api/postOffice/updatePostOffice/{id}", updateDto);
 
-                return await HandleResponse<ApiResponse<PostOfficeDto>>(response, "Update failed");
+                return await ApiHandler.HandleResponse<ApiResponse<PostOfficeDto>>(response, "Update failed");
             }
             catch (Exception e)
             {
@@ -71,21 +71,13 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             {
                 var response = await _httpClient.PostAsJsonAsync("api/postOffice/createPostOffice", createDto);
 
-                return await HandleResponse<ApiResponse<PostOfficeDto>>(response, "Create failed");
+                return await ApiHandler.HandleResponse<ApiResponse<PostOfficeDto>>(response, "Create failed");
             }
             catch (Exception e)
             {
                 return new ApiResponse<PostOfficeDto>(e.Message, 500);
             }
 
-        }
-
-        private static async Task<T> HandleResponse<T>(HttpResponseMessage response, string action)
-        {
-            var result = await response.Content.ReadFromJsonAsync<T>(
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            return result ?? throw new InvalidOperationException($"{action}: Deserialized response is null.");
         }
    
     }

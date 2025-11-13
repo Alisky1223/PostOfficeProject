@@ -10,6 +10,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
 {
     public class LoginMiddleware : ILoginMiddleware
     {
+
         private readonly HttpClient _httpClient;
 
         public LoginMiddleware(HttpClient httpClient)
@@ -23,14 +24,13 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             {
                 var response = await _httpClient.PostAsJsonAsync("/api/auth/login", user);
 
-                return await HandleResponse<ApiResponse<string>>(response, "Login failed");
+                return await ApiHandler.HandleResponse<ApiResponse<string>>(response, "Login failed");
             }
             catch (Exception e)
             {
                 return new ApiResponse<string>(e.Message, 500);
             }
         }
-
 
         public async Task<ApiResponse<UserDto>> UpdateRoleAsync(int id, int roleId)
         {
@@ -48,14 +48,23 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
 
         }
 
-        private static async Task<T> HandleResponse<T>(HttpResponseMessage response, string action)
+        public async Task<ApiResponse<List<RoleDto>>> GetAllRoleAsync()
         {
-            var result = await response.Content.ReadFromJsonAsync<T>(
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            return result ?? throw new InvalidOperationException($"{action}: Deserialized response is null.");
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<RoleDto>>>("api/auth/getallRoles") ?? throw new Exception("API Response Is Null");
+
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<List<RoleDto>>(e.Message, 500);
+            }
+
         }
+
     }
+
 }
 
 

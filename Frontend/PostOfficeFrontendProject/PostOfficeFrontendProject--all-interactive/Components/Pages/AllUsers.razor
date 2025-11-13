@@ -1,17 +1,16 @@
 ﻿@page "/AllUsers"
+@using MudBlazor
 @using CommonDll.Dto
-@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Components.Web
-@using MudBlazor
-@using System.Net.Http.Json
-@using System.Globalization
-@using System.Reflection
 @using System.Threading
-@using MudBlazor
-@using PostOfficeFrontendProject__all_interactive.Components.Dialogs
-@using PostOfficeFrontendProject__all_interactive.Interface
+@using System.Reflection
+@using System.Globalization
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Authorization
 @using PostOfficeFrontendProject__all_interactive.Mapper
 @using PostOfficeFrontendProject__all_interactive.Service
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Components.Dialogs
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 @inject NotificationService notificationService
@@ -20,9 +19,10 @@
 @inject IDataPassHelper dataPassHelper
 @inject IUsersMiddleware usersMiddleware
 @inject ILoginMiddleware loginMiddleware
-@* <AuthorizeView Roles="SuperAdmin">
 
-    <Authorized> *@
+<AuthorizeView Roles="SuperAdmin">
+
+    <Authorized>
 
         <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
@@ -30,7 +30,7 @@
 
         </MudItem>
 
-        <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="UserDto" Loading="isLoading" Items="@users" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedUser">
+        <MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="UserDto" Loading="isLoading" Items="@users" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" RowClick="@RowClicked" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedUser">
 
             <ToolBarContent>
 
@@ -59,7 +59,8 @@
                         <MudStack Row>
 
 
-                            <MudSelect T="RoleDto" SelectedValuesChanged="ChangeRoles" @bind-Value="selectedRole" Label="Select a State" FitContent="true" Variant="Variant.Outlined"  ToStringFunc="x => x?.Name">
+                            <MudSelect T="RoleDto" SelectedValuesChanged="ChangeRoles" @bind-Value="selectedRole" Label="Select a State" FitContent="true" Variant="Variant.Outlined" ToStringFunc="x => x?.Name" @onfocus="@(() => OnSelectClick(cellContext.Item))"
+                                       @onchange="@((args) => OnRoleChanged(args, cellContext.Item))">
 
                                 @foreach (var Role in changeRole)
                                 {
@@ -69,6 +70,7 @@
                                 }
 
                             </MudSelect>
+
 
                             <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedUser(cellContext.Item))">Delete</MudButton>
 
@@ -90,15 +92,15 @@
 
         </MudDataGrid>
 
-        <MudPaper Elevation="0" Class="d-flex align-center justify-start " Style="margin-top:20px">
+        <MudPaper Elevation="0" Class="d-flex align-center justify-end " Style="margin-top:20px">
+
+            <MudButton Class="main-button" Style="margin-right:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddUserPage">Add</MudButton>
 
             <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
 
-            <MudButton Class="main-button" Style="margin-left:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddUserPage">Add</MudButton>
-
         </MudPaper>
 
-@*     </Authorized>
+    </Authorized>
 
     <NotAuthorized>
 
@@ -106,13 +108,13 @@
 
     </NotAuthorized>
 
-</AuthorizeView> *@
+</AuthorizeView>
 
 <style>
 
     .red-header {
-    background-color: #87CEFA;
-    color: #fff;
+        background-color: #87CEFA;
+        color: #fff;
     }
 
 </style>
@@ -120,6 +122,8 @@
 @code {
 
     #region Props
+
+    private bool isEditClick = false;
 
     private bool hover = true;
 
@@ -145,21 +149,22 @@
 
     private List<UserDto> users = new List<UserDto>();
 
+    private List<string> _events = new();
+
     [Parameter]
 
     public EventCallback OnStatusChanged { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
-        changeRole = new List<RoleDto>
-    {
-        new RoleDto { Id = 1, Name = "Customer" },
-        new RoleDto { Id = 2, Name = "Postman" },
-        new RoleDto { Id = 3, Name = "Admin" },
-        new RoleDto { Id = 4, Name = "Manager" }
-    };
+        await LoadRoles();
         await LoadUsers();
 
+    }
+
+    void RowClicked(DataGridRowClickEventArgs<UserDto> args)
+    {
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
     }
 
     #endregion
@@ -193,7 +198,42 @@
             users = new List<UserDto>();
         }
 
+
         StateHasChanged();
+    }
+
+    #endregion
+
+    #region LoadRoles
+
+    private async Task LoadRoles()
+    {
+        try
+        {
+            var apiResponse = await loginMiddleware.GetAllRoleAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                changeRole = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                changeRole = new List<RoleDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            changeRole = new List<RoleDto>();
+        }
+
+        StateHasChanged();
+
     }
 
     #endregion
@@ -206,13 +246,13 @@
             return true;
 
         var fields = new List<string?>
-                                            {
+                                                                    {
         x.FirstName?.ToString(),
         x.LastName.ToString(),
         x.Username.ToString(),
         x.Role?.Name.ToString(),
 
-                                            };
+                                                                    };
 
         return fields.Any(f => !string.IsNullOrEmpty(f) &&
                                f.Contains(searchString, StringComparison.OrdinalIgnoreCase));
@@ -309,7 +349,6 @@
 
     #region ChangeRoles
 
-
     private async Task ChangeRoles()
     {
         if (selectedRole.Name == "Postman")
@@ -330,6 +369,7 @@
 
             // دریافت کد پرسنلی
             var personalCodeFromDialog = result.Data as string;
+
             if (string.IsNullOrWhiteSpace(personalCodeFromDialog))
             {
                 Snackbar.Add("Personal Code can't be null", Severity.Error);
@@ -356,49 +396,96 @@
             }
 
             await OnStatusChanged.InvokeAsync();
+
+            StateHasChanged();
+
         }
+
+        else if (selectedRole.Name == "Customer")
+        {
+            var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+            var parameters = new DialogParameters<ChangeRoleDialog>
+        {
+            { x => x.UserId, selectedUser.Id }
+        };
+
+            var dialog = DialogService.Show<ChangeRoleDialog>("Warning", parameters, options);
+
+            var result = await dialog.Result;
+
+            if (result.Canceled)
+                return;
+
+            // دریافت کد پرسنلی
+            var personalCodeFromDialog = result.Data as string;
+
+            if (string.IsNullOrWhiteSpace(personalCodeFromDialog))
+            {
+                Snackbar.Add("Personal Code can't be null", Severity.Error);
+                return;
+            }
+
+
+            var customerDto = new CustomerUpdateAndCreateDto
+                {
+                    UserId = selectedUser.Id,
+                    CustomerNumber = personalCodeFromDialog
+                };
+
+            if (selectedRole != null)
+            {
+                var apiResult = await loginMiddleware.UpdateRoleAsync(selectedUser.Id, selectedRole.Id);
+
+                if (apiResult.Success)
+                {
+                    Snackbar.Add("اطلاعات با موفقیت ثبت شد", Severity.Success);
+                }
+            }
+
+            await OnStatusChanged.InvokeAsync();
+
+            StateHasChanged();
+
+        }
+        else
+        {
+
+            if (selectedRole != null)
+            {
+                var apiResult = await loginMiddleware.UpdateRoleAsync(selectedUser.Id, selectedRole.Id);
+
+                if (apiResult.Success)
+                {
+
+                    Snackbar.Add("اطلاعات با موفقیت ثبت شد", Severity.Success);
+
+                }
+            }
+
+            await OnStatusChanged.InvokeAsync();
+
+            StateHasChanged();
+
+        }
+
     }
 
+    #endregion
 
-    // else
-    // {
-    //     var options = new DialogOptions { CloseOnEscapeKey = true };
+    private void OnSelectClick(UserDto user)
+    {
+        selectedUser = user;
+        Console.WriteLine($"Clicked select in row: {user.Id} - {user.Username}");
+    }
 
-    //     var parameters = new DialogParameters<CheckIfCorrectorInStationDialog>
-
-    //     {
-
-    //         { x => x.ContentText, $"ایا از انتخاب خود اطمینان دارید؟" }
-
-    //     };
-
-    //     var dialog = DialogService.Show<CheckIfCorrectorInStationDialog>("اخطار", parameters, options);
-
-    //     var result = await dialog.Result;
-
-
-
-    //     if (result.Canceled || !(result.Data is bool confirmed && confirmed))
-    //     {
-
-    //         // selectedStatus = null;
-    //         return;
-    //     }
-
-    //     if (selectedStatus != null)
-    //     {
-
-    //         await correctorService.ChangeCorrectorTransferStatusAsync(selectedCorrector.CorrectorId, selectedStatus.Id);
-
-    //         Snackbar.Add("اطلاعات با موفقیت ثبت شد", Severity.Success);
-
-    //     }
-
-    //     await OnStatusChanged.InvokeAsync();
-    // }
-
-#endregion
-
+    private void OnRoleChanged(ChangeEventArgs e, UserDto user)
+    {
+        selectedUser = user;
+        Console.WriteLine($"Role changed for {user.Username}, new value: {e.Value}");
+        // اینجا می‌تونی فراخوانی ChangeRoles رو هم انجام بدی اگر خواستی:
+        // ChangeRoles(...);
+    }
 }
 
 

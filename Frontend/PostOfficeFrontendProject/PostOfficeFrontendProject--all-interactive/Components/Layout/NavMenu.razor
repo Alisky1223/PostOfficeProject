@@ -13,11 +13,11 @@
 
             <MudNavLink Href="Admin" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">Admin</MudNavLink>
 
+            <MudNavLink Href="AllUsers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">Users</MudNavLink>
 
         </Authorized>
 
     </AuthorizeView>
-            <MudNavLink Href="AllUsers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">Users</MudNavLink>
 
     <MudNavLink Href="PostOffice" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalPostOffice">PostOfiices</MudNavLink>
 
@@ -29,15 +29,15 @@
 
     <MudNavGroup Title="ManageBasicInfo" Expanded="false" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">
 
-        <MudNavLink Href="Customers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.MergeType">Product Type</MudNavLink>
+        <MudNavLink Href="ProductTypeDropDown" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.MergeType">Product Type</MudNavLink>
 
-        <MudNavLink Href="Customers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.SignalWifiStatusbar4Bar">Product Status</MudNavLink>
+        <MudNavLink Href="TransferStatusDropDown" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.SignalWifiStatusbar4Bar">Product Status</MudNavLink>
 
     </MudNavGroup>
 
     @* <MudNavLink Href="Login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Login">Login</MudNavLink> *@
 
-    <MudButton Class="logOut" Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Medium" OnClick="LogOut">LogOut</MudButton>
+    <MudButton Class="logOut" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick="LogOut">LogOut</MudButton>
 
 </MudNavMenu>
 

@@ -15,8 +15,6 @@
 @inject ICustomerMiddleware customerMiddleware
 @inject IDataPassHelper dataPassHelper
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
-
     <MudItem Class="d-flex align-center justify-center mud-theme-primary mud-elevation-25" Style="height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
         <MudText Typo="Typo.h5">AddCustomer</MudText>
@@ -53,8 +51,6 @@
 
     </MudPaper>
 
-</MudRTLProvider>
-
 <style>
 
     .main-button {
@@ -69,8 +65,6 @@
     #region Props
 
     private MudForm form;
-
-    private bool _rightToLeft = true;
 
     private CustomerDto AddedCustomer = new CustomerDto();
 
