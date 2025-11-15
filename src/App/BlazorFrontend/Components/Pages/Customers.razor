@@ -1,0 +1,263 @@
+﻿@page "/Customers"
+@using MudBlazor
+@using CommonDll.Dto
+@using System.Threading
+@using System.Reflection
+@using System.Globalization
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Web
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Mapper
+@using PostOfficeFrontendProject__all_interactive.Service
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@inject NotificationService notificationService 
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IDataPassHelper dataPassHelper
+@inject ICustomerMiddleware customerMiddleware
+
+
+    <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
+
+        <MudText Typo="Typo.h5">Customers Informations</MudText>
+
+    </MudItem>
+
+    <MudDataGrid Height="60vh" FixedHeader @onclick="DoubleClick" T="CustomerDto" Loading="isLoading" Items="@Customer" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterCustomers" SelectOnRowClick @bind-SelectedItem="@selectedCustomer">
+
+        <ToolBarContent>
+
+            <MudText Typo="Typo.h5" Style="margin:20px"><b>Customers List</b></MudText>
+
+            <MudSpacer />
+
+            <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
+        </ToolBarContent>
+
+        <Columns>
+
+            <PropertyColumn Property="x => x.UserId" Title="CustomerId" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+
+            <PropertyColumn Property="x => x.CustomerNumber" Title="CustomerNumber" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+            <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="Operations">
+
+                <CellTemplate>
+
+                    <MudStack Row>
+
+                        <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditCustomer(context.Item.UserId))">
+
+                            Edit
+
+                        </MudButton>
+
+                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">Delete</MudButton>
+
+                    </MudStack>
+
+                </CellTemplate>
+
+            </TemplateColumn>
+
+        </Columns>
+
+        <PagerContent>
+
+            <MudDataGridPager />
+
+        </PagerContent>
+
+    </MudDataGrid>
+
+    <MudPaper Elevation="0" Class="d-flex align-center justify-end " Style="margin-top:20px">
+
+        @* <MudButton Class="main-button" Style="margin-left:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddProductPage">افزودن</MudButton> *@
+
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
+
+    </MudPaper>
+
+<style>
+
+    .red-header {
+        background-color: #87CEFA;
+        color: #fff;
+    }
+
+</style>
+
+@code {
+
+    #region Props
+
+    private bool hover = true;
+
+    private bool dense = true;
+
+    private bool striped = true;
+
+    private bool bordered = true;
+
+    private bool isLoading = false;
+
+    private string searchString = "";
+
+    private CustomerDto selectedCustomer = new();
+
+    private List<CustomerDto> Customer = new List<CustomerDto>();
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        await LoadCustomer();
+
+    }
+
+    #endregion
+
+    #region LoadCustomer
+
+    private async Task LoadCustomer()
+    {
+
+        try
+        {
+            var apiResponse = await customerMiddleware.GetAllCustomersAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                Customer = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                Customer = new List<CustomerDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            Customer = new List<CustomerDto>();
+        }
+
+        StateHasChanged();
+
+    }
+
+    #endregion
+
+    #region Filter
+
+    private Func<CustomerDto, bool> _quickFilterCustomers => x =>
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+
+        var fields = new List<string?>
+                                {
+        x.UserId.ToString(),
+        x.CustomerNumber.ToString(),
+
+                                };
+
+        return fields.Any(f => !string.IsNullOrEmpty(f) &&
+                               f.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+
+    };
+
+    #endregion
+
+    #region GoToMainPage
+
+    private void GoToMainPage()
+    {
+
+        NavigationManager.NavigateTo("/");
+
+    }
+    #endregion
+
+    #region DeleteItem
+
+    private async Task DeletedProduct(CustomerDto deletedCustomer)
+    {
+
+        bool? confirmed = await DialogService.ShowMessageBox(
+    "Delete Confirm",
+    $"Do You Want To Remove '{deletedCustomer.UserId}' From This List ?",
+    yesText: "Yes",
+    noText: "No"
+    );
+
+        if (confirmed == true)
+        {
+            Customer = Customer.Where(s => s != deletedCustomer).ToList();
+        }
+
+    }
+
+    #endregion
+
+    #region EditCustomer
+
+    private void EditCustomer(int id)
+    {
+
+        dataPassHelper.SetCustomerId(id);
+
+        NavigationManager.NavigateTo("/EditCustomer");
+
+    }
+
+    #endregion
+
+    #region persian date
+
+    private CultureInfo GetPersianCulture()
+    {
+        var persianCulture = new CultureInfo("fa-IR");
+
+        persianCulture.DateTimeFormat.Calendar = new PersianCalendar();
+
+        return persianCulture;
+
+    }
+
+    #endregion
+
+    #region GoToAddProductPage
+
+    private void GoToAddProductPage()
+    {
+
+        NavigationManager.NavigateTo("/AddCustomer");
+
+    }
+
+    #endregion
+
+    #region DoubleClick
+
+    private void DoubleClick()
+    {
+        if (selectedCustomer == null)
+        {
+            return;
+        }
+        dataPassHelper.SetCustomerId(selectedCustomer.Id);
+
+        NavigationManager.NavigateTo("/CustomerInformations");
+
+    }
+
+    #endregion
+
+}
+

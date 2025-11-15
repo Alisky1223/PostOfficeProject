@@ -1,0 +1,195 @@
+﻿@page "/ProductInformations"
+@using MudBlazor
+@using CommonDll.Dto
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
+@inject NavigationManager NavigationManager
+@inject NotificationService notificationService
+@inject ISnackbar Snackbar
+@inject IDataPassHelper dataPassHelper
+@inject IProductsMiddelware productsMiddelware
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-6 mb-10">
+
+    <MudPaper Elevation="4" Class="rounded-xl pa-6" Style="background: linear-gradient(135deg,#E3F2FD,#F3E5F5);">
+
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="font-weight-bold mb-2">
+
+            📦  Product Informations
+
+        </MudText>
+
+        <MudDivider Class="mb-4" />
+
+        @if (isLoading)
+        {
+            <div class="d-flex justify-center my-6">
+
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+
+            </div>
+        }
+        else if (product != null)
+        {
+            <MudGrid Spacing="3">
+
+                <MudItem xs="12" sm="6" md="3">
+
+                    <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                        <MudIcon Icon="@Icons.Material.Filled.Inventory2" Size="Size.Large" Color="Color.Primary" />
+
+                        <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">ProductName</MudText>
+
+                        <MudText Typo="Typo.body1">@product?.ProductName</MudText>
+
+                    </MudPaper>
+
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+
+                    <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                        <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Size="Size.Large" Color="Color.Success" />
+
+                        <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">ProductPrice</MudText>
+
+                        <MudText Typo="Typo.body1">
+
+                            @((product?.Price ?? 0).ToString("N0", new System.Globalization.CultureInfo("fa-IR"))) Rial
+
+                        </MudText>
+
+                    </MudPaper>
+
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+
+                    <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                        <MudIcon Icon="@Icons.Material.Filled.Category" Size="Size.Large" Color="Color.Secondary" />
+
+                        <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">ProductType</MudText>
+
+                        <MudText Typo="Typo.body1">@product?.ProductType?.Type</MudText>
+
+                    </MudPaper>
+
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="3">
+
+                    <MudPaper Class="pa-4 text-center rounded-lg shadow-sm">
+
+                        <MudIcon Icon="@Icons.Material.Filled.LocalShipping" Size="Size.Large" Color="Color.Tertiary" />
+@*                                  Color="@(product?.TransportStatus?.Status == "Deliverd" ? Color.Success : Color.Info)" />
+ *@
+                        <MudText Typo="Typo.subtitle2" Class="font-weight-bold mt-2">TransportStatus</MudText>
+@* 
+                        <MudChip T="string" Variant="Variant.Outlined"
+                                 Color="@(product?.TransportStatus?.Status == "Not Deliverd" ? Color.Success : Color.Info)">
+
+                            @product?.TransportStatus?.Status
+
+                        </MudChip> *@
+                        <MudText Typo="Typo.body1">@product?.TransportStatus?.Status</MudText>
+
+                    </MudPaper>
+
+                </MudItem>
+
+            </MudGrid>
+
+            <div class="d-flex justify-center mt-6">
+
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary"
+                           StartIcon="@Icons.Material.Filled.ArrowBack"
+                           OnClick="@GoToMainPage" Class="px-6 py-2 rounded-xl">
+
+                    MainPage
+                </MudButton>
+
+            </div>
+
+        }
+        else
+        {
+
+            <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Error">
+
+                Informations Not Found
+            </MudText>
+
+        }
+
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+
+    #region Props
+
+    private bool isLoading = false;
+
+    private ProductDto? product;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProduct();
+    }
+
+    #endregion
+
+    #region LoadProduct
+
+    private async Task LoadProduct()
+    {
+
+        try
+        {
+            isLoading = true;
+
+            var apiResponse = await productsMiddelware.GetByIdAsync(dataPassHelper.GetProudctId());
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                product = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                product = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            product = null;
+        }
+        finally
+        {
+
+            isLoading = false;
+
+        }
+
+    }
+
+    #endregion
+
+    #region GoToMainPage
+
+    private void GoToMainPage() => NavigationManager.NavigateTo("/");
+
+    #endregion
+
+}
+

@@ -18,13 +18,13 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore MainAPI/MainAPISolution.sln  # Adjust this path based on ls -R output
+      run: dotnet restore PostOfficeProject.sln  # Adjust this path based on ls -R output
 
     - name: Build
-      run: dotnet build MainAPI/MainAPISolution.sln --no-restore --configuration Release  # Adjust path
+      run: dotnet build PostOfficeProject.sln --no-restore --configuration Release  # Adjust path
 
     - name: Test with Coverage
-      run: dotnet test MainAPI/MainAPISolution.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura  # Updated to cobertura as recommended
+      run: dotnet test PostOfficeProject.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura  # Updated to cobertura as recommended
 
     - name: Combine Coverage Reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.18  # Latest valid version
