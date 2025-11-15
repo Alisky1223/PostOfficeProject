@@ -1,5 +1,5 @@
 ﻿using CommonDll.Dto;
-using PostOfficeBackendProject.src.Application.Dto;
+using PostOfficeProject.Core.src.Application.Dto;
 using PostOfficeFrontendProject__all_interactive.Interface;
 using System.Text.Json;
 

@@ -1,12 +1,11 @@
 ﻿using CommonDll.Dto;
-using PostOfficeBackendProject.src.Application.Dto;
 using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
 
 namespace PostOfficeFrontendProject__all_interactive.Middelware
 {
     public class CustomerMiddleware : ICustomerMiddleware
-    { 
+    {
         private readonly HttpClient _httpClient;
 
         public CustomerMiddleware(HttpClient httpClient)
@@ -28,7 +27,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
 
         }
 
-        public async Task<ApiResponse<CustomerDto>>UpdateCustomersAsync(int id, CustomerUpdateAndCreateDto updateDto)
+        public async Task<ApiResponse<CustomerDto>> UpdateCustomersAsync(int id, CustomerUpdateAndCreateDto updateDto)
         {
 
             try

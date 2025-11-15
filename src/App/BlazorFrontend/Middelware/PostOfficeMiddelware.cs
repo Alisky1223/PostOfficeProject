@@ -1,12 +1,7 @@
-﻿using Azure;
-using CommonDll.Dto;
-using PostOfficeBackendProject.src.Application.Dto;
+﻿using CommonDll.Dto;
 using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Text.Json;
+using PostOfficeProject.Core.src.Application.Dto;
 
 namespace PostOfficeFrontendProject__all_interactive.Middelware
 {
@@ -23,14 +18,14 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<ApiResponse<List<PostOfficeBasicInformationDto>>>("/api/postOffice/getAllPostOffice") ?? throw new Exception ("API Response Is Null") ;
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<PostOfficeBasicInformationDto>>>("/api/postOffice/getAllPostOffice") ?? throw new Exception("API Response Is Null");
 
             }
             catch (Exception e)
             {
                 return new ApiResponse<List<PostOfficeBasicInformationDto>>(e.Message, 500);
             }
-        
+
         }
 
         public async Task<ApiResponse<PostOfficeDto>> GetByIdAsync(int id)
@@ -45,7 +40,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             {
                 return new ApiResponse<PostOfficeDto>(e.Message, 500);
             }
-           
+
         }
 
         public async Task<ApiResponse<PostOfficeDto>> UpdatePostOfficeAsync(int id, PostOfficeUpdateAndCreateDto updateDto)
@@ -79,7 +74,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             }
 
         }
-   
+
     }
 
 }

@@ -1,5 +1,5 @@
 ﻿using CommonDll.Dto;
-using PostOfficeBackendProject.src.Application.Dto;
+using PostOfficeProject.Core.src.Application.Dto;
 
 namespace PostOfficeFrontendProject__all_interactive.Interface
 {

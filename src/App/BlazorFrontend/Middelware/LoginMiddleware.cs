@@ -1,6 +1,6 @@
 ﻿using CommonDll.Dto;
 using Microsoft.AspNetCore.Authentication;
-using PostOfficeBackendProject.src.Application.Dto;
+using PostOfficeProject.Core.src.Application.Dto;
 using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
 using System.Net.Http.Json;
