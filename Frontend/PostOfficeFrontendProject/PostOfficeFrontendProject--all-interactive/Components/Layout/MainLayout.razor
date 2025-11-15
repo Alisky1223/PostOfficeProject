@@ -1,19 +1,24 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.Authorization
 @using MudBlazor
 @using MudBlazor.Utilities
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ISnackbar Snackbar
 
-<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
+<CascadingAuthenticationState>
 
-<MudPopoverProvider />
+    <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
 
-<MudDialogProvider />
+    <MudPopoverProvider />
 
-<MudSnackbarProvider />
+    <MudDialogProvider />
 
-<MudRTLProvider RightToLeft="@_rightToLeft">
+    <MudSnackbarProvider />
 
-    @if (!IsHomePage)
+    @* <MudRTLProvider RightToLeft="@_rightToLeft"> *@
+
+    @if (!IsHomePage && !IsLoginPage && !IsRegisterPage)
     {
 
         <MudLayout>
@@ -22,7 +27,7 @@
 
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
 
-                <MudText Typo="Typo.h5" Class="ml-3"> نرم افزار مدیریت و رهگیری پست </MudText>
+                <MudText Typo="Typo.h5" Class="ml-3">Post Management And Tracking</MudText>
 
                 <MudSpacer />
 
@@ -41,16 +46,21 @@
                 @Body
 
             </MudMainContent>
+
         </MudLayout>
     }
-    else{
+    else
+    {
         <MudLayout>
 
             @Body
 
         </MudLayout>
-}
-</MudRTLProvider>
+    }
+
+</CascadingAuthenticationState>
+
+@* </MudRTLProvider> *@
 
 
 <div id="blazor-error-ui" data-nosnippet>
@@ -202,7 +212,6 @@
 
     }
 
-
     private void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
@@ -260,6 +269,36 @@
 
     private bool IsHomePage =>
         NavigationManager.Uri.TrimEnd('/') == NavigationManager.BaseUri.TrimEnd('/');
+
+    private bool IsLoginPage =>
+    NavigationManager.Uri.ToLower().Contains("/login"); 
+    
+    private bool IsRegisterPage =>
+    NavigationManager.Uri.ToLower().Contains("/registeruser");
+
+    private bool _checkedAuth = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // اگه قبلاً چک کردیم، دیگه هیچی
+        if (_checkedAuth)
+            return;
+
+        _checkedAuth = true; // فقط یک‌بار اجازه چک کردن بده
+
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var currentUrl = NavigationManager.Uri.ToLower();
+
+        bool isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+        bool isLoginPage = currentUrl.Contains("/login");
+
+        if (!isAuthenticated && !isLoginPage)
+        {
+            Snackbar.Add("برای دسترسی به این صفحه باید وارد شوید.", Severity.Warning);
+            NavigationManager.NavigateTo("/login", forceLoad: false);
+        }
+    }
 
 }
 

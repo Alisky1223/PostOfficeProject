@@ -12,6 +12,7 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
         private const string loginRequest = "login";
         private const string registerRequest = "register";
         private const string changeUserRoleRequest = "changeUserRole/{id:int}";
+        private const string getallrolesRequest = "getallRoles";
 
         private readonly IAuthenticationMiddleware _middleware;
         public AuthController(IAuthenticationMiddleware middleware)
@@ -48,6 +49,16 @@ namespace PostOfficeBackendProject.src.Presentation.Controller
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(string.Join(" ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)), 400));
 
             var result = await _middleware.ChangeUserRole(id,newRoleId);
+
+            return Ok(result);
+        }
+
+        [HttpGet(getallrolesRequest)]
+        public async Task<IActionResult> GetAllRoles() 
+        {
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(string.Join(" ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)), 400));
+
+            var result = await _middleware.GetallRoles();
 
             return Ok(result);
         }

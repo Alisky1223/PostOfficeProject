@@ -1,0 +1,37 @@
+﻿@page "/Admin"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthStateProvider
+
+<h3>Admin Pannel</h3>
+
+<AuthorizeView Roles="SuperAdmin">
+    <Authorized>
+        <div style="padding:10px; border:1px solid green; margin-top:10px;">
+            <h4>Welcome.</h4>
+            <button @onclick="DoAdminTask">Adimin Duteis</button>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p style="color:red;"><b>Access Denied.</b></p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private void DoAdminTask()
+    {
+        Console.WriteLine("Admin task executed!");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            Console.WriteLine($"User: {user.Identity.Name}");
+            Console.WriteLine($"Roles: {string.Join(", ", user.FindAll(System.Security.Claims.ClaimTypes.Role).Select(r => r.Value))}");
+        }
+    }
+}

@@ -8,45 +8,40 @@
 @using System.Threading
 @using PostOfficeFrontendProject__all_interactive.Interface
 @using PostOfficeFrontendProject__all_interactive.Mapper
+@using PostOfficeFrontendProject__all_interactive.Service
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
+@inject NotificationService notificationService
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
-@inject IProductsMiddelware productsMiddelware
 @inject IDataPassHelper dataPassHelper
-
-
-<MudRTLProvider RightToLeft="@_rightToLeft">
+@inject IProductsMiddelware productsMiddelware
 
     <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
 
-        <MudText Typo="Typo.h5">مشاهده اطلاعات مرسوله ها</MudText>
+        <MudText Typo="Typo.h5">Packet Informations</MudText>
 
     </MudItem>
 
-    <MudDataGrid Height="60vh" FixedHeader T="ProductDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedProduct" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick>
+<MudDataGrid Height="60vh" FixedHeader @ondblclick="DoubleClick" T="ProductBasicInformationDto" Loading="isLoading" Items="@products" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filterable="true" QuickFilter="_quickFilterProducts" SelectOnRowClick @bind-SelectedItem="@selectedProducts">
 
         <ToolBarContent>
 
-            <MudText Typo="Typo.h5" Style="margin:20px"><b>لیست مرسولات</b></MudText>
+            <MudText Typo="Typo.h5" Style="margin:20px"><b>Packets List</b></MudText>
 
             <MudSpacer />
 
-            <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="جستجو" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchString" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
 
         </ToolBarContent>
 
         <Columns>
 
-            <PropertyColumn Property="x => x.ProductName" Title="نام مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+            <PropertyColumn Property="x => x.ProductName" Title="ProductName" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
 
-            <PropertyColumn Property="x => x.Price" Title="ارزش مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
+            <PropertyColumn Property="x => x.Price" Title="Price" HeaderStyle="background:#ADD8E6;color:#333;" />
 
-            <PropertyColumn Property="x => x.Description" Title="توضیحات مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
-
-            <PropertyColumn Property="x => x.ProductType.ProductsTypeToString()" Title="نوع مرسوله" HeaderStyle="background:#ADD8E6;color:#333;" StickyRight="true" />
-
-            <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="عملیات">
+            <TemplateColumn HeaderStyle="background:#ADD8E6;color:#333;" Title="Operations">
 
                 <CellTemplate>
 
@@ -55,11 +50,11 @@
 
                         <MudButton Style="margin-right:10px" Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditProduct(context.Item.Id))">
 
-                            ویرایش
+                            Edit
 
                         </MudButton>
 
-                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">حذف</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() =>DeletedProduct(context.Item))">Delete</MudButton>
 
 
 
@@ -81,19 +76,18 @@
 
     <MudPaper Elevation="0" Class="d-flex align-center justify-end " Style="margin-top:20px">
 
-        <MudButton Class="main-button" Style="margin-left:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddProductPage">افزودن</MudButton>
+        <MudButton Class="main-button" Style="margin-right:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddProductPage">Add</MudButton>
 
-        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">بازگشت به صفحه اصلی</MudButton>
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
 
     </MudPaper>
 
-</MudRTLProvider>
 
 <style>
 
     .red-header {
-        background-color: #87CEFA;
-        color: #fff; /* سفید برای خوانایی متن */
+    background-color: #87CEFA;
+    color: #fff; /* سفید برای خوانایی متن */
     }
 
 </style>
@@ -112,13 +106,11 @@
 
     private bool isLoading = false;
 
-    private bool _rightToLeft = true;
-
     private string searchString = "";
 
-    private ProductDto selectedProduct = null;
+    private ProductBasicInformationDto selectedProducts = new();
 
-    private IEnumerable<ProductDto> products = new List<ProductDto>();
+    private List<ProductBasicInformationDto> products = new List<ProductBasicInformationDto>();
 
     protected async override Task OnInitializedAsync()
     {
@@ -133,28 +125,39 @@
 
     private async Task LoadProducts()
     {
+
         try
         {
-            isLoading = true;
-            products = await productsMiddelware.GetAllProductsAsync();  // لیست جدید
+            var apiResponse = await productsMiddelware.GetAllProductsAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                products = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                products = new List<ProductBasicInformationDto>();
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            Snackbar.Add(ex.Message);
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            products = new List<ProductBasicInformationDto>();
+        }
 
-        }
-        finally
-        {
-            isLoading = false;
-        }
+        StateHasChanged();
     }
 
     #endregion
 
     #region Filter
 
-    private Func<ProductDto, bool> _quickFilterProducts => x =>
+    private Func<ProductBasicInformationDto, bool> _quickFilterProducts => x =>
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
@@ -163,8 +166,7 @@
                             {
         x.ProductName?.ToString(),
         x.Price.ToString(),
-        x.Description.ToString(),
-        x.ProductType?.ToString(),
+     
 
                             };
 
@@ -186,7 +188,7 @@
 
     #region DeleteItem
 
-    private async Task DeletedProduct(ProductDto deletedProduct)
+    private async Task DeletedProduct(ProductBasicInformationDto deletedProduct)
     {
 
         bool? confirmed = await DialogService.ShowMessageBox(
@@ -242,5 +244,22 @@
     }
 
     #endregion
+
+    #region DoubleClick
+
+    private void DoubleClick()
+    {
+        if (selectedProducts == null)
+        {
+            return;
+        }
+        dataPassHelper.SetProudctId(selectedProducts.Id);
+
+        NavigationManager.NavigateTo("/ProductInformations");
+
+    }
+
+    #endregion
+
 }
 

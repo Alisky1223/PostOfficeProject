@@ -10,7 +10,11 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Json_exe.MudBlazor.SimpleIcons" Version="1.10.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="4.0.1" />
     <PackageReference Include="MudBlazor" Version="8.*" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
 

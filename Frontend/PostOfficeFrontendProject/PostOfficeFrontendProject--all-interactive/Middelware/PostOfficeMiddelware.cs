@@ -1,8 +1,12 @@
-﻿using CommonDll.Dto;
+﻿using Azure;
+using CommonDll.Dto;
 using PostOfficeBackendProject.src.Application.Dto;
+using PostOfficeFrontendProject__all_interactive.Helper;
 using PostOfficeFrontendProject__all_interactive.Interface;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace PostOfficeFrontendProject__all_interactive.Middelware
 {
@@ -15,33 +19,72 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             _httpClient = httpClient;
         }
 
-        public async Task<List<PostOfficeBasicInformationDto>> GetAllPostOfficesAsync()
+        public async Task<ApiResponse<List<PostOfficeBasicInformationDto>>> GetAllPostOfficesAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<PostOfficeBasicInformationDto>>("api/postOffice/getAllPostOffice");
-        }
-        public async Task<PostOfficeDto?> GetByIdAsync(int id)
-        {
-            return await _httpClient.GetFromJsonAsync<PostOfficeDto>($"api/postOffice/getByIdPostOffice/{id}");
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<ApiResponse<List<PostOfficeBasicInformationDto>>>("/api/postOffice/getAllPostOffice") ?? throw new Exception ("API Response Is Null") ;
+
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<List<PostOfficeBasicInformationDto>>(e.Message, 500);
+            }
+        
         }
 
-        public async Task<PostOfficeDto?> UpdatePostOfficeAsync(int id, PostOfficeUpdateAndCreateDto updateDto)
+        public async Task<ApiResponse<PostOfficeDto>> GetByIdAsync(int id)
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/postOffice/updatePostOffice/{id}", updateDto);
-            if (response.IsSuccessStatusCode)
+
+            try
             {
-                return await response.Content.ReadFromJsonAsync<PostOfficeDto>();
+                return await _httpClient.GetFromJsonAsync<ApiResponse<PostOfficeDto>>($"api/postOffice/getByIdPostOffice/{id}") ?? throw new Exception("API Response Is Null");
+
             }
-            return null;
+            catch (Exception e)
+            {
+                return new ApiResponse<PostOfficeDto>(e.Message, 500);
+            }
+           
         }
 
-        public async Task<PostOfficeDto?> CreatePostOfficeAsync(PostOfficeUpdateAndCreateDto createDto)
+        public async Task<ApiResponse<PostOfficeDto>> UpdatePostOfficeAsync(int id, PostOfficeUpdateAndCreateDto updateDto)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/postOffice/createPostOffice", createDto);
-            if (response.IsSuccessStatusCode)
+
+            try
             {
-                return await response.Content.ReadFromJsonAsync<PostOfficeDto>();
+                var response = await _httpClient.PutAsJsonAsync($"api/postOffice/updatePostOffice/{id}", updateDto);
+
+                return await ApiHandler.HandleResponse<ApiResponse<PostOfficeDto>>(response, "Update failed");
             }
-            return null;
+            catch (Exception e)
+            {
+                return new ApiResponse<PostOfficeDto>(e.Message, 500);
+            }
+
         }
+
+        public async Task<ApiResponse<PostOfficeDto>> CreatePostOfficeAsync(PostOfficeUpdateAndCreateDto createDto)
+        {
+
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/postOffice/createPostOffice", createDto);
+
+                return await ApiHandler.HandleResponse<ApiResponse<PostOfficeDto>>(response, "Create failed");
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<PostOfficeDto>(e.Message, 500);
+            }
+
+        }
+   
     }
+
 }
+
+
+
+
+

@@ -7,27 +7,27 @@
   
     <MudContainer MaxWidth="MaxWidth.Large" Class="my-8">
      
-        <MudPaper Class="hero-banner pa-8 mb-8" Elevation="5">
+        <MudPaper Class="hero-banner service-card pa-8 mb-8" Elevation="5">
           
             <MudGrid>
              
-                <MudItem xs="12" sm="6">
+                <MudItem xs="12" sm="10">
                 
-                    <MudText Typo="Typo.h3" Class="mb-4">ارسال سریع و امن</MudText>
+                    <MudText Typo="Typo.h3" Class="mb-4">Fast And Safe Shipping</MudText>
                
-                    <MudText Typo="Typo.body1" Class="mb-6">با شرکت پست مدرن، بسته‌هایتان را با سرعت نور ارسال کنید. ردیابی لحظه‌ای و تحویل تضمینی!</MudText>
+                    <MudText Typo="Typo.body1" Class="mb-6">Send Your Packages At The Speed Of Light With Postmodern. Real-time Tracking And Guaranteed Delivery!</MudText>
                   
                     <MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.LocalShipping" Size="Size.Large" OnClick="GoToPostOffices">
                       
-                        مراکزپست
+                        PostOffices
                
                     </MudButton>
               
                 </MudItem>
              
-                <MudItem xs="12" sm="6">
+                <MudItem xs="12" sm="2">
              
-                    <MudImage Src="https://picsum.photos/seed/delivery/500/300" Class="hero-image" />
+                    <MudImage Src="img/PostOffice.png" Class="hero-image" Width="100" Height="100" />
              
                 </MudItem>
           
@@ -35,7 +35,7 @@
        
         </MudPaper>
       
-        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-6 services-title">خدمات ما</MudText>
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-6 services-title">Our Services</MudText>
      
         <MudGrid Spacing="4" Justify="Justify.Center">
           
@@ -43,20 +43,20 @@
                
                 <MudCard Class="service-card service-domestic pa-4" Elevation="3">
                  
-                    <MudCardMedia Image="https://picsum.photos/seed/truck/300/200" Height="200" Class="service-media" />
-                 
+                    <MudImage Src="img/Delivery.png" Class="hero-image" Width="100" Height="100" />
+
                     <MudCardContent>
                      
-                        <MudText Typo="Typo.h6" Class="mb-2">ارسال داخلی</MudText>
+                        <MudText Typo="Typo.h6" Class="mb-2">Internal Shipping</MudText>
                      
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">تحویل سریع در سراسر کشور</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Primary">Fast Delivery Nationwide</MudText>
                   
                     </MudCardContent>
                  
                     <MudCardActions>
                        
-                        <MudButton Variant="Variant.Text" Color="Color.Primary">جزئیات</MudButton>
-                    
+                        <MudButton Variant="Variant.Filled" Color="Color.Error">Details</MudButton>
+
                     </MudCardActions>
              
                 </MudCard>
@@ -67,20 +67,20 @@
               
                 <MudCard Class="service-card service-international pa-4" Elevation="3">
                  
-                    <MudCardMedia Image="https://picsum.photos/seed/world/300/200" Height="200" Class="service-media" />
-                 
+                    <MudImage Src="img/WorldDelivery.png" Class="hero-image" Width="100" Height="100" />
+
                     <MudCardContent>
                      
-                        <MudText Typo="Typo.h6" Class="mb-2">ارسال بین‌المللی</MudText>
+                        <MudText Typo="Typo.h6" Class="mb-2">International Shipping‌</MudText>
                      
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">به تمام نقاط جهان</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Primary">To All Parts Of The World</MudText>
                   
                     </MudCardContent>
                    
                     <MudCardActions>
                   
-                        <MudButton Variant="Variant.Text" Color="Color.Primary">جزئیات</MudButton>
-                   
+                        <MudButton Variant="Variant.Filled" Color="Color.Error">Details</MudButton>
+
                     </MudCardActions>
               
                 </MudCard>
@@ -90,19 +90,19 @@
                
                 <MudCard Class="service-card service-tracking pa-4" Elevation="3">
                   
-                    <MudCardMedia Image="https://picsum.photos/seed/map/300/200" Height="200" Class="service-media" />
-                  
+                    <MudImage Src="img/Map.png" Class="hero-image" Width="100" Height="100" />
+
                     <MudCardContent>
                       
-                        <MudText Typo="Typo.h6" Class="mb-2">ردیابی آنلاین</MudText>
+                        <MudText Typo="Typo.h6" Class="mb-2">Online Tracking</MudText>
                       
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">پیگیری لحظه‌ای بسته</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Primary">Instant Tracking</MudText>
                    
                     </MudCardContent>
                    
                     <MudCardActions>
                       
-                        <MudButton Variant="Variant.Text" Color="Color.Primary">جزئیات</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Error">Details</MudButton>
                     
                     </MudCardActions>
                
@@ -112,27 +112,27 @@
       
         </MudGrid>
 
-        <MudPaper Class="quick-track pa-6 mt-8" Elevation="2">
+        <MudPaper Class="quick-track service-card tracking_paper pa-6 mt-8" Elevation="2">
 
-            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">ردیابی سریع</MudText>
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Fast Tracking</MudText>
 
-            <MudGrid>
+            <MudGrid Class="d-flex align-center justify-center">
 
-                <MudItem xs="12" md="8">
+                <MudItem xs="12" md="5">
 
-                    <MudTextField @bind-Value="trackCode" Label="کد رهگیری" Variant="Variant.Outlined" Adornment="@Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentAriaLabel="جستجو" />
+                    <MudTextField @bind-Value="trackCode" Label="Tracking Code" Variant="Variant.Outlined" Placeholder="Search Your Codes" Adornment="@Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentAriaLabel="Search" />
 
                 </MudItem>
 
-                <MudItem xs="12" md="4">
+                <MudItem xs="12" md="3">
 
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth Size="Size.Large">
+                    <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth Size="Size.Large">
 
-                        جستجو
+                        Search
 
                     </MudButton>
 
-                </MudItem>
+                </MudItem>     
 
             </MudGrid>
 
@@ -142,11 +142,11 @@
 
             <MudItem xs="12" sm="4">
 
-                <MudPaper Class="stat-card stat-packages pa-4 text-center" Elevation="1">
+                <MudPaper Class="stat-card service-card stat-packages pa-4 text-center" Elevation="1">
 
                     <MudText Typo="Typo.h3">1M+</MudText>
 
-                    <MudText Typo="Typo.body1">بسته ارسال شده</MudText>
+                    <MudText Typo="Typo.body1">Packet Sent</MudText>
 
                 </MudPaper>
 
@@ -154,22 +154,22 @@
 
             <MudItem xs="12" sm="4">
 
-                <MudPaper Class="stat-card stat-satisfaction pa-4 text-center" Elevation="1">
+                <MudPaper Class="stat-card service-card stat-satisfaction pa-4 text-center" Elevation="1">
 
                     <MudText Typo="Typo.h3">99%</MudText>
 
-                    <MudText Typo="Typo.body1">رضایت مشتریان</MudText>
+                    <MudText Typo="Typo.body1">Customer Satisfaction</MudText>
 
                 </MudPaper>
             </MudItem>
 
             <MudItem xs="12" sm="4">
 
-                <MudPaper Class="stat-card stat-support pa-4 text-center" Elevation="1">
+                <MudPaper Class="stat-card service-card stat-support pa-4 text-center" Elevation="1">
 
                     <MudText Typo="Typo.h3">24/7</MudText>
 
-                    <MudText Typo="Typo.body1">پشتیبانی</MudText>
+                    <MudText Typo="Typo.body1">Support</MudText>
 
                 </MudPaper>
 
@@ -284,6 +284,11 @@
 
     .stat-support {
         background: linear-gradient(45deg, #FF8E53, #FE6D73);
+    }
+
+    .tracking_paper{
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+        color: white;
     }
 
     /* Responsive برای موبایل */
