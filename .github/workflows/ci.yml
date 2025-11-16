@@ -1,6 +1,11 @@
 name: CI
 on: [push, pull_request]
 
+permissions:
+  issues: write  # For commenting on issues
+  pull-requests: write  # For commenting on PRs
+  contents: read  # For reading code and artifacts
+
 jobs:
   build:
     runs-on: ubuntu-latest
