@@ -28,6 +28,10 @@ jobs:
     - name: Build
       run: dotnet build PostOfficeProject.sln --no-restore --configuration Release  # Adjust path
 
+    # Check lint 
+    - name: Run dotnet format
+      run: dotnet format --verify-no-changes
+
     - name: Test with Coverage
       run: dotnet test PostOfficeProject.sln --no-build --configuration Release --verbosity detailed /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura  # Updated to cobertura as recommended
 
