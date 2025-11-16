@@ -1,0 +1,289 @@
+﻿@page "/RegisterUser"
+@using MudBlazor
+@using System.Net.Http.Json
+@using CommonDll.Dto
+@using PostOfficeProject.Core.src.Application.Dto
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Provider
+@using PostOfficeFrontendProject__all_interactive.Service
+@inject CustomAuthStateProvider AuthStateProvider
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+@inject IDataPassHelper dataHelper
+@inject ISnackbar Snackbar
+@inject IRegisterMiddleware registerMiddleware
+
+<MudContainer Class="d-flex align-center justify-center pa-4 login-container" Style="min-height: 100vh;min-width:100%">
+    <MudCard Class="pa-6 login-card" Style="width: 100%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 10px 20px -10px rgba(0, 0, 0, 0.05); border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+
+        <MudCardContent Style="text-align:center" Class="text-center">
+            <MudText Typo="Typo.h4" Color="Color.Primary" Class="mb-2" Style="font-family: 'Vazir', sans-serif;">Register</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-6 opacity-70">Please enter your login information to access the dashboard.</MudText>
+        </MudCardContent>
+
+        <MudCardContent>
+
+            <!-- Input Fields -->
+
+            <MudTextField @bind-Value="Username"
+                          Label="Email or Username"
+                          Variant="Variant.Outlined"
+                          Class="mb-4"
+                          PrefixIcon="@Icons.Material.Filled.AlternateEmail"
+                          Placeholder="Example: demo@example.com"
+                          HelperText="Use a valid email address"
+                          Required="true" />
+
+            <MudTextField @bind-Value="Password"
+                          Label="Password"
+                          Variant="Variant.Outlined"
+                          Class="mb-4"
+                          InputType="@(IsPasswordVisible ? InputType.Text : InputType.Password)"
+                          PrefixIcon="@Icons.Material.Filled.Lock"
+                          AdornmentIcon="@(IsPasswordVisible ? Icons.Material.Filled.Visibility : Icons.Material.Filled.VisibilityOff)"
+                          AdornmentAriaLabel="Show/Hide Password"
+                          OnAdornmentClick="@(() => IsPasswordVisible = !IsPasswordVisible)"
+                          Placeholder="At least 8 characters"
+                          HelperText="@(Password.Length < 8 ? "Password must be at least 8 characters" : "")" />
+
+            <MudTextField @bind-Value="ConfirmPassword"
+                          Label="Password"
+                          Variant="Variant.Outlined"
+                          Class="mb-4"
+                          InputType="@(IsPasswordVisible ? InputType.Text : InputType.Password)"
+                          PrefixIcon="@Icons.Material.Filled.Lock"
+                          AdornmentIcon="@(IsPasswordVisible ? Icons.Material.Filled.Visibility : Icons.Material.Filled.VisibilityOff)"
+                          AdornmentAriaLabel="Show/Hide Password"
+                          OnAdornmentClick="@(() => IsPasswordVisible = !IsPasswordVisible)"
+                          Placeholder="At least 8 characters"
+                          HelperText="@(Password.Length < 8 ? "Password must be at least 8 characters" : "")" />
+
+            <MudTextField @bind-Value="FirstName"
+                          Label="FirstName"
+                          Variant="Variant.Outlined"
+                          Class="mb-4"
+                          PrefixIcon="@Icons.Material.Filled.AlternateEmail"
+                          Placeholder="Example:Amir"
+                          HelperText="Type Your FirstName"
+                          Required="true" />
+
+            <MudTextField @bind-Value="LastName"
+                          Label="LastName"
+                          Variant="Variant.Outlined"
+                          Class="mb-4"
+                          PrefixIcon="@Icons.Material.Filled.AlternateEmail"
+                          Placeholder="Example: Mohammadi"
+                          HelperText="Type Your LastName"
+                          Required="true" />
+
+            <MudTextField @bind-Value="UserEmail"
+                          Label="Email"
+                          InputType="InputType.Email"
+                          Variant="Variant.Outlined"
+                          Class="mb-4"
+                          PrefixIcon="@Icons.Material.Filled.AlternateEmail"
+                          Placeholder="Example: demo@example.com"
+                          HelperText="Use a valid email address"
+                          Required="true" />
+
+            <MudTextField @bind-Value="UserPhone"
+                          Label="UserPhone"
+                          Variant="Variant.Outlined"
+                          Class="mb-4"
+                          PrefixIcon="@Icons.Material.Filled.AlternateEmail"
+                          Placeholder="Example: 0912......."
+                          HelperText="Use a valid Phone Number "
+                          Required="true" />
+
+            <!-- Login Button -->
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       Size="Size.Large"
+                       FullWidth="true"
+                       Class="mb-4 rounded-xl"
+                       StartIcon="@Icons.Material.Filled.Login"
+                       OnClick="@HandleRegister">
+                Register
+
+            </MudButton>
+
+
+            <!-- Divider  -->
+
+            <div class="or-divider">
+                <MudDivider Style="width:25%" />
+                <MudText Typo="Typo.caption" Class="mx-3" Color="Color.Secondary" Style="white-space: nowrap; min-width: 20px; text-align: center;">or</MudText>
+                <MudDivider Style="width:25%" />
+            </div>
+
+            <!-- Social Login Buttons -->
+
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Primary"
+                       Size="Size.Large"
+                       StartIcon="@Icons.Custom.Brands.Google"
+                       FullWidth="true"
+                       Class="mb-2 rounded-xl"
+                       OnClick="@(() => Snackbar.Add("Sign in with Google (Demo)", Severity.Success))">
+                Sign in with Google
+            </MudButton>
+
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Default"
+                       Size="Size.Large"
+                       StartIcon="@Icons.Custom.Brands.GitHub"
+                       FullWidth="true"
+                       Class="rounded-xl"
+                       OnClick="@(() => Snackbar.Add("Sign in with GitHub (Demo)", Severity.Success))">
+                Sign in with GitHub
+            </MudButton>
+
+        </MudCardContent>
+
+        <MudCardActions Class="justify-center">
+            <MudText Typo="Typo.caption" Color="Color.Secondary" Class="mr-2">Don't have an account?</MudText>
+            <MudLink Href="/register" Underline="Underline.None" Color="Color.Primary" Typo="Typo.body2">
+                Sign up
+            </MudLink>
+        </MudCardActions>
+
+    </MudCard>
+
+</MudContainer>
+
+
+<style>
+
+    .login-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+    .login-card {
+        animation: fadeInUp 0.6s ease-out;
+        transform-origin: center;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .mud-input-outlined .mud-input-slot {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mud-input-outlined:focus-within .mud-input-slot {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(126, 111, 255, 0.2);
+    }
+
+    .or-divider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+        .or-divider .mud-divider-root {
+            flex: 1;
+            min-width: 100px; /* حداقل عرض برای جلوگیری از کوتاه شدن بیش از حد */
+        }
+
+</style>
+
+@code {
+
+    #region Props 
+
+    private string Username = string.Empty;
+
+    private string Password = string.Empty;
+
+    private string ConfirmPassword = string.Empty;
+
+    private string FirstName = string.Empty;
+
+    private string LastName = string.Empty;
+
+    private string UserEmail = string.Empty;
+
+    private string UserPhone = string.Empty;
+
+    private bool IsPasswordVisible { get; set; }
+
+    #endregion 
+
+    private async Task HandleRegister()
+    {
+        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword) || string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(UserEmail) || string.IsNullOrWhiteSpace(UserPhone))
+        {
+            Snackbar.Add("Fill The Requird Fields.", Severity.Warning);
+            return;
+        }
+
+        if (Password != ConfirmPassword)
+        {
+            Snackbar.Add("Password And ConfirmPassword Does Not Match", Severity.Warning);
+            return;
+        }
+
+        var Register = new RegisterDto
+            {
+                Username = Username,
+                Password = Password,
+                ConfirmPassword = ConfirmPassword,
+                FirstName = FirstName,
+                LastName = LastName,
+                UserEmail = UserEmail,
+                UserPhone = UserPhone,
+                
+            };
+
+        try
+        {
+            var response = await registerMiddleware.Register(Register);
+
+            if (!response.Success || string.IsNullOrWhiteSpace(response.Data))
+            {
+                Snackbar.Add("Register Is Not Success.", Severity.Error);
+                return;
+            }
+
+            var token = response.Data; // JWT واقعی از بک‌اند
+
+            await AuthStateProvider.SetTokenAsync(token);
+
+            Snackbar.Add("Register Is Success!", Severity.Success);
+            NavigationManager.NavigateTo("/", forceLoad: true);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Internal Server Error: {ex.Message}", Severity.Error);
+        }
+    }
+
+
+}

@@ -1,0 +1,328 @@
+﻿@page "/ProductTypeDropDown"
+@using CommonDll.Dto
+@using MudBlazor
+@using System.Net.Http.Json
+@using System.Globalization
+@using System.Reflection
+@using System.Threading
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@inject NotificationService notificationService
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IProductDropdownMiddelware productDropdownMiddelware
+
+    <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
+
+        <MudText Typo="Typo.h5">Product Type </MudText>
+
+    </MudItem>
+
+    <MudDataGrid FixedHeader Height="60vh" T="ProductTypeDto" ColumnResizeMode="ResizeMode.Container" Loading="isLoading" Items="@productTypes" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedType" Filterable="true" SelectOnRowClick Hideable="_hideable" ShowMenuIcon="true" QuickFilter="_quickFilterForProductTypes">
+
+        <ToolBarContent>
+
+        <MudText style="margin-right: 40px" Typo="Typo.h6">Product Type</MudText>
+
+            <MudTextField Style="width:30%" @bind-Value="searchType" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
+        </ToolBarContent>
+
+        <Columns>
+
+            <SelectColumn T="ProductTypeDto" />
+
+            <PropertyColumn Property="x => x.Type" Title="Type" HeaderStyle="background:#ADD8E6;color:#333;">
+
+                <CellTemplate>
+
+                    @if (editingProductType == context.Item)
+                    {
+
+                        <MudTextField @bind-Value="context.Item.Type" Immediate="true" Placeholder="New Value" />
+
+                    }
+                    else
+                    {
+
+                        @context.Item.Type
+
+                    }
+
+                </CellTemplate>
+
+            </PropertyColumn>
+
+            <TemplateColumn Title="Operation" HeaderStyle="background:#ADD8E6;color:#333;">
+
+                <CellTemplate>
+
+                    <MudStack Row>
+
+                        @if (editingProductType == context.Item)
+                        {
+
+                            <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="SaveEdit">
+
+                                Save
+
+                            </MudButton>
+
+                        }
+                        else
+                        {
+
+                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditType(context.Item))">
+
+                                Edit
+
+                            </MudButton>
+
+                        }
+
+                        @*                         <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteItem(context.Item))">
+                            حذف
+                        </MudButton> *@
+
+                    </MudStack>
+
+                </CellTemplate>
+
+            </TemplateColumn>
+
+        </Columns>
+
+        <PagerContent>
+
+            <MudDataGridPager T="ProductTypeDto" />
+
+        </PagerContent>
+
+    </MudDataGrid>
+
+    <div style="display:inline;">
+
+        <MudTextField Label="New Value" @bind-Value="_newProductType.Type" Placeholder="Product Type" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Add" Class="mt-2" />
+
+        <MudButton Style="margin-top:10px;" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNewMeter">Save</MudButton>
+
+    </div>
+
+
+@code {
+
+    #region Props
+
+    private bool dense = true;
+
+    private bool hover = true;
+
+    private bool striped = true;
+
+    private bool bordered = true;
+
+    private bool _hideable = true;
+
+    private string searchType = "";
+
+    private bool isLoading = false;
+
+    public MudDataGrid<ProductTypeDto> grid;
+
+    private ProductTypeDto selectedType = null;
+
+    private ProductTypeDto editingProductType = null;
+
+    private ProductTypeDto creatingProductType = null;
+
+    private ProductTypeUpdateAndCreateDto _newProductType = new();
+
+    private List<ProductTypeDto> productTypes = new List<ProductTypeDto>();
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        try
+        {
+
+            isLoading = true;
+
+            var apiResponse = await productDropdownMiddelware.GetAllProductTypeAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                productTypes = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                productTypes = new List<ProductTypeDto>();
+            }
+
+        }
+
+        catch (Exception ex)
+        {
+
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            productTypes = new List<ProductTypeDto>();
+
+        }
+
+        finally
+        {
+
+            isLoading = false;
+
+        }
+
+    }
+
+    #endregion
+
+    #region Filter
+
+    private Func<ProductTypeDto, bool> _quickFilterForProductTypes => x =>
+    {
+        if (string.IsNullOrWhiteSpace(searchType))
+            return true;
+
+        var fields = new List<string?>
+                                                       {
+        x.Type,
+                                                        };
+
+        return fields.Any(f => !string.IsNullOrEmpty(f) &&
+                               f.Contains(searchType, StringComparison.OrdinalIgnoreCase));
+    };
+
+
+    #endregion
+
+    #region HideColumns
+
+    private async Task HideColumnsAsync(bool hide)
+    {
+        foreach (var column in grid.RenderedColumns)
+        {
+
+            if (hide)
+            {
+                await column.HideAsync();
+            }
+            else
+            {
+                await column.ShowAsync();
+            }
+
+        };
+
+    }
+
+    #endregion
+
+    #region DeleteDialog
+
+    private async Task DeleteItem(ProductTypeDto productType)
+    {
+
+        bool? confirmed = await DialogService.ShowMessageBox(
+            " Delete Confirm",
+            $"Do You Want Delete '{productType.Type}'? ",
+            yesText: "Yes",
+            noText: "No"
+        );
+
+        if (confirmed == true)
+        {
+
+            productTypes = productTypes.Where(s => s.Id != productType.Id).ToList();
+
+        }
+
+    }
+
+    #endregion
+
+    #region EditType
+
+    private void EditType(ProductTypeDto productType)
+    {
+
+        editingProductType = productType;
+    }
+
+    private async void SaveEdit()
+    {
+
+        var update = new ProductTypeUpdateAndCreateDto
+            {
+
+                Type = editingProductType.Type,
+
+            };
+
+        int editingItemId = editingProductType.Id;
+
+        editingProductType = null;
+
+        await productDropdownMiddelware.UpdateProductTypeAsync(editingItemId, update);
+
+        Snackbar.Add("Changes Saved", Severity.Success);
+
+    }
+
+    #endregion
+
+    #region CreateItem
+
+    private async void AddNewMeter()
+    {
+
+        if (!string.IsNullOrEmpty(_newProductType.Type))
+        {
+
+            productTypes.Add(new ProductTypeDto
+                {
+
+                    Type = _newProductType.Type
+                });
+
+            await productDropdownMiddelware.CreateProductTypeAsync(_newProductType);
+
+            Snackbar.Add("Add New Product Type", Severity.Success);
+
+        }
+        else
+        {
+
+            Snackbar.Add("Please Enter The Value", Severity.Error);
+
+        }
+
+    }
+
+    #endregion
+
+    #region persian date
+
+    private CultureInfo GetPersianCulture()
+    {
+
+        var persianCulture = new CultureInfo("fa-IR");
+
+        persianCulture.DateTimeFormat.Calendar = new PersianCalendar();
+
+        return persianCulture;
+
+    }
+
+    #endregion
+
+}

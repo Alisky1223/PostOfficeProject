@@ -1,0 +1,239 @@
+﻿@page "/PostOffice"
+@using System.Net.Http.Json
+@using CommonDll.Dto
+@using PostOfficeProject.Core.src.Application.Dto
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@inject NotificationService notificationService 
+@inject IDialogService DialogService
+@inject IDataPassHelper dataHelper
+@inject IPostOfficeMiddelware postOfficeMiddelware
+
+    <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
+
+    <MudText Typo="Typo.h5">Post Office Information</MudText>
+
+    </MudItem>
+
+    <MudDataGrid Height="60vh" FixedHeader T="PostOfficeBasicInformationDto" MultiSelection="true" Items="@postOffice" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilterForPosOffice"
+                 Hideable="true" RowClick="@RowClicked" RowContextMenuClick="RowRightClicked" SelectedItemsChanged="@SelectedItemsChanged">
+
+        <ToolBarContent>
+
+        <MudText Typo="Typo.h6">PostOffices</MudText>
+
+            <MudSpacer />
+
+            <MudTextField @bind-Value="searchInPostOffice" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+
+            </MudTextField>
+
+        </ToolBarContent>
+
+        <Columns>
+
+            <SelectColumn T="PostOfficeDto" />
+
+        <PropertyColumn Property="x => x.OfficeAccessCode" Title="OfficeAccessCode" Sortable="false" Filterable="false" StickyRight="true" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+        <PropertyColumn Property="x => x.OfficeName" SortBy="@_sortBy" Title="OfficeName" StickyRight="true" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+        <PropertyColumn Property="x => x.Address" Title="Address" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+        <PropertyColumn Property="x => x.StorageCapacity" Title="StorageCapacity" HeaderStyle="background:#ADD8E6;color:#333;" />
+
+            <TemplateColumn Title="Oprations" HeaderStyle="background:#ADD8E6;color:#333;">
+
+                <CellTemplate>
+
+                    <MudStack Row>
+
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditedPostOffice(context.Item.Id))">
+                        
+                            Edit
+
+                        </MudButton>
+                       
+                        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeletedOffice(context.Item))">
+                         
+                            Delete
+                     
+                        </MudButton>
+
+                    </MudStack>
+
+                </CellTemplate>
+
+            </TemplateColumn>
+
+        </Columns>
+
+        <PagerContent>
+
+            <MudDataGridPager T="PostOfficeBasicInformationDto" />
+
+        </PagerContent>
+
+    </MudDataGrid>
+
+    <MudPaper Elevation="0" Class="d-flex align-center justify-end " Style="margin-top:20px">
+
+        <MudButton Class="main-button" Style="margin-right:10px" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="GoToAddPostOfficePage">Add</MudButton>
+
+        <MudButton Class="main-button" Variant="Variant.Filled" Color="Color.Tertiary" Size="Size.Large" OnClick="GoToMainPage">MainPage</MudButton>
+
+    </MudPaper>
+
+@code {
+
+    #region Props
+
+    private bool _sortNameByLength;
+
+    private List<string> _events = new();
+
+    private string searchInPostOffice = string.Empty;
+
+    private List<PostOfficeBasicInformationDto> postOffice = new List<PostOfficeBasicInformationDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadPostOffices(); 
+    }
+
+    private async Task LoadPostOffices()
+    {
+        try
+        {
+            var apiResponse = await postOfficeMiddelware.GetAllPostOfficesAsync();  
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                postOffice = apiResponse.Data;  
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                postOffice = new List<PostOfficeBasicInformationDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            postOffice = new List<PostOfficeBasicInformationDto>();
+        }
+
+        StateHasChanged();  
+    }
+
+    #endregion
+
+    #region Sorting
+
+    private Func<PostOfficeBasicInformationDto, object> _sortBy => x =>
+    {
+        if (_sortNameByLength)
+            return x.OfficeName.Length;
+        else
+            return x.OfficeName;
+    };
+
+    void RowClicked(DataGridRowClickEventArgs<PostOfficeBasicInformationDto> args)
+    {
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<PostOfficeBasicInformationDto> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<PostOfficeBasicInformationDto> items)
+    {
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    #endregion
+
+    #region Filter
+
+    private Func<PostOfficeBasicInformationDto, bool> _quickFilterForPosOffice => x =>
+    {
+        if (string.IsNullOrWhiteSpace(searchInPostOffice))
+            return true;
+
+        var fields = new List<string?>
+                                       {
+        x.OfficeName,
+        x.OfficeAccessCode,
+        x.Address,
+        x.StorageCapacity.ToString(),
+
+                                        };
+
+        return fields.Any(f => !string.IsNullOrEmpty(f) &&
+                               f.Contains(searchInPostOffice, StringComparison.OrdinalIgnoreCase));
+    };
+
+
+    #endregion
+
+    #region Operations
+
+    private async Task DeletedOffice(PostOfficeBasicInformationDto deletedPostOffice)
+    {
+
+        bool? confirmed = await DialogService.ShowMessageBox(
+    "Delete Confirm",
+    $"Are You Sure To Delete '{deletedPostOffice.OfficeName}'? ",
+    noText: "No",
+    yesText: "Yes"
+    );
+
+        if (confirmed == true)
+        {
+            postOffice = postOffice.Where(s => s != deletedPostOffice).ToList();
+        }
+
+    }
+
+    private void EditedPostOffice(int Id)
+    {
+
+        dataHelper.SetPostOfficeId(Id);
+        NavigationManager.NavigateTo("/EditPostOffice");
+
+    }
+
+    #endregion
+
+    #region GoToMainPage
+
+    private void GoToMainPage()
+    {
+
+        NavigationManager.NavigateTo("/");
+
+    }
+
+    #endregion
+
+    #region GoToAddPostOfficePage
+
+    private void GoToAddPostOfficePage()
+    {
+
+        NavigationManager.NavigateTo("/AddPostOffice");
+
+    }
+
+    #endregion
+
+}

@@ -1,0 +1,329 @@
+﻿@page "/TransferStatusDropDown"
+@using CommonDll.Dto
+@using MudBlazor
+@using System.Net.Http.Json
+@using System.Globalization
+@using System.Reflection
+@using System.Threading
+@using PostOfficeFrontendProject__all_interactive.Interface
+@using PostOfficeFrontendProject__all_interactive.Service
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@inject NotificationService notificationService
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IProductDropdownMiddelware productDropdownMiddelware
+
+
+    <MudItem Class="d-flex align-center justify-center mud-theme-primary  mud-elevation-25" Style=" height:60px; width:100%; margin-top:0px; margin-bottom:20px;">
+
+        <MudText Typo="Typo.h5"> Product Transport Status  </MudText>
+
+    </MudItem>
+
+    <MudDataGrid FixedHeader Height="60vh" T="TransportStatusDto" ColumnResizeMode="ResizeMode.Container" Loading="isLoading" Items="@Status" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedStatus" Filterable="true" SelectOnRowClick Hideable="_hideable" ShowMenuIcon="true" QuickFilter="_quickFilterForStatus">
+
+        <ToolBarContent>
+
+            <MudText style="margin-right: 40px" Typo="Typo.h6">Transport Status</MudText>
+
+            <MudTextField Style="width:30%" @bind-Value="searchStatus" Immediate="true" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
+        </ToolBarContent>
+
+        <Columns>
+
+            <SelectColumn T="TransportStatusDto" />
+
+        <PropertyColumn Property="x => x.Status" Title="Status" HeaderStyle="background:#ADD8E6;color:#333;">
+
+                <CellTemplate>
+
+                    @if (editingStatus == context.Item)
+                    {
+
+                        <MudTextField @bind-Value="context.Item.Status" Immediate="true" Placeholder="New Value" />
+
+                    }
+                    else
+                    {
+
+                        @context.Item.Status
+
+                    }
+
+                </CellTemplate>
+
+            </PropertyColumn>
+
+            <TemplateColumn Title="Operation" HeaderStyle="background:#ADD8E6;color:#333;">
+
+                <CellTemplate>
+
+                    <MudStack Row>
+
+                        @if (editingStatus == context.Item)
+                        {
+
+                            <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="SaveEdit">
+
+                                Save
+
+                            </MudButton>
+
+                        }
+                        else
+                        {
+
+                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => EditStatus(context.Item))">
+
+                                Edit
+
+                            </MudButton>
+
+                        }
+
+                        @*                         <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteItem(context.Item))">
+                            حذف
+                        </MudButton> *@
+
+                    </MudStack>
+
+                </CellTemplate>
+
+            </TemplateColumn>
+
+        </Columns>
+
+        <PagerContent>
+
+            <MudDataGridPager T="TransportStatusDto" />
+
+        </PagerContent>
+
+    </MudDataGrid>
+
+    <div style="display:inline;">
+
+        <MudTextField Label="New Value" @bind-Value="_newStatus.Status" Placeholder="Product Status" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Add" Class="mt-2" />
+
+        <MudButton Style="margin-top:10px;" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNewStatus">Save</MudButton>
+
+    </div>
+
+
+@code {
+
+    #region Props
+
+    private bool dense = true;
+
+    private bool hover = true;
+
+    private bool striped = true;
+
+    private bool bordered = true;
+
+    private bool _hideable = true;
+
+    private string searchStatus = "";
+
+    private bool isLoading = false;
+
+    public MudDataGrid<TransportStatusDto> grid;
+
+    private TransportStatusDto selectedStatus = null;
+
+    private TransportStatusDto editingStatus = null;
+
+    private TransportStatusDto creatingStatus = null;
+
+    private TransportStatusUpdateAndCreateDto _newStatus = new();
+
+    private List<TransportStatusDto> Status = new List<TransportStatusDto>();
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        try
+        {
+
+            isLoading = true;
+
+            var apiResponse = await productDropdownMiddelware.GetAllStatusAsync();
+
+            if (apiResponse.Success && apiResponse.Data != null)
+            {
+                Status = apiResponse.Data;
+                notificationService.ShowSuccess(apiResponse.Message ?? "Load Success.");
+            }
+            else
+            {
+                var errorMsg = string.IsNullOrEmpty(apiResponse.Message)
+                    ? string.Join(", ", apiResponse.Errors ?? new List<string>())
+                    : apiResponse.Message;
+                notificationService.ShowError(errorMsg ?? "Error To Load.");
+                Status = new List<TransportStatusDto>();
+            }
+
+        }
+
+        catch (Exception ex)
+        {
+
+            notificationService.ShowError($"Unexpected Error: {ex.Message}");
+            Status = new List<TransportStatusDto>();
+
+        }
+
+        finally
+        {
+            isLoading = false;
+        }
+
+    }
+
+    #endregion
+
+    #region Filter
+
+    private Func<TransportStatusDto, bool> _quickFilterForStatus => x =>
+    {
+        if (string.IsNullOrWhiteSpace(searchStatus))
+            return true;
+
+        var fields = new List<string?>
+                                                           {
+        x.Status,
+                                                            };
+
+        return fields.Any(f => !string.IsNullOrEmpty(f) &&
+                               f.Contains(searchStatus, StringComparison.OrdinalIgnoreCase));
+    };
+
+
+    #endregion
+
+    #region HideColumns
+
+    private async Task HideColumnsAsync(bool hide)
+    {
+        foreach (var column in grid.RenderedColumns)
+        {
+
+            if (hide)
+            {
+                await column.HideAsync();
+            }
+            else
+            {
+                await column.ShowAsync();
+            }
+
+        };
+
+    }
+
+    #endregion
+
+    #region deleteItem
+
+    private async Task DeleteItem(TransportStatusDto status)
+    {
+
+        bool? confirmed = await DialogService.ShowMessageBox(
+        " Delete Confirm",
+            $"Do You Want Delete  '{status.Status}'?",
+          yesText: "Yes",
+        noText: "No"
+        );
+
+        if (confirmed == true)
+        {
+
+            Status = Status.Where(s => s.Id != status.Id).ToList();
+
+        }
+
+    }
+
+    #endregion
+
+    #region EditMeterType
+
+    private void EditStatus(TransportStatusDto productStatus)
+    {
+
+        editingStatus = productStatus;
+    }
+
+    private async void SaveEdit()
+    {
+
+        var update = new TransportStatusUpdateAndCreateDto
+            {
+
+                Status = editingStatus.Status,
+
+            };
+
+        int editingItemId = editingStatus.Id;
+
+        editingStatus = null;
+
+        await productDropdownMiddelware.UpdateStatusAsync(editingItemId, update);
+
+        Snackbar.Add("Changes Saved", Severity.Success);
+
+    }
+
+
+    #endregion
+
+    #region CreateItem
+
+    private async void AddNewStatus()
+    {
+
+        if (!string.IsNullOrEmpty(_newStatus.Status))
+        {
+
+            Status.Add(new TransportStatusDto
+                {
+
+                    Status = _newStatus.Status
+                });
+
+            await productDropdownMiddelware.CreateStatusAsync(_newStatus);
+
+            Snackbar.Add("Add New Product Type", Severity.Success);
+
+        }
+        else
+        {
+
+            Snackbar.Add("Please Enter The Value", Severity.Error);
+
+        }
+
+    }
+
+    #endregion
+
+    #region persian date
+
+    private CultureInfo GetPersianCulture()
+    {
+
+        var persianCulture = new CultureInfo("fa-IR");
+
+        persianCulture.DateTimeFormat.Calendar = new PersianCalendar();
+
+        return persianCulture;
+
+    }
+
+    #endregion
+
+}
+
