@@ -10,15 +10,6 @@ namespace AAA.src.Infrastructure.Data
             
         }
 
-        private ApplicationDBContext CreateInMemoryDbContext()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDBContext>()
-                .UseInMemoryDatabase("TestDatabase")
-                .Options;
-
-            return new ApplicationDBContext(options);
-        }
-
         public DbSet<User> Users { get; set; }
         public DbSet<LoginAttempt> LoginAttempts { get; set; }
         public DbSet<Role> Role { get; set; }

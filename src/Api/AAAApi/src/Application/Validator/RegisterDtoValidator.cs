@@ -38,7 +38,7 @@ namespace AAA.src.Application.Validator
                     if (p.RequireSpecialChar && !pass.Any(ch => p.SpecialChars.Contains(ch)))
                         errors.Add($"one of: {p.SpecialChars}");
 
-                    return errors.Count == 0 ? true : false;
+                    return errors.Count == 0;
                 })
                 .WithMessage(x =>
                 {
@@ -47,7 +47,7 @@ namespace AAA.src.Application.Validator
                 });
         }
 
-        private string GetRequirements(PasswordPolicy p)
+        private static string GetRequirements(PasswordPolicy p)
         {
             var reqs = new List<string>();
             if (p.MinLength > 0) reqs.Add($"{p.MinLength}+ chars");

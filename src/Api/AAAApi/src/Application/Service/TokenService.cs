@@ -23,15 +23,25 @@ namespace AAA.src.Application.Service
 
         public string GenerateJwtToken(User user)
         {
+            ArgumentNullException.ThrowIfNull(user);  
+
+            if (user.Role == null)
+            {
+                throw new InvalidOperationException("User role is null.");
+            }
+
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role.Name),
+                new Claim(ClaimTypes.Role, user.Role.Name ),
             };
 
+            var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("jwt key is not set in configuration");
+
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
