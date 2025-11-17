@@ -8,11 +8,13 @@ namespace PostOfficeProject.Tests.UnitTests
 {
     public class PostofficeRepositoryUnitTest : IAsyncLifetime
     {
-        private ApplicationDBContext _dbContext;
-        private PostOfficeRepository _repository;
+        private ApplicationDBContext? _dbContext;
+        private PostOfficeRepository? _repository;
 
         public async Task DisposeAsync()
         {
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+
             await _dbContext.DisposeAsync();
         }
 
@@ -31,6 +33,8 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetAllPostoffice_Success_ShouldReturnAllPostoffices() 
         {
             //Arrange
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("repository is null");
 
             var firstPostOffice = new PostOffice
             {
@@ -60,7 +64,7 @@ namespace PostOfficeProject.Tests.UnitTests
             var result = await _repository.GetAllPostsAsync();
 
             //Assert
-            Assert.NotEqual(0, result.Count);
+            Assert.NotEmpty(result);
             CheckResultsAreEqual(firstPostOffice, result[0]);
             CheckResultsAreEqual(secondPostOffice, result[1]);
         }
@@ -69,6 +73,8 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetByIdPostoffice_Success_ShouldReturnPostoffice()
         {
             //Arrange
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("repository is null");
 
             var firstPostOffice = new PostOffice
             {
@@ -94,6 +100,9 @@ namespace PostOfficeProject.Tests.UnitTests
         [Fact]
         public async Task GetByIdPostoffice_Failed_ShouldReturnNull()
         {
+            //Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             //Act
             var result = await _repository.GetPostByIdAsync(1);
 
@@ -105,6 +114,8 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task UpdatePostoffice_Success_ShouldReturnUpdatedPostoffice()
         {
             //Arrange
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("repository is null");
 
             var notExpectedResult = new PostOffice
             {
@@ -149,6 +160,9 @@ namespace PostOfficeProject.Tests.UnitTests
         [Fact]
         public async Task UpdatePostoffice_Failed_ShouldReturnNull()
         {
+            //Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             //Act
             var result = await _repository.UpdatePostAsync(1, new PostOffice { });
 
@@ -156,7 +170,7 @@ namespace PostOfficeProject.Tests.UnitTests
             Assert.Null(result);
         }
 
-        private void CheckResultsAreEqual(PostOffice expected, PostOffice result) 
+        private static void CheckResultsAreEqual(PostOffice expected, PostOffice result) 
         {
             Assert.Equal(expected.OfficeName, result.OfficeName);
             Assert.Equal(expected.OfficeAccessCode, result.OfficeAccessCode);
@@ -164,7 +178,7 @@ namespace PostOfficeProject.Tests.UnitTests
             Assert.Equal(expected.StorageCapacity, result.StorageCapacity);
         }
 
-        private void CheckResultsNotEqual(PostOffice expected, PostOffice result)
+        private static void CheckResultsNotEqual(PostOffice expected, PostOffice result)
         {
             Assert.NotEqual(expected.OfficeName, result.OfficeName);
             Assert.NotEqual(expected.OfficeAccessCode, result.OfficeAccessCode);

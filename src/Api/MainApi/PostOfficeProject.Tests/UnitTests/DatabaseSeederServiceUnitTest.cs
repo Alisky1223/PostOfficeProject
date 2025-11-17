@@ -11,12 +11,14 @@ namespace PostOfficeProject.Tests.UnitTests
 {
     public class DatabaseSeederServiceUnitTest : IAsyncLifetime
     {
-        private ApplicationDBContext _dbContext;
-        private DatabaseSeederService _service;
-        private ITransportStatusRepository _repository;
+        private ApplicationDBContext? _dbContext;
+        private DatabaseSeederService? _service;
+        private ITransportStatusRepository? _repository;
 
         public async Task DisposeAsync()
         {
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+
             await _dbContext.DisposeAsync();
         }
 
@@ -39,6 +41,9 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task DatabaseSeederService_SuccessfullSeed_ShouldReturnDefaultValuesForTransportstatus() 
         {
             //Arrange
+            if (_service == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("db context is null");
+
             var expectedFirstRowResults = new TransportStatus
             {
                 Status = "In Station"
@@ -60,7 +65,7 @@ namespace PostOfficeProject.Tests.UnitTests
             var result = await _repository.GetAll();
 
             //Assert
-            Assert.NotEqual(result.Count,0);
+            Assert.NotEmpty(result);
             Assert.Equal(result[0].Status, expectedFirstRowResults.Status);
             Assert.Equal(result[1].Status, expectedSecondRowResults.Status);
             Assert.Equal(result[2].Status, expectedThirdRowResults.Status);

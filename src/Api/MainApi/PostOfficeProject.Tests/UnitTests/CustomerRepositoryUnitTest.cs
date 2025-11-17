@@ -9,11 +9,13 @@ namespace PostOfficeProject.Tests.UnitTests
     public class CustomerRepositoryUnitTest : IAsyncLifetime
     {
 
-        private ApplicationDBContext _dbContext;
-        private CustomerRepository _repository;
+        private ApplicationDBContext? _dbContext;
+        private CustomerRepository? _repository;
 
         public async Task DisposeAsync()
         {
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+
             await _dbContext.DisposeAsync();
         }
 
@@ -31,7 +33,10 @@ namespace PostOfficeProject.Tests.UnitTests
         [Fact]
         public async Task CreateNewCustomer_ShouldAddAndRetrieveCorrectly()
         {
+
             //Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var newCustomer = new Customer
             {
                 CustomerNumber = "Test Customer Number",
@@ -42,7 +47,7 @@ namespace PostOfficeProject.Tests.UnitTests
 
             //Act
 
-            var result = await _repository.CreateAsync(newCustomer);
+            await _repository.CreateAsync(newCustomer);
             var firstRowResult = await _repository.GetCustomerByIdAsync(1);
             //Assert
 
@@ -56,6 +61,7 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task UpdateCustomer_ShouldModifyExistingAndRetrieveUpdated()
         {
             //Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
 
             var newCustomer = new Customer
             {
@@ -64,7 +70,7 @@ namespace PostOfficeProject.Tests.UnitTests
                 UserId = 1,
                 Products = []
             };
-            var result = await _repository.CreateAsync(newCustomer);
+            await _repository.CreateAsync(newCustomer);
 
             var updatedCustomer = new Customer
             {
@@ -90,7 +96,10 @@ namespace PostOfficeProject.Tests.UnitTests
         [Fact]
         public async Task UpdateCustomerAsync_NonExistentId_ShouldReturnNull()
         {
+
             //Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var nonExistedCustomer = new Customer { Id = 999, UserId = 1, CustomerNumber = "NonExistent" };
 
             // Act
@@ -104,6 +113,8 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetAllCustomersAsync_WithMultipleCustomers_ShouldReturnAll()
         {
             // Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             await _repository.CreateAsync(new Customer { Id = 1, UserId = 1, CustomerNumber = "One" });
             await _repository.CreateAsync(new Customer { Id = 2, UserId = 2, CustomerNumber = "Two" });
 
@@ -118,6 +129,8 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetCustomerByUserIdAsync_WithIncludes_ShouldLoadRelatedEntities()
         {
             // Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
 
             var productType = new ProductType { Id = 1, Type = "Soft" };
 
