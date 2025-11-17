@@ -41,7 +41,9 @@ namespace AAA.src.Infrastructure.Extentions
 
         public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtKey = configuration["Jwt:Key"] ?? throw new InvalidOperationException("jwt key is not set in configuration file");
+            var jwtKey = configuration["Jwt:Key"];
+
+            ArgumentException.ThrowIfNullOrWhiteSpace(jwtKey);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

@@ -10,15 +10,6 @@ namespace PostOfficeProject.Core.src.Infrastructure.Data
 
         }
 
-        private ApplicationDBContext CreateInMemoryDbContext()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDBContext>()
-                .UseInMemoryDatabase("TestDatabase")
-                .Options;
-
-            return new ApplicationDBContext(options);
-        }
-
         public DbSet<PostOffice> PostOffice { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductType> ProductType { get; set; }

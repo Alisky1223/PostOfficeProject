@@ -10,7 +10,7 @@
 
         public ApiResponse()
         {
-            
+            Errors = new List<string>();
         }
 
         // Constructor for successful response

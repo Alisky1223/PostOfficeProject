@@ -45,10 +45,6 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
 
             if (customer == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
-            //var personalInformation = await _middleware.GetUserInformation(customer.UserId);
-
-            //if(!personalInformation.Success) return BadRequest(new ApiResponse<object>(personalInformation.Message, 500));
-
             var postmanUserResult = await _middleware.GetUserInformation(customer.UserId);
 
             return Ok(postmanUserResult);
@@ -61,7 +57,7 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var customer = createDto.ToCustomerFromCreateDto();
-            var createdCustomer = await _repository.CreateAsync(customer);
+            await _repository.CreateAsync(customer);
 
             return Ok(new ApiResponse<object>("Done"));//createdCustomer.ToDto()
         }

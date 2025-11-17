@@ -23,7 +23,8 @@ namespace PostOfficeProject.Core.src.Infrastructure.Midleware
             {
                 var result = await _context.GetFromJsonAsync<ApiResponse<UserPersonalInformationDto>>($"/api/users/getUserById/{userId}") ?? throw new Exception("API response is null");
 
-                //if (!result.Success) return BadRequest(new ApiResponse<object>(result.Message, 500));
+                ArgumentNullException.ThrowIfNull(result.Data);
+                ArgumentNullException.ThrowIfNull(result.Data.Role);
 
                 switch (result.Data.Role.Name)
                 {
@@ -62,15 +63,6 @@ namespace PostOfficeProject.Core.src.Infrastructure.Midleware
             {
                 return new ApiResponse<List<UserDto>>(e.Message, 500);
             }
-        }
-
-        // Helper to reduce duplication
-        private static async Task<T> HandleResponse<T>(HttpResponseMessage response, string action)
-        {
-            var result = await response.Content.ReadFromJsonAsync<T>(
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            return result ?? throw new InvalidOperationException($"{action}: Deserialized response is null.");
         }
     }
 }

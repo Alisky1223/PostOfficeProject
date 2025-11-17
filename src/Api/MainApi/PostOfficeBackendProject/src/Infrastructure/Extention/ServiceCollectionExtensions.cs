@@ -30,6 +30,8 @@ namespace PostOfficeProject.Core.src.Infrastructure.Extention
 
         public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            var jwtKey = configuration["Jwt:Key"] ?? throw new InvalidOperationException("jwt key in configuration file is not set");
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -42,7 +44,7 @@ namespace PostOfficeProject.Core.src.Infrastructure.Extention
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                            Encoding.UTF8.GetBytes(jwtKey))
                     };
                 });
 
