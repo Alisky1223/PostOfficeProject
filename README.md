@@ -1,5 +1,4 @@
 # PostOfficeProject
-[![Lint Status](https://github.com/Alisky1223/PostOfficeProject/workflows/Lint/badge.svg)](https://github.com/Alisky1223/PostOfficeProject/actions/workflows/ci.yml)
 
 This is a backend project built with .NET Core to demonstrate over 2 years of experience in developing scalable APIs. It simulates a post office management system, handling users, customers, postmen, post offices, products, transports, and authentication/authorization.
 
