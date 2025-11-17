@@ -16,16 +16,16 @@ namespace AAA.src.Presentation.Controller
         }
 
         [HttpGet("getUserById/{id}")]
-        public async Task<IActionResult> GetUserById([FromRoute] int id) 
+        public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
             var user = await _repository.GetUserById(id);
-            if(user == null) return NotFound(new ApiResponse<object>("User not found",404));
+            if (user == null) return NotFound(new ApiResponse<object>("User not found", 404));
 
             return Ok(new ApiResponse<object>(user.ToUserPersonalInformationDto()));
         }
 
         [HttpGet("getAllUsers")]
-        public async Task<IActionResult> GetAllUsers() 
+        public async Task<IActionResult> GetAllUsers()
         {
             var users = await _repository.GetUsers();
             var usersDto = users.Select(x => x.ToDto()).ToList();

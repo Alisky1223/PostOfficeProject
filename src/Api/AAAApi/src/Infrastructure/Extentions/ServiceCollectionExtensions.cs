@@ -41,6 +41,10 @@ namespace AAA.src.Infrastructure.Extentions
 
         public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            var jwtKey = configuration["Jwt:Key"];
+
+            ArgumentException.ThrowIfNullOrWhiteSpace(jwtKey);
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -53,7 +57,7 @@ namespace AAA.src.Infrastructure.Extentions
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                            Encoding.UTF8.GetBytes(jwtKey))
                     };
                 });
 

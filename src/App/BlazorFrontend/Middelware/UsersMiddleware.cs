@@ -1,6 +1,6 @@
 ﻿using CommonDll.Dto;
 using PostOfficeFrontendProject__all_interactive.Interface;
-using PostOfficeFrontendProject__all_interactive.Helper; 
+using PostOfficeFrontendProject__all_interactive.Helper;
 namespace PostOfficeFrontendProject__all_interactive.Middelware
 {
     public class UsersMiddleware : IUsersMiddleware

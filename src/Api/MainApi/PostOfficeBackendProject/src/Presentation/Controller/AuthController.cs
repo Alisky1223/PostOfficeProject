@@ -47,7 +47,7 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(string.Join(" ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)), 400));
 
-            var result = await _middleware.ChangeUserRole(id,newRoleId);
+            var result = await _middleware.ChangeUserRole(id, newRoleId);
 
             return Ok(result);
         }

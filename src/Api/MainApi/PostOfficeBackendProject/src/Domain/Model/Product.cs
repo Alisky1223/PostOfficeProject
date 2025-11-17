@@ -9,7 +9,7 @@
 
         public int? PostOfficeId { get; set; }
         public PostOffice? PostOffice { get; set; }
-        
+
         public int? ProductTypeId { get; set; }
         public ProductType? ProductType { get; set; }
 

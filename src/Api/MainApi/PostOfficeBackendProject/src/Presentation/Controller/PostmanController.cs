@@ -24,7 +24,7 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
         }
 
         [HttpGet(getAllRequest)]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
@@ -35,7 +35,7 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
         }
 
         [HttpGet(getByIdRequest)]
-        public async Task<IActionResult> GetById([FromRoute] int id) 
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
@@ -43,12 +43,12 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
             if (postMan == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
             var postmanUserResult = await _middleware.GetUserInformation(postMan.UserId);
-            
+
             return Ok(postmanUserResult);
         }
 
         [HttpPost(createRequest)]
-        public async Task<IActionResult> Create([FromBody] PostmanUpdateAndCreateDto createDto) 
+        public async Task<IActionResult> Create([FromBody] PostmanUpdateAndCreateDto createDto)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
@@ -57,13 +57,13 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
         }
 
         [HttpPut(updateRequest)]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] PostmanUpdateAndCreateDto updateDto) 
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] PostmanUpdateAndCreateDto updateDto)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var targetPostman = await _repository.Update(id, updateDto.ToPostmanFromCreateAndUpdateDto());
 
-            if(targetPostman == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+            if (targetPostman == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
             return Ok(new ApiResponse<object>(targetPostman.ToDto()));
         }

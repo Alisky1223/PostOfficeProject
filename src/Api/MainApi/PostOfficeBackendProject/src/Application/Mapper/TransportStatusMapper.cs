@@ -5,16 +5,16 @@ namespace PostOfficeProject.Core.src.Application.Mapper
 {
     public static class TransportStatusMapper
     {
-        public static TransportStatusDto ToDto(this TransportStatus model) 
+        public static TransportStatusDto ToDto(this TransportStatus model)
         {
-            return new TransportStatusDto 
+            return new TransportStatusDto
             {
                 Id = model.Id,
-                Status = model.Status,  
+                Status = model.Status,
             };
         }
 
-        public static TransportStatus ToTransportStatusFromCreateDto(this TransportStatusUpdateAndCreateDto createDto) 
+        public static TransportStatus ToTransportStatusFromCreateDto(this TransportStatusUpdateAndCreateDto createDto)
         {
             return new TransportStatus
             {

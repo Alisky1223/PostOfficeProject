@@ -10,8 +10,6 @@ namespace PostOfficeProject.Tests.UnitTests
     public class AuthenticationMiddlewareUnitTest
     {
 
-        private readonly AuthenticationMiddleware _middleware;
-
         // Helper to create mocked HttpClient with custom response
         private static HttpClient CreateMockHttpClient(HttpResponseMessage responseMessage)
         {

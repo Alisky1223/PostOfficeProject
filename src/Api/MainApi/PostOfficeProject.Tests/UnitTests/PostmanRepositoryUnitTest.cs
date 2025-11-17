@@ -9,8 +9,8 @@ namespace PostOfficeProject.Tests.UnitTests
 {
     public class PostmanRepositoryUnitTest : IAsyncLifetime
     {
-        private ApplicationDBContext _dbContext;
-        private PostmanRepository _repository;
+        private ApplicationDBContext? _dbContext;
+        private PostmanRepository? _repository;
 
         public async Task InitializeAsync()
         {
@@ -25,6 +25,8 @@ namespace PostOfficeProject.Tests.UnitTests
 
         public async Task DisposeAsync()
         {
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+
             await _dbContext.DisposeAsync();
         }
 
@@ -32,6 +34,9 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetPostmanByIdAsync_ReturnsPostmen()
         {
             // Arrange
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var newpostman = new Postman
             {
                 Id = 1,
@@ -56,6 +61,9 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetPostmanByIdAsync_ReturnsNull()
         {
             // Arrange
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             // Act
             var result = await _repository.GetPostmanById(1);
 
@@ -67,6 +75,9 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetPostmanByUserIdAsync_ReturnsPostmen()
         {
             // Arrange
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var newpostman = new Postman
             {
                 Id = 1,
@@ -92,6 +103,7 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task GetPostmanByUserIdAsync_ReturnsNull()
         {
             // Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
 
             // Act
             var result = await _repository.GetPostmanByUserId(1);
@@ -101,9 +113,12 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetAllPostmen() 
+        public async Task GetAllPostmen()
         {
             // Arrange
+            if (_dbContext == null) throw new InvalidOperationException("db context is null");
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var firstPostman = new Postman
             {
                 Id = 1,
@@ -137,9 +152,11 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task PostmanRepository_CreatePostman_ShouldCreateNewPostman() 
+        public async Task PostmanRepository_CreatePostman_ShouldCreateNewPostman()
         {
             // Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var newpostman = new Postman
             {
                 Id = 1,
@@ -161,6 +178,8 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task PostmanRepository_CreatePostman_ShouldReturnAllreadyPostman()
         {
             // Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var postman = new Postman
             {
                 Id = 1,
@@ -188,9 +207,11 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task PostmanRepository_UpdatePostman_ShouldReturnUpdatedPostman() 
+        public async Task PostmanRepository_UpdatePostman_ShouldReturnUpdatedPostman()
         {
             // Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var notExpected = new Postman
             {
                 Id = 1,
@@ -229,6 +250,8 @@ namespace PostOfficeProject.Tests.UnitTests
         public async Task PostmanRepository_UpdatePostman_ShouldReturnNull()
         {
             // Arrange
+            if (_repository == null) throw new InvalidOperationException("repository is null");
+
             var newpostman = new Postman
             {
                 Id = 2,
@@ -244,14 +267,14 @@ namespace PostOfficeProject.Tests.UnitTests
             Assert.Null(result);
         }
 
-        private void ComparePostmansEqual(Postman result, Postman expected) 
+        private static void ComparePostmansEqual(Postman result, Postman expected)
         {
             Assert.Equal(expected.PostOfficeId, result.PostOfficeId);
             Assert.Equal(expected.UserId, result.UserId);
             Assert.Equal(expected.PersonalCode, result.PersonalCode);
         }
 
-        private void ComparePostmansNotEqual(Postman result, Postman expected)
+        private static void ComparePostmansNotEqual(Postman result, Postman expected)
         {
 
             Assert.NotEqual(expected.PostOfficeId, result.PostOfficeId);

@@ -55,7 +55,7 @@ namespace PostOfficeProject.Core.src.Infrastructure.Repository
 
             if (targetTransport == null) return null;
 
-            targetTransport.Id = id;    
+            targetTransport.Id = id;
             targetTransport.ProductId = transport.ProductId;
             targetTransport.PostOfficeId = transport.PostOfficeId;
             targetTransport.PostmanId = transport.PostmanId;

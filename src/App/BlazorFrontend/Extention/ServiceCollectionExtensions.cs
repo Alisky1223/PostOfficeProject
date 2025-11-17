@@ -19,26 +19,26 @@ namespace PostOfficeFrontendProject__all_interactive.Extention
             string AAAbaseAddress = configuration.GetValue<string>("AAAAPIBaseAddress");
 
             // Register HTTP clients with manually specified base addresses
-            services.AddHttpClient<IPostOfficeMiddelware,PostOfficeMiddelware>(client =>
+            services.AddHttpClient<IPostOfficeMiddelware, PostOfficeMiddelware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
-            }); 
+            });
             services.AddHttpClient<IProductsMiddelware, ProductsMiddelware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
-            });         
+            });
             services.AddHttpClient<IProductDropdownMiddelware, ProductDropdownMiddelware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
-            });    
+            });
             services.AddHttpClient<IPostManMiddleware, PostManMiddleware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
-            });     
+            });
             services.AddHttpClient<ICustomerMiddleware, CustomerMiddleware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
-            });   
+            });
             services.AddHttpClient<ILoginMiddleware, LoginMiddleware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
@@ -46,7 +46,7 @@ namespace PostOfficeFrontendProject__all_interactive.Extention
             services.AddHttpClient<IRegisterMiddleware, RegisterMiddleware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);
-            });        
+            });
             services.AddHttpClient<IUsersMiddleware, UsersMiddleware>(client =>
             {
                 client.BaseAddress = new Uri(baseAddress);

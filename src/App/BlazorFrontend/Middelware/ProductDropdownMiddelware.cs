@@ -27,7 +27,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             }
         }
 
-        public async Task<ApiResponse<ProductTypeDto>>CreateProductTypeAsync(ProductTypeUpdateAndCreateDto createDto)
+        public async Task<ApiResponse<ProductTypeDto>> CreateProductTypeAsync(ProductTypeUpdateAndCreateDto createDto)
         {
 
             try
@@ -42,7 +42,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             }
 
         }
-        
+
         public async Task<ApiResponse<ProductTypeDto>> UpdateProductTypeAsync(int id, ProductTypeUpdateAndCreateDto updateDto)
         {
             try
@@ -88,7 +88,7 @@ namespace PostOfficeFrontendProject__all_interactive.Middelware
             {
                 return new ApiResponse<TransportStatusDto>(e.Message, 500);
             }
-            
+
         }
 
         public async Task<ApiResponse<TransportStatusDto>> UpdateStatusAsync(int id, TransportStatusUpdateAndCreateDto update)

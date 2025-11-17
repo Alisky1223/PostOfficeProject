@@ -7,16 +7,7 @@ namespace AAA.src.Infrastructure.Data
     {
         public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-            
-        }
 
-        private ApplicationDBContext CreateInMemoryDbContext()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDBContext>()
-                .UseInMemoryDatabase("TestDatabase")
-                .Options;
-
-            return new ApplicationDBContext(options);
         }
 
         public DbSet<User> Users { get; set; }

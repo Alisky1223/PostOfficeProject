@@ -5,15 +5,15 @@ namespace AAA.src.Application.Mapper
 {
     public static class RoleMapper
     {
-        public static Role ToRoleFromCreateDto(this RolesCreateDto createDto) 
+        public static Role ToRoleFromCreateDto(this RolesCreateDto createDto)
         {
-            return new Role 
+            return new Role
             {
                 Name = createDto.Name,
             };
         }
 
-        public static RoleDto ToDto(this Role role) 
+        public static RoleDto ToDto(this Role role)
         {
             return new RoleDto
             {

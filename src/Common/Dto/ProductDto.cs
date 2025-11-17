@@ -8,6 +8,5 @@
         public string Description { get; set; } = string.Empty;
         public ProductTypeDto? ProductType { get; set; }
         public TransportStatusDto? TransportStatus { get; set; }
-        //public PostManDto? PostMan { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace AAA.src.Presentation.Controller
     public class RolesController : ControllerBase
     {
         private const string getAllRolesRequest = "getAllRoles";
-        private const string createRoleRequest  = "addRole";
+        private const string createRoleRequest = "addRole";
 
         private readonly IRoleRepository _repository;
         public RolesController(IRoleRepository repository)
@@ -19,14 +19,14 @@ namespace AAA.src.Presentation.Controller
         }
 
         [HttpPost(createRoleRequest)]
-        public async Task<IActionResult> AddRole([FromBody] RolesCreateDto createDto) 
+        public async Task<IActionResult> AddRole([FromBody] RolesCreateDto createDto)
         {
             var newRole = await _repository.AddRoles(createDto.ToRoleFromCreateDto());
             return Ok(new ApiResponse<object>(newRole.ToDto()));
         }
 
         [HttpGet(getAllRolesRequest)]
-        public async Task<IActionResult> GetAllRoles() 
+        public async Task<IActionResult> GetAllRoles()
         {
             var roles = await _repository.GetRolesAsync();
 

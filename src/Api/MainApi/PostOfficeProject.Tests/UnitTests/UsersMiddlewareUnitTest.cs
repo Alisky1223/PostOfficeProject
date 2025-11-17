@@ -15,7 +15,6 @@ namespace PostOfficeProject.Tests.UnitTests
 
         private readonly Mock<ICustomerRepository> _mockCustomerRepo;
         private readonly Mock<IPostmanRepository> _mockPostmanRepo;
-        private readonly UsersMiddleware _middleware;
 
         public UsersMiddlewareUnitTest()
         {
@@ -73,6 +72,7 @@ namespace PostOfficeProject.Tests.UnitTests
             // Assert
             Assert.NotNull(result);
             Assert.Equal(200, result.StatusCode);
+            Assert.NotNull(result.Data);
             Assert.Equal(2, result.Data.Count);
         }
 
@@ -104,7 +104,6 @@ namespace PostOfficeProject.Tests.UnitTests
             Assert.NotNull(result);
             Assert.Equal(200, result.StatusCode); // Assuming ApiResponse has StatusCode
             Assert.NotNull(result.Data);
-            // Assert specific DTO properties, e.g., Assert.Equal("Customer", result.Data.Role.Name);
             _mockCustomerRepo.Verify(r => r.GetCustomerByUserIdAsync(userId), Times.Once);
             _mockPostmanRepo.Verify(r => r.GetPostmanByUserId(It.IsAny<int>()), Times.Never);
         }

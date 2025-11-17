@@ -5,7 +5,7 @@ namespace PostOfficeProject.Core.src.Application.Mapper
 {
     public static class TransportMapper
     {
-        public static TransportDto ToDto (this Transport transport) 
+        public static TransportDto ToDto(this Transport transport)
         {
             return new TransportDto
             {
@@ -19,7 +19,7 @@ namespace PostOfficeProject.Core.src.Application.Mapper
             };
         }
 
-        public static TransportBasicInformationDto ToBasicInformationDto (this Transport transport) 
+        public static TransportBasicInformationDto ToBasicInformationDto(this Transport transport)
         {
             return new TransportBasicInformationDto
             {
@@ -29,9 +29,9 @@ namespace PostOfficeProject.Core.src.Application.Mapper
             };
         }
 
-        public static Transport ToTransportFromUpdateAndCreateDto(this TransportUpdateAndCreateDto createDto) 
+        public static Transport ToTransportFromUpdateAndCreateDto(this TransportUpdateAndCreateDto createDto)
         {
-            return new Transport 
+            return new Transport
             {
                 DeliverCode = createDto.DeliverCode,
                 DeliverdDate = createDto.DeliverdDate,

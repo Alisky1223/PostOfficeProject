@@ -10,18 +10,18 @@ namespace PostOfficeProject.Core.src.Application.Mapper
         {
             return new PostOfficeDto
             {
-                Id                  = postOffice.Id,
-                OfficeName          = postOffice.OfficeName,
-                OfficeAccessCode    = postOffice.OfficeAccessCode,
-                Address             = postOffice.Address,
-                StorageCapacity     = postOffice.StorageCapacity,
-                Products            = postOffice.Products.Select(x => x.ToBasicInformationDto()).ToList(),
-                PostMans            = postOffice.Postman.Select(x => x.ToBasicInformationDto()).ToList(),
-                Transport           = postOffice.Transport.Select(x => x.ToDto()).ToList(),
+                Id = postOffice.Id,
+                OfficeName = postOffice.OfficeName,
+                OfficeAccessCode = postOffice.OfficeAccessCode,
+                Address = postOffice.Address,
+                StorageCapacity = postOffice.StorageCapacity,
+                Products = postOffice.Products.Select(x => x.ToBasicInformationDto()).ToList(),
+                PostMans = postOffice.Postman.Select(x => x.ToBasicInformationDto()).ToList(),
+                Transport = postOffice.Transport.Select(x => x.ToDto()).ToList(),
             };
         }
 
-        public static PostOffice ToModelFromPostOfficeUpdateAndCreateDto(this PostOfficeUpdateAndCreateDto createDto) 
+        public static PostOffice ToModelFromPostOfficeUpdateAndCreateDto(this PostOfficeUpdateAndCreateDto createDto)
         {
             return new PostOffice
             {
@@ -32,9 +32,9 @@ namespace PostOfficeProject.Core.src.Application.Mapper
             };
         }
 
-        public static PostOfficeBasicInformationDto ToBasicInformationDto(this PostOffice postOffice) 
+        public static PostOfficeBasicInformationDto ToBasicInformationDto(this PostOffice postOffice)
         {
-            return new PostOfficeBasicInformationDto 
+            return new PostOfficeBasicInformationDto
             {
                 Id = postOffice.Id,
                 OfficeName = postOffice.OfficeName,

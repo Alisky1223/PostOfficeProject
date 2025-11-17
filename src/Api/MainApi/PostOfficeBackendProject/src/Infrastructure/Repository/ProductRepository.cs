@@ -26,7 +26,7 @@ namespace PostOfficeProject.Core.src.Infrastructure.Repository
                 Console.WriteLine(e);
                 throw;
             }
-            
+
         }
 
         public async Task<List<Product>> GetAllAsync()

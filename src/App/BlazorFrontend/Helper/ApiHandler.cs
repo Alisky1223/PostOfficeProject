@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 namespace PostOfficeFrontendProject__all_interactive.Helper
 {
-    public class ApiHandler 
+    public class ApiHandler
     {
         public static async Task<T> HandleResponse<T>(HttpResponseMessage response, string action)
         {

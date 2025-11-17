@@ -10,7 +10,7 @@ namespace PostOfficeProject.Core.src.Application.Service
             _transportStatusRepository = transportStatusRepository;
         }
 
-        public async Task SeedAsync() 
+        public async Task SeedAsync()
         {
             await SeedTransportStatus();
         }

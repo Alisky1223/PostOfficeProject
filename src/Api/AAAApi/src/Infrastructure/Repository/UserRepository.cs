@@ -12,7 +12,6 @@ namespace AAA.src.Infrastructure.Repository
         private readonly ApplicationDBContext _context;
         private readonly ITokenService _tokenService;
         private readonly ILoginAttemptRepository _loginAttemptRepository;
-        private readonly IConfiguration _configuration;
 
         // Configurable thresholds
         private readonly int MaxAttempts;
@@ -23,9 +22,8 @@ namespace AAA.src.Infrastructure.Repository
             _context = dBContext;
             _tokenService = tokenService;
             _loginAttemptRepository = loginAttemptRepository;
-            _configuration = configuration;
 
-            MaxAttempts = _configuration.GetValue<int>("Lockout:MaxAttempts", 5);
+            MaxAttempts = configuration.GetValue<int>("Lockout:MaxAttempts", 5);
             LockoutDuration = TimeSpan.FromMinutes(configuration.GetValue<int>("Lockout:Minutes", 2));
         }
 
@@ -36,7 +34,7 @@ namespace AAA.src.Infrastructure.Repository
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (targetUser == null)  return null;
+            if (targetUser == null) return null;
 
             targetUser.RoleId = RoleId;
 
@@ -56,9 +54,9 @@ namespace AAA.src.Infrastructure.Repository
 
         public async Task<List<User>> GetUsers()
         {
-           return await _context.Users
-                .Include(c => c.Role)
-                .ToListAsync();
+            return await _context.Users
+                 .Include(c => c.Role)
+                 .ToListAsync();
         }
 
         public async Task<LoginResultDto> LoginAsync(LoginDto loginDto, string ipAddress)
@@ -164,7 +162,7 @@ namespace AAA.src.Infrastructure.Repository
                 ConfirmPassword = "P@ssword_44",
             };
 
-            var userRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "SuperAdmin");
+            var userRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "SuperAdmin") ?? throw new InvalidOperationException("user Roler is Null");
 
             var user = _context.Users.Add(superAdmin.ToUserFromRegisterDto());
 
@@ -173,7 +171,7 @@ namespace AAA.src.Infrastructure.Repository
             await _context.SaveChangesAsync();
         }
 
-        private bool VerifyPassword(string password, string passwordHash)
+        private static bool VerifyPassword(string password, string passwordHash)
         {
             return BCrypt.Net.BCrypt.Verify(password, passwordHash);
         }

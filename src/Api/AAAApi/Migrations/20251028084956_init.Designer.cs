@@ -13,7 +13,7 @@ namespace AAA.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
     [Migration("20251028084956_init")]
-    partial class init
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

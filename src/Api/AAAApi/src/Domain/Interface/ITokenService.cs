@@ -5,7 +5,7 @@ namespace AAA.src.Domain.Interface
 {
     public interface ITokenService
     {
-        string GenerateJwtToken(User user);   
+        string GenerateJwtToken(User user);
         void DeleteToken(string token);
         void ChangeTokenExpireDate(string token, out ClaimsPrincipal? claimsPrincipal);
         void RefreshToken(string token);
