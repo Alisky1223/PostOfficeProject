@@ -4,7 +4,7 @@ namespace PostOfficeProject.Core.src.Application.Mapper
 {
     public static class UserInformationMapper
     {
-        public static UserCustomerPostmanDto ToUserCustomerPostmanDto (this UserPersonalInformationDto personalInformationDto, CustomerDto customerDto)
+        public static UserCustomerPostmanDto ToUserCustomerPostmanDto(this UserPersonalInformationDto personalInformationDto, CustomerDto customerDto)
         {
             return new UserCustomerPostmanDto
             {
@@ -18,7 +18,7 @@ namespace PostOfficeProject.Core.src.Application.Mapper
             };
         }
 
-        public static UserCustomerPostmanDto ToUserCustomerPostmanDto(this UserPersonalInformationDto personalInformationDto, PostManDto postmanDto) 
+        public static UserCustomerPostmanDto ToUserCustomerPostmanDto(this UserPersonalInformationDto personalInformationDto, PostManDto postmanDto)
         {
             return new UserCustomerPostmanDto
             {
@@ -32,15 +32,15 @@ namespace PostOfficeProject.Core.src.Application.Mapper
             };
         }
 
-        public static UserCustomerPostmanDto ToUserCustomerPostmanDto( this UserPersonalInformationDto personalInformationDto) 
+        public static UserCustomerPostmanDto ToUserCustomerPostmanDto(this UserPersonalInformationDto personalInformationDto)
         {
-            return new UserCustomerPostmanDto 
+            return new UserCustomerPostmanDto
             {
                 FirstName = personalInformationDto.FirstName,
                 LastName = personalInformationDto.LastName,
                 UserEmail = personalInformationDto.UserEmail,
                 Username = personalInformationDto.Username,
-                UserPhone= personalInformationDto.UserPhone,
+                UserPhone = personalInformationDto.UserPhone,
             };
         }
     }

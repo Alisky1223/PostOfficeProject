@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace AAA.src.Application.Validator
 {
-    public class RegisterDtoValidator: AbstractValidator<RegisterDto>
+    public class RegisterDtoValidator : AbstractValidator<RegisterDto>
     {
         public RegisterDtoValidator(IOptions<PasswordPolicy> policy)
         {

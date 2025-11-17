@@ -34,7 +34,7 @@ namespace AAA.src.Infrastructure.Repository
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (targetUser == null)  return null;
+            if (targetUser == null) return null;
 
             targetUser.RoleId = RoleId;
 
@@ -54,9 +54,9 @@ namespace AAA.src.Infrastructure.Repository
 
         public async Task<List<User>> GetUsers()
         {
-           return await _context.Users
-                .Include(c => c.Role)
-                .ToListAsync();
+            return await _context.Users
+                 .Include(c => c.Role)
+                 .ToListAsync();
         }
 
         public async Task<LoginResultDto> LoginAsync(LoginDto loginDto, string ipAddress)

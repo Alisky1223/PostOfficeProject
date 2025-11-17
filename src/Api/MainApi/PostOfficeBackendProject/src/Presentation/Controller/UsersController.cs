@@ -13,11 +13,11 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
         private const string getAllUsersRequest = "getAllUsers";
 
         private readonly IUsersMiddleware _middleware;
-        
+
         public UsersController(IUsersMiddleware middleware)
         {
             _middleware = middleware;
-            
+
         }
 
         [HttpGet(getUserByUserIdRequest)]

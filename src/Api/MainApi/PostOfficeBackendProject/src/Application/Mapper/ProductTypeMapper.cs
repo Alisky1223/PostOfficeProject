@@ -5,18 +5,18 @@ namespace PostOfficeProject.Core.src.Application.Mapper
 {
     public static class ProductTypeMapper
     {
-        public static ProductTypeDto ToDto(this ProductType productType) 
+        public static ProductTypeDto ToDto(this ProductType productType)
         {
-            return new ProductTypeDto 
+            return new ProductTypeDto
             {
                 Id = productType.Id,
                 Type = productType.Type,
             };
         }
 
-        public static ProductType ToProductTypeFromCreateDto(this ProductTypeUpdateAndCreateDto createDto) 
+        public static ProductType ToProductTypeFromCreateDto(this ProductTypeUpdateAndCreateDto createDto)
         {
-            return new ProductType 
+            return new ProductType
             {
                 Type = createDto.Type,
             };

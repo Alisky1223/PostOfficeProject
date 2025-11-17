@@ -16,8 +16,8 @@ namespace AAA.src.Application.Mapper
                 Role = user.Role?.ToDto() ?? null,
             };
         }
-        
-        public static User ToUserFromRegisterDto(this RegisterDto registerDto) 
+
+        public static User ToUserFromRegisterDto(this RegisterDto registerDto)
         {
             return new User
             {
@@ -30,9 +30,9 @@ namespace AAA.src.Application.Mapper
             };
         }
 
-        public static UserPersonalInformationDto ToUserPersonalInformationDto(this User user) 
+        public static UserPersonalInformationDto ToUserPersonalInformationDto(this User user)
         {
-            return new UserPersonalInformationDto 
+            return new UserPersonalInformationDto
             {
                 Id = user.Id,
                 FirstName = user.FirstName,

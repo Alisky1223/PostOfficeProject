@@ -5,7 +5,7 @@ namespace PostOfficeProject.Core.src.Application.Mapper
 {
     public static class ProductMapper
     {
-        public static ProductDto ToDto(this Product product) 
+        public static ProductDto ToDto(this Product product)
         {
             return new ProductDto
             {
@@ -31,7 +31,7 @@ namespace PostOfficeProject.Core.src.Application.Mapper
         }
 
 
-        public static Product ToProductFromCreateDto(this ProductUpdateAndCreateDto createDto) 
+        public static Product ToProductFromCreateDto(this ProductUpdateAndCreateDto createDto)
         {
             return new Product
             {

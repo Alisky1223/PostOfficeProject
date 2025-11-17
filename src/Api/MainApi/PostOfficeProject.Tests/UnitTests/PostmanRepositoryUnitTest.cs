@@ -113,7 +113,7 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetAllPostmen() 
+        public async Task GetAllPostmen()
         {
             // Arrange
             if (_dbContext == null) throw new InvalidOperationException("db context is null");
@@ -152,7 +152,7 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task PostmanRepository_CreatePostman_ShouldCreateNewPostman() 
+        public async Task PostmanRepository_CreatePostman_ShouldCreateNewPostman()
         {
             // Arrange
             if (_repository == null) throw new InvalidOperationException("repository is null");
@@ -207,7 +207,7 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task PostmanRepository_UpdatePostman_ShouldReturnUpdatedPostman() 
+        public async Task PostmanRepository_UpdatePostman_ShouldReturnUpdatedPostman()
         {
             // Arrange
             if (_repository == null) throw new InvalidOperationException("repository is null");
@@ -267,7 +267,7 @@ namespace PostOfficeProject.Tests.UnitTests
             Assert.Null(result);
         }
 
-        private static void ComparePostmansEqual(Postman result, Postman expected) 
+        private static void ComparePostmansEqual(Postman result, Postman expected)
         {
             Assert.Equal(expected.PostOfficeId, result.PostOfficeId);
             Assert.Equal(expected.UserId, result.UserId);

@@ -3,7 +3,7 @@ namespace PostOfficeFrontendProject__all_interactive.Mapper
 {
     public static class ValueTypesMapper
     {
-       
+
         public static string ProductsTypeToString(this ProductTypeDto productType)
         {
             if (productType != null)
@@ -15,7 +15,7 @@ namespace PostOfficeFrontendProject__all_interactive.Mapper
             {
                 return "";
             }
-        }     
+        }
         public static string ProductStatusToString(this TransportStatusDto transportStatus)
         {
             if (transportStatus != null)
@@ -28,7 +28,7 @@ namespace PostOfficeFrontendProject__all_interactive.Mapper
                 return "";
             }
         }
-        
+
         public static string CustomerProductsToString(this ProductDto Product)
         {
             if (Product != null)
@@ -40,8 +40,8 @@ namespace PostOfficeFrontendProject__all_interactive.Mapper
             {
                 return "";
             }
-        }       
-        
+        }
+
         public static string RoleNameToString(this RoleDto roleName)
         {
             if (roleName != null)

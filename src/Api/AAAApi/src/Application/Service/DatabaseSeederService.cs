@@ -12,18 +12,18 @@ namespace AAA.src.Application.Service
             _userRepository = userRepository;
         }
 
-        public async Task SeedAsync() 
+        public async Task SeedAsync()
         {
             await SeedRolesAsync();
             await SeedSuperAdminAsync();
         }
 
-        private async Task SeedRolesAsync() 
+        private async Task SeedRolesAsync()
         {
             await _roleRepository.SeedRolesAsync();
         }
 
-        private async Task SeedSuperAdminAsync() 
+        private async Task SeedSuperAdminAsync()
         {
             await _userRepository.SeedSuperAdmin();
         }

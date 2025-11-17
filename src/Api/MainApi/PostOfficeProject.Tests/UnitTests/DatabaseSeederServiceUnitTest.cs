@@ -38,7 +38,7 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task DatabaseSeederService_SuccessfullSeed_ShouldReturnDefaultValuesForTransportstatus() 
+        public async Task DatabaseSeederService_SuccessfullSeed_ShouldReturnDefaultValuesForTransportstatus()
         {
             //Arrange
             if (_service == null) throw new InvalidOperationException("db context is null");

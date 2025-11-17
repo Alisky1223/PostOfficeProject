@@ -31,20 +31,20 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetAllProduct_Success_ShouldReturnAllProducts() 
+        public async Task GetAllProduct_Success_ShouldReturnAllProducts()
         {
             //Arrange
             if (_dbContext == null) throw new InvalidOperationException("db context is null");
             if (_repository == null) throw new InvalidOperationException("repository is null");
 
-            var firstProduct = new Product 
+            var firstProduct = new Product
             {
                 Price = 100,
                 Description = "Test Description #1",
                 ProductName = "Test Product Name #1",
             };
 
-            var secondProduct = new Product 
+            var secondProduct = new Product
             {
                 Price = 200,
                 Description = "Test Description #2",
@@ -158,7 +158,7 @@ namespace PostOfficeProject.Tests.UnitTests
             Assert.Null(result);
         }
 
-        private static void CheckResultsAreEqual(Product expected, Product result) 
+        private static void CheckResultsAreEqual(Product expected, Product result)
         {
             Assert.Equal(expected.Price, result.Price);
             Assert.Equal(expected.Description, result.Description);

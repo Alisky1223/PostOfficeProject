@@ -70,7 +70,7 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
             var customer = updateDto.ToCustomerFromCreateDto();
             var updatedCustomer = await _repository.UpdateCustomerAsync(id, customer);
 
-            if (updatedCustomer == null) return NotFound(new ApiResponse<object>("The Information Not Found",404));
+            if (updatedCustomer == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
             return Ok(new ApiResponse<object>("Done"));//updatedCustomer.ToDto()
         }

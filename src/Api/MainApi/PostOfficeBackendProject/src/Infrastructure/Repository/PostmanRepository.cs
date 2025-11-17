@@ -18,7 +18,7 @@ namespace PostOfficeProject.Core.src.Infrastructure.Repository
             var allreadyCreated = await _context.Postman.FirstOrDefaultAsync(x => x.UserId == postman.UserId);
 
             if (allreadyCreated != null) return allreadyCreated;
-            
+
             var newPostman = await _context.Postman.AddAsync(postman);
             await _context.SaveChangesAsync();
             return newPostman.Entity;
@@ -53,7 +53,7 @@ namespace PostOfficeProject.Core.src.Infrastructure.Repository
 
         public async Task<Postman?> Update(int id, Postman postman)
         {
-            var targetPostman = await _context.Postman.FirstOrDefaultAsync(x => x.Id==id);
+            var targetPostman = await _context.Postman.FirstOrDefaultAsync(x => x.Id == id);
             if (targetPostman == null) return null;
 
             targetPostman.PostOffice = postman.PostOffice;

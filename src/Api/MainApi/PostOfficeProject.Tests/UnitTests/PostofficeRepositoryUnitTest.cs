@@ -30,7 +30,7 @@ namespace PostOfficeProject.Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetAllPostoffice_Success_ShouldReturnAllPostoffices() 
+        public async Task GetAllPostoffice_Success_ShouldReturnAllPostoffices()
         {
             //Arrange
             if (_dbContext == null) throw new InvalidOperationException("db context is null");
@@ -149,7 +149,7 @@ namespace PostOfficeProject.Tests.UnitTests
             await _dbContext.SaveChangesAsync();
 
             //Act
-            var result = await _repository.UpdatePostAsync(1,secondPostOffice);
+            var result = await _repository.UpdatePostAsync(1, secondPostOffice);
 
             //Assert
             Assert.NotNull(result);
@@ -170,11 +170,11 @@ namespace PostOfficeProject.Tests.UnitTests
             Assert.Null(result);
         }
 
-        private static void CheckResultsAreEqual(PostOffice expected, PostOffice result) 
+        private static void CheckResultsAreEqual(PostOffice expected, PostOffice result)
         {
             Assert.Equal(expected.OfficeName, result.OfficeName);
             Assert.Equal(expected.OfficeAccessCode, result.OfficeAccessCode);
-            Assert.Equal(expected.Address, result.Address);           
+            Assert.Equal(expected.Address, result.Address);
             Assert.Equal(expected.StorageCapacity, result.StorageCapacity);
         }
 

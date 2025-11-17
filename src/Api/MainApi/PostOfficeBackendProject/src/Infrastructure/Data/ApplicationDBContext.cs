@@ -5,7 +5,7 @@ namespace PostOfficeProject.Core.src.Infrastructure.Data
 {
     public class ApplicationDBContext : DbContext
     {
-        public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions) 
+        public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
 
         }

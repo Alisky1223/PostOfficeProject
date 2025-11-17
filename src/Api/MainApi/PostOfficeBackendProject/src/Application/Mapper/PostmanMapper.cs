@@ -5,12 +5,12 @@ namespace PostOfficeProject.Core.src.Application.Mapper
 {
     public static class PostmanMapper
     {
-        public static PostManDto ToDto(this Postman postman) 
+        public static PostManDto ToDto(this Postman postman)
         {
-            return new PostManDto 
+            return new PostManDto
             {
                 Id = postman.Id,
-                PersonalCode = postman.PersonalCode,  
+                PersonalCode = postman.PersonalCode,
                 Products = postman.Products.Select(x => x.ToDto()).ToList(),
                 UserId = postman.UserId,
             };
@@ -26,9 +26,9 @@ namespace PostOfficeProject.Core.src.Application.Mapper
             };
         }
 
-        public static Postman ToPostmanFromCreateAndUpdateDto(this PostmanUpdateAndCreateDto createDto) 
+        public static Postman ToPostmanFromCreateAndUpdateDto(this PostmanUpdateAndCreateDto createDto)
         {
-            return new Postman 
+            return new Postman
             {
                 PersonalCode = createDto.PersonalCode,
                 PostOfficeId = createDto.PostOfficeId,

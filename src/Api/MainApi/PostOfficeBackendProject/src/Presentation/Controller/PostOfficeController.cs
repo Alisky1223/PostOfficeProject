@@ -10,11 +10,11 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
     [ApiController]
     public class PostOfficeController : ControllerBase
     {
-        private const string getAllRequest      = "getAllPostOffice";
-        private const string getByIdRequest     = "getByIdPostOffice/{id:int}";
-        private const string updateRequest      = "updatePostOffice/{id:int}";
-        private const string createRequest      = "createPostOffice";
-        
+        private const string getAllRequest = "getAllPostOffice";
+        private const string getByIdRequest = "getByIdPostOffice/{id:int}";
+        private const string updateRequest = "updatePostOffice/{id:int}";
+        private const string createRequest = "createPostOffice";
+
         private readonly IPostOfficeRepository _repository;
 
         public PostOfficeController(IPostOfficeRepository repository)
@@ -23,21 +23,21 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
         }
 
         [HttpGet(getAllRequest)]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
         {
-            if(!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
+            if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
             var postOffices = await _repository.GetAllPostsAsync();
             var postOfficesDto = postOffices.Select(x => x.ToBasicInformationDto());
             return Ok(new ApiResponse<object>(postOfficesDto));
         }
 
         [HttpGet(getByIdRequest)]
-        public async Task<IActionResult> GetById([FromRoute] int id) 
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 
             var postOffice = await _repository.GetPostByIdAsync(id);
-            if(postOffice == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
+            if (postOffice == null) return NotFound(new ApiResponse<object>("The Information Not Found", 404));
 
             return Ok(new ApiResponse<object>(postOffice.ToDto()));
         }
@@ -55,7 +55,7 @@ namespace PostOfficeProject.Core.src.Presentation.Controller
         }
 
         [HttpPut(updateRequest)]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] PostOfficeUpdateAndCreateDto updateDto) 
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] PostOfficeUpdateAndCreateDto updateDto)
         {
             if (!ModelState.IsValid) return BadRequest(new ApiResponse<object>(ModelState, 400));
 

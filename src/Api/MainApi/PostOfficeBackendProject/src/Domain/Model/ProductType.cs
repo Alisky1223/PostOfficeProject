@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string Type { get; set; } = string.Empty;
-        public List<Product> Products { get; set;} = new();
+        public List<Product> Products { get; set; } = new();
     }
 }

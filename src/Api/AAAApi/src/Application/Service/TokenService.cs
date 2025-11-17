@@ -23,7 +23,7 @@ namespace AAA.src.Application.Service
 
         public string GenerateJwtToken(User user)
         {
-            ArgumentNullException.ThrowIfNull(user);  
+            ArgumentNullException.ThrowIfNull(user);
 
             if (user.Role == null)
             {
